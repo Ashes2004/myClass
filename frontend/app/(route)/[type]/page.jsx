@@ -11,18 +11,16 @@ import { notFound } from "next/navigation";
 import AddClassRoutineForm from "@/components/Administrator/RoutineManagement/AddClassRoutineForm";
 
 import EnrollmentForm from "@/components/Student/StudentEnrollmentForm";
-
-
+import TeacherEnrollmentForm from "@/components/Teacher/TeacherEnrollmentForm";
 
 const pageTitleMap = {
   student: "Student",
   teacher: "Teacher",
   administrator: "Admin",
   library: "Digital Library",
-
   classroutineform: "Class Routine Form",
   studentEnrollment: "Student Enrollment",
-
+  teacherEnrollment: "Teacher Enrollment",
 };
 
 export default function Page({ params }) {
@@ -45,13 +43,12 @@ export default function Page({ params }) {
       return <AdminitratorBody /> || notFound();
     case "library":
       return <DigitalLibrary /> || notFound();
-
     case "classroutineform":
-      return <AddClassRoutineForm/> || notFound();  
-
+      return <AddClassRoutineForm /> || notFound();
     case "studentEnrollment":
       return <EnrollmentForm /> || notFound();
-
+    case "teacherEnrollment":
+      return <TeacherEnrollmentForm /> || notFound();
     default:
       return notFound();
   }

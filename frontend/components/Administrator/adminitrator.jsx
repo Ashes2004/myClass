@@ -203,7 +203,10 @@ const AdminBody = () => {
                           <h2 className="font-semibold">{item.type}</h2>
                         </div>
                       </div>
-                      <Link href={`${item.link}`} className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
+                      <Link
+                        href={`${item.link}`}
+                        className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                      >
                         <Image
                           src={rightArrow}
                           alt="arrow"
@@ -260,10 +263,15 @@ const AdminBody = () => {
                           </div>
                           <div className="flex flex-col">
                             <h2 className="font-bold">{item.task}</h2>
-                            <h2 className="font-semibold text-xs">{item.statusDesc}</h2>
+                            <h2 className="font-semibold text-xs">
+                              {item.statusDesc}
+                            </h2>
                           </div>
                         </div>
-                        <div className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
+                        <Link
+                          href={`${item.link}`}
+                          className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                        >
                           <Image
                             src={rightArrow}
                             alt="arrow"
@@ -271,7 +279,7 @@ const AdminBody = () => {
                             height={24}
                             className="object-cover cursor-pointer"
                           />
-                        </div>
+                        </Link>
                       </div>
                     )
                 )}

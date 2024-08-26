@@ -462,6 +462,7 @@ export const adminTasks = [
     status: "in progress",
     statusDesc: "in progress",
     bg: "bg-blue-300",
+    link: "/",
   },
   {
     id: 1,
@@ -472,6 +473,7 @@ export const adminTasks = [
     status: "pending",
     statusDesc: "pending approval",
     bg: "bg-green-300",
+    link: "/teacherEnrollment",
   },
   {
     id: 2,
@@ -482,6 +484,7 @@ export const adminTasks = [
     status: "completed",
     statusDesc: "completed",
     bg: "bg-purple-300",
+    link: "/",
   },
 ];
 
