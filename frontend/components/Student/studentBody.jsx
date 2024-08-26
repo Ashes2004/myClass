@@ -25,7 +25,7 @@ const StudentBody = () => {
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
-            <Link href="/profile" className="bg-white rounded-full">
+            <Link href="/studentProfile" className="bg-white rounded-full">
               <Image
                 src={sampleProfile}
                 alt="profile"
