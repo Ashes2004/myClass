@@ -2,6 +2,7 @@ import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
 import {
+  notices,
   studentAssignments,
   studentProgress,
   studentSchedule,
@@ -61,7 +62,9 @@ const StudentBody = () => {
                       className="bg-white p-4 rounded-lg shadow-xl hover:scale-105 duration-300"
                     >
                       <div>
-                        <div className={`rounded-full flex justify-center items-center ${item.bg} w-8 h-8`}>
+                        <div
+                          className={`rounded-full flex justify-center items-center ${item.bg} w-8 h-8`}
+                        >
                           <Image
                             src={item.icon}
                             alt={item.sub}
@@ -127,36 +130,33 @@ const StudentBody = () => {
               </div>
 
               {/* Chatbot Section */}
-              <div className="bg-white flex justify-center flex-col shadow-xl rounded-lg p-4">
-                <div className="flex justify-between items-center mb-4">
-                  <div className="flex flex-col">
-                    <h2 className="font-bold text-lg md:text-xl">
-                      Chat with EduBot 🤖
-                    </h2>
-                    <p className="font-semibold text-base">
-                      Ask any instant doubts!
-                    </p>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
+                  <div className="flex justify-between items-center mb-4">
+                    <div className="bg-purple-300 rounded-full p-2">
+                      <Image
+                        src={chatbot}
+                        alt="bot"
+                        width={28}
+                        height={28}
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <h2 className="font-bold text-lg">Chat with EduBot 🤖</h2>
+                      <p className="font-semibold text-sm">
+                        Ask any instant doubts!
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-purple-300 rounded-full p-3">
-                    <Image
-                      src={chatbot}
-                      alt="bot"
-                      width={32}
-                      height={32}
-                      className="object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                  <div>
-                    <h2 className="font-semibold">
-                      <span className="font-bold">EduBot:</span> Hi there! I am
-                      EduBot, your virtual study buddy. How can I assist you
-                      today?
+                  <div className="flex flex-col gap-1 text-sm font-semibold mb-3">
+                    <h2 className="text-base font-bold">
+                      EduBot: Hi there! I am EduBot, your virtual study buddy.
+                      How can I assist you today?
                     </h2>
-                    <h2 className="font-bold mt-2">Help with Homework 📚</h2>
-                    <h2 className="font-bold mt-2">Check My Schedule 🗓️</h2>
-                    <h2 className="font-bold mt-1">Assignment Reminders ⏰</h2>
+                    <p>Help with Homework 📚</p>
+                    <p>Assignment Reminders ⏰</p>
+                    <p>Ask a Question ❓</p>
                   </div>
                   <div className="flex justify-center items-center">
                     <div className="bg-green-300 hover:bg-green-custom duration-300 rounded-full p-3 flex justify-center items-center cursor-pointer">
@@ -169,6 +169,28 @@ const StudentBody = () => {
                         className="object-cover"
                       />
                     </div>
+                  </div>
+                </div>
+                <div className="col-span-1 bg-white shadow-xl rounded-xl p-4">
+                  <h2 className="font-bold text-lg text-center">
+                    Notice Board
+                  </h2>
+                  <div className="flex flex-col gap-1 text-base pt-2">
+                    {notices.map(
+                      (item, index) =>
+                        index < 5 && (
+                          <Link
+                            href={`${item.link}`}
+                            key={item.id}
+                            className={`flex justify-between items-center mb-1 ${
+                              index % 2 == 0 ? "bg-slate-300 hover:bg-slate-400" : "bg-slate-400 hover:bg-slate-500"
+                            } rounded-lg px-2 py-3 duration-200`}
+                          >
+                            <h2 className="font-bold">{item.title}</h2>
+                            <p className="font-semibold">{item.date}</p>
+                          </Link>
+                        )
+                    )}
                   </div>
                 </div>
               </div>
@@ -264,10 +286,20 @@ const StudentBody = () => {
                           </div>
                           <div className="flex flex-col">
                             <h2 className="font-bold">{item.task}</h2>
-                            <h2>Due Date: {item.due} {item.time}</h2>
+                            <h2>
+                              Due Date: {item.due} {item.time}
+                            </h2>
                           </div>
                         </div>
-                        <div className={`p-2 px-3 rounded-full ${item.status === "done" ? "bg-green-400" : item.status === "progress" ? "bg-purple-400" : "bg-red-400"}`}>
+                        <div
+                          className={`p-2 px-3 rounded-full ${
+                            item.status === "done"
+                              ? "bg-green-400"
+                              : item.status === "progress"
+                              ? "bg-purple-400"
+                              : "bg-red-400"
+                          }`}
+                        >
                           <h2 className="text-xs">{item.statusDesc}</h2>
                         </div>
                         <div className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">

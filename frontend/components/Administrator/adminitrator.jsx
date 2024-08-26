@@ -171,19 +171,19 @@ const AdminBody = () => {
 
             <div className="flex justify-between items-center my-3">
               <h3 className="font-bold text-lg md:text-xl">
-                Subject Management
+                Management Options
               </h3>
               <Link
                 href="#"
                 className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
               >
-                Manage Subjects
+                View All
               </Link>
             </div>
             <div className="flex flex-col gap-3">
               {adminSubjectManagement.map(
                 (item, index) =>
-                  index < 2 && (
+                  index < 3 && (
                     <div
                       key={item.id}
                       className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
@@ -203,7 +203,7 @@ const AdminBody = () => {
                           <h2 className="font-semibold">{item.type}</h2>
                         </div>
                       </div>
-                      <div className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
+                      <Link href={`${item.link}`} className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
                         <Image
                           src={rightArrow}
                           alt="arrow"
@@ -211,7 +211,7 @@ const AdminBody = () => {
                           height={24}
                           className="object-cover cursor-pointer"
                         />
-                      </div>
+                      </Link>
                     </div>
                   )
               )}
