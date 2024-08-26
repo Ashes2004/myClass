@@ -25,7 +25,7 @@ const StudentBody = () => {
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
-            <Link href="/profile" className="bg-white rounded-full">
+            <Link href="/studentProfile" className="bg-white rounded-full">
               <Image
                 src={sampleProfile}
                 alt="profile"
@@ -89,7 +89,7 @@ const StudentBody = () => {
                     Today's Schedule
                   </h3>
                   <Link
-                    href="/"
+                    href="/timetable"
                     className="hover:underline decoration-solid underline-offset-4 cursor-pointer hover:text-green-500 duration-200"
                   >
                     View All

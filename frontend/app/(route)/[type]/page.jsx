@@ -1,18 +1,21 @@
 "use client";
 
 import { useEffect } from "react";
+import { notFound } from "next/navigation";
 
 import StudentBody from "@/components/Student/studentBody";
 import TeacherBody from "@/components/Teacher/teacher";
 import AdminitratorBody from "@/components/Administrator/adminitrator";
 import DigitalLibrary from "@/components/structComponents/DigitalLibrary";
-import { notFound } from "next/navigation";
 
 import AddClassRoutineForm from "@/components/Administrator/RoutineManagement/AddClassRoutineForm";
 
 import EnrollmentForm from "@/components/Student/StudentEnrollmentForm";
 import TeacherEnrollmentForm from "@/components/Teacher/TeacherEnrollmentForm";
-import ProfilePage from "@/components/Pages/ProfilePage";
+import StudentProfilePage from "@/components/Pages/StudentProfilePage";
+import TeacherProfilePage from "@/components/Pages/TeacherProfilePage";
+import AdminProfilePage from "@/components/Pages/AdminProfilePage";
+import Timetable from "@/components/Pages/Timetable";
 
 const pageTitleMap = {
   student: "Student",
@@ -22,7 +25,10 @@ const pageTitleMap = {
   classroutineform: "Class Routine Form",
   studentEnrollment: "Student Enrollment",
   teacherEnrollment: "Teacher Enrollment",
-  profile: "My Profile",
+  studentProfile: "My Profile",
+  teacherProfile: "My Profile",
+  adminProfile: "My Profile",
+  timetable: "Class Routine",
 };
 
 export default function Page({ params }) {
@@ -43,12 +49,18 @@ export default function Page({ params }) {
       return <TeacherBody /> || notFound();
     case "administrator":
       return <AdminitratorBody /> || notFound();
-    case "profile":
-      return <ProfilePage /> || notFound();
+    case "studentProfile":
+      return <StudentProfilePage /> || notFound();
+    case "teacherProfile":
+      return <TeacherProfilePage /> || notFound();
+    case "adminProfile":
+      return <AdminProfilePage /> || notFound();
     case "library":
       return <DigitalLibrary /> || notFound();
     case "classroutineform":
       return <AddClassRoutineForm /> || notFound();
+    case "timetable":
+      return <Timetable /> || notFound();
     case "studentEnrollment":
       return <EnrollmentForm /> || notFound();
     case "teacherEnrollment":

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import StudentLayout from "../Student/studentLayout";
 import { sampleProfile } from "@/public/Images";
+import AdminLayout from "../Administrator/administratorLayout";
 
-const ProfilePage = () => {
+const AdminProfilePage = () => {
   const [profilePic, setProfilePic] = useState(sampleProfile);
 
   const handleProfilePicChange = (e) => {
@@ -18,16 +18,16 @@ const ProfilePage = () => {
   };
 
   return (
-    <StudentLayout>
+    <AdminLayout>
       <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center rounded-xl">
         <div className="bg-white rounded-xl shadow-xl p-8 w-full md:w-3/4 lg:w-1/2 text-black">
           <div className="flex flex-col items-center">
             <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-blue-500">
               <Image
                 src={profilePic}
-                alt="Profile Picture"
                 layout="fill"
-                objectFit="cover"
+                alt="Profile Picture"
+                className="object-cover"
               />
             </div>
             <input
@@ -37,7 +37,6 @@ const ProfilePage = () => {
               onChange={handleProfilePicChange}
             />
             <h1 className="text-2xl font-bold mt-4">John Doe</h1>
-            <p className="text-lg font-semibold">Class: 10th | Section: A</p>
           </div>
 
           <div className="mt-6">
@@ -50,7 +49,7 @@ const ProfilePage = () => {
                   type="text"
                   id="phone"
                   name="phone"
-                  autocomplete="tel"
+                  autoComplete="tel"
                   className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
                   defaultValue="+91 9XXXX XXX89"
                 />
@@ -64,7 +63,7 @@ const ProfilePage = () => {
                   type="email"
                   id="email"
                   name="email"
-                  autocomplete="email"
+                  autoComplete="email"
                   className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
                   defaultValue="johndoe@example.com"
                 />
@@ -78,7 +77,7 @@ const ProfilePage = () => {
                   type="text"
                   id="address"
                   name="address"
-                  autocomplete="street-address"
+                  autoComplete="street-address"
                   className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
                   defaultValue="123 Main St, Springfield"
                 />
@@ -87,8 +86,8 @@ const ProfilePage = () => {
           </div>
         </div>
       </div>
-    </StudentLayout>
+    </AdminLayout>
   );
 };
 
-export default ProfilePage;
+export default AdminProfilePage;
