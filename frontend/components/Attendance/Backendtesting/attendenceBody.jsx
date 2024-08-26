@@ -62,7 +62,13 @@ const AttendanceBody = ({ Id }) => {
       .then((response) => {
         if (!response.ok) {
           return response.json().then((errorData) => {
-            alert(errorData.message);
+           
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: `${errorData.message} . Please Refresh and Update`
+             
+            });
             throw new Error(errorData.message || "An unknown error occurred");
           });
         }else{
@@ -123,15 +129,16 @@ const AttendanceBody = ({ Id }) => {
   };
 
 
+  useEffect(()=>{
+    window.addEventListener('keypress',handleKeypress);
+    return ()=>{
+      window.removeEventListener('keypress',handleKeypress);
+    }
+  })
 
+  
   useEffect(() => {
     fetchapi();
-
-    console.log("students  :", students);
-    window.addEventListener("keypress", handleKeypress);
-    return () => {
-      window.removeEventListener("keypress", handleKeypress);
-    };
   }, []);
 
   const handleKeypress = (e) => {

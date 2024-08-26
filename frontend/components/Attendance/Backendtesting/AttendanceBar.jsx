@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { arrow_left_filled, arrow_right_filled } from "@/public/Icons";
 import { useAttendanceContext } from "./attendenceBody";
+
 const AttendanceBar = () => {
   const {
     isOpen,
@@ -17,54 +18,36 @@ const AttendanceBar = () => {
     currStudent,
     students,
   } = useAttendanceContext();
+  
   const [attendenceTaken, setAttendenceTaken] = useState(false);
-  const fetchapi = () => {
-    let attendenceDate = `${new Date().getDate()}-${
-      new Date().getMonth() + 1
-    }-${new Date().getFullYear()}`;
-
-    console.log(Id + " ***" + attendenceDate);
-    fetch(`http://localhost/api/attendence/${Id}/${attendenceDate}`)
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok " + response.statusText);
-        } else {
-          setAttendenceTaken(true);
-        }
-
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.error(
-          "There has been a problem with your fetch operation:",
-          error
-        );
-      });
-  };
-  useEffect(() => {
-    fetchapi();
-  }, []);
-
-  const d = new Date();
-  const date = d.getDate();
-  const month = d.getMonth() + 1;
-  const year = d.getFullYear();
   const [holidayDisabled, setHolidayDisabled] = useState(false);
   const [attendanceDisable, setAttendanceDisabled] = useState(false);
 
-  const handleLeftClick = () => {
-    handleLeft();
-  };
-  const handleRightClick = () => {
-    handleRight();
-  };
+  useEffect(() => {
+    // Fetch attendance data once on component mount
+    const fetchAttendance = async () => {
+      try {
+        let attendenceDate = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
+        console.log(Id + " ***" + attendenceDate);
+
+        const response = await fetch(`http://localhost/api/attendence/${Id}/${attendenceDate}`);
+        if (response.ok) {
+          setAttendenceTaken(true);
+        } else {
+          throw new Error("Network response was not ok " + response.statusText);
+        }
+      } catch (error) {
+        console.error("There has been a problem with your fetch operation:", error);
+      }
+    };
+    fetchAttendance();
+  }, []); // Run this effect only once when the component mounts
+
+  const handleLeftClick = () => handleLeft();
+  const handleRightClick = () => handleRight();
   const handlePresentClick = () => {
     handlePresent();
     setHolidayDisabled(true);
-    //setIsPresentClicked(false);
   };
   const handleAbsentClick = () => {
     setHolidayDisabled(true);
@@ -76,11 +59,14 @@ const AttendanceBar = () => {
   };
   const handleSubmitClick = () => {
     handleSubmit();
+    setAttendenceTaken(true); // Set state to reflect that attendance has been taken
   };
+  const handleUpdateClick = () => handleUpdate();
 
-  const handleUpdateClick = () => {
-    handleUpdate();
-  };
+  const d = new Date();
+  const date = d.getDate();
+  const month = d.getMonth() + 1;
+  const year = d.getFullYear();
 
   return (
     <div
@@ -95,7 +81,7 @@ const AttendanceBar = () => {
         Date:{date}/{month}/{year}
       </p>
       <div className="md:flex justify-between grid grid-cols-3 gap-3 mt-6 items-center outline outline-black outline-2 p-4 rounded-lg shadow-md shadow-slate-500">
-        <button onClick={() => handleLeftClick()}>
+        <button onClick={handleLeftClick}>
           <Image src={arrow_left_filled} width={50} height={50} />
         </button>
         <div className="flex-row">
@@ -104,14 +90,14 @@ const AttendanceBar = () => {
           </div>
           <h3 className="text-center p-1">{currStudent?.studentName}</h3>
         </div>
-        <button onClick={() => handleRightClick()}>
+        <button onClick={handleRightClick}>
           <Image src={arrow_right_filled} width={50} height={50} />
         </button>
       </div>
 
       <div className="mt-10 flex flex-col md:gap-6 gap-3">
         <button
-          onClick={() => handlePresentClick()}
+          onClick={handlePresentClick}
           disabled={attendanceDisable}
           className="mb-1 p-4"
         >
@@ -124,7 +110,7 @@ const AttendanceBar = () => {
           </span>
         </button>
         <button
-          onClick={() => handleAbsentClick()}
+          onClick={handleAbsentClick}
           disabled={attendanceDisable}
           className="mb-1 p-4"
         >
@@ -137,7 +123,7 @@ const AttendanceBar = () => {
           </span>
         </button>
         <button
-          onClick={() => handleHolidayClick()}
+          onClick={handleHolidayClick}
           disabled={holidayDisabled}
           className="md:mb-20 mb-10 p-4"
         >
@@ -158,14 +144,15 @@ const AttendanceBar = () => {
         >
           <span
             className={`w-1/2 p-3 rounded-md shadow-md ${
-             ( (currStudent && currStudent.attendanceStatus != "" &&
-              
-              currStudent === students[students.length - 1]) || ( !holidayDisabled && currStudent != students[0]))
+              (currStudent &&
+                currStudent.attendanceStatus !== "" &&
+                currStudent === students[students.length - 1]) ||
+              (!holidayDisabled && currStudent !== students[0])
                 ? "visible"
                 : "hidden"
             } shadow-slate-600 bg-blue-500 text-white hover:opacity-80`}
           >
-            {attendenceTaken ? "Update" : "Submit"} 
+            {attendenceTaken ? "Update" : "Submit"}
           </span>
         </button>
       </div>
