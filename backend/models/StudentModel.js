@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+
 const studentSchema = new mongoose.Schema({
   studentName: {
     type: String,
@@ -32,7 +33,7 @@ const studentSchema = new mongoose.Schema({
   },
   studentId: {
     type: String,
-    required: true,
+  
     unique: true
   },
   password: {
@@ -41,7 +42,7 @@ const studentSchema = new mongoose.Schema({
   },
   studentRoll: {
     type: String,
-    required: true,
+   
   },
 
   classId: {
@@ -61,7 +62,12 @@ const studentSchema = new mongoose.Schema({
       ref: "Grades",
     },
   ],
-
+ attendance:[
+  {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Attendance",
+  },
+ ],
   numberOfDaysPresent: {
     type: Number,
     default: 0,

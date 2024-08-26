@@ -44,6 +44,9 @@ export const createAttendenceRecord = async (req, res) => {
               totalSchoolDays: 1,
               numberOfDaysPresent: sa.present ? 1 : 0,
             },
+            $push: {
+              attendance: newAttendance._id, 
+            },
           }
         );
       }
@@ -77,7 +80,7 @@ export const updateAttendence = async (req, res) => {
       if (attendanceRecord.isHoliday == false) {
         await Student.updateMany(
           { _id: { $in: studentIds } },
-          { $inc: { totalSchoolDays: -1, numberOfDaysPresent: -1 } }
+          { $inc: { totalSchoolDays: -1, numberOfDaysPresent: -1 }  ,  $pull: { attendance: attendanceRecord._id } }
         );
         let prevattendence = attendanceRecord.studentAttendances; 
         for (const sa of prevattendence) {
@@ -105,6 +108,9 @@ export const updateAttendence = async (req, res) => {
               $inc: {
                 totalSchoolDays: 1,
                 numberOfDaysPresent: sa.present ? 1 : 0,
+              },
+              $push: {
+                attendance: attendanceRecord._id, // Add attendance reference
               },
             }
           );

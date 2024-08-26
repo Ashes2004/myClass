@@ -6,6 +6,7 @@ import teacherRoutes from "./routes/TeacherRoutes.js";
 import classRoutineRoutes from "./routes/classRoutineRoutes.js";
 import teacherRoutineRoutes from "./routes/TeacherRoutineRoutes.js";
 import classRoutes from './routes/ClassRoutes.js';
+import roomRoutes from './routes/RoomRoutes.js';
 import cors from 'cors';
 // import quizRoutes from './routes/QuizRoutes.js';
 // import studentQuizRoutes from './routes/StudentQuizRoutes.js';
@@ -37,6 +38,7 @@ app.use('/api/classes',  classRoutes);
 // app.use('/api/quizzes', quizRoutes);
 // app.use('/api/student-quizzes', studentQuizRoutes);
 app.use('/api/attendence', attendenceRoutes);
+app.use('/api/rooms', roomRoutes);
 // app.use('/api/administratives', authenticateToken, administrativeRoutes);
 
 // Error handling middleware

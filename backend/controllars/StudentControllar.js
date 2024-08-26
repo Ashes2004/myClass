@@ -8,12 +8,30 @@ export const getAllStudents = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
 export const createStudent = async (req, res) => {
   try {
-    const studentData = req.body;
+    const currentYear = new Date().getFullYear();
+    const yearPrefix = currentYear.toString();
 
+    // Find the highest serial number for the current year
+    const latestStudent = await Student.findOne({ studentId: { $regex: `^${yearPrefix}` } })
+      .sort({ studentId: -1 })
+      .limit(1);
+
+    let serialNumber = 1;
+    if (latestStudent) {
+      const latestSerial = parseInt(latestStudent.studentId.slice(-2));
+      serialNumber = latestSerial + 1;
+    }
+
+
+    const serialNumberStr = serialNumber.toString().padStart(2, '0');
+    const studentId = `${yearPrefix}${serialNumberStr}`;
+
+    
+    const studentData = { ...req.body, studentId };
     const student = new Student(studentData);
+
     await student.save();
     res.status(201).json(student);
   } catch (error) {

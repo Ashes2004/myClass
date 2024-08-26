@@ -6,11 +6,7 @@ const classPeriodSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  classId: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: "Class", // Reference to the Class model
-  },
+  
   teacherId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
@@ -21,19 +17,13 @@ const classPeriodSchema = new mongoose.Schema({
     required: true,
   },
   startPeriod: {
-    type: Number,
+    type: String,
     required: true,
   },
   endPeriod: {
-    type: Number,
+    type: String,
     required: true,
-    validate: {
-      validator: function (v) {
-        return v >= this.startPeriod;
-      },
-      message:
-        "End period number must be greater than or equal to start period number.",
-    },
+    
   },
 });
 

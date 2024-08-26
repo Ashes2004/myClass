@@ -15,13 +15,14 @@ const teacherSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  employeeId: {
-    type: String,
-    unique: true,
-  },
+ 
   password: {
     type: String,
     required: true
+  },
+  teacherId: {
+    type: String,
+    unique: true,
   },
   subjects: {
     type: [String],
@@ -38,6 +39,11 @@ const teacherSchema = new mongoose.Schema({
   salary: {
     type: Number,
   },
+  allocatedClasses:[ {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Class",
+  }
+  ],
   TeacherRoutine: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "TeacherRoutine",
