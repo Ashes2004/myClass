@@ -25,7 +25,7 @@ const StudentBody = () => {
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
-            <div className="bg-white rounded-full">
+            <Link href="/profile" className="bg-white rounded-full">
               <Image
                 src={sampleProfile}
                 alt="profile"
@@ -33,7 +33,7 @@ const StudentBody = () => {
                 height={42}
                 className="object-cover cursor-pointer"
               />
-            </div>
+            </Link>
           </div>
         </div>
 
@@ -47,7 +47,7 @@ const StudentBody = () => {
               </h3>
               <Link
                 href="#"
-                className="hover:underline decoration-solid underline-offset-4 cursor-pointer hover:text-green-custom duration-200"
+                className="hover:underline decoration-solid underline-offset-4 cursor-pointer hover:text-green-500 duration-200"
               >
                 View All
               </Link>
@@ -84,9 +84,17 @@ const StudentBody = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Today's Schedule Section */}
               <div className="bg-white shadow-xl rounded-lg p-4">
-                <h2 className="font-bold text-lg md:text-xl mb-4">
-                  Today's Schedule
-                </h2>
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-bold text-lg md:text-xl">
+                    Today's Schedule
+                  </h3>
+                  <Link
+                    href="/"
+                    className="hover:underline decoration-solid underline-offset-4 cursor-pointer hover:text-green-500 duration-200"
+                  >
+                    View All
+                  </Link>
+                </div>
                 {studentSchedule.map(
                   (item, index) =>
                     index < 3 && (
@@ -115,7 +123,10 @@ const StudentBody = () => {
                           </div>
                         </div>
 
-                        <div className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
+                        <Link
+                          href={`${item.link}`}
+                          className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                        >
                           <Image
                             src={rightArrow}
                             alt="arrow"
@@ -123,14 +134,14 @@ const StudentBody = () => {
                             height={24}
                             className="object-cover cursor-pointer"
                           />
-                        </div>
+                        </Link>
                       </div>
                     )
                 )}
               </div>
 
-              {/* Chatbot Section */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                {/* Chatbot Section */}
                 <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
                   <div className="flex justify-between items-center mb-4">
                     <div className="bg-purple-300 rounded-full p-2">
@@ -159,7 +170,10 @@ const StudentBody = () => {
                     <p>Ask a Question ❓</p>
                   </div>
                   <div className="flex justify-center items-center">
-                    <div className="bg-green-300 hover:bg-green-custom duration-300 rounded-full p-3 flex justify-center items-center cursor-pointer">
+                    <Link
+                      href="/"
+                      className="bg-green-300 hover:bg-green-600 duration-300 rounded-full p-3 flex justify-center items-center cursor-pointer"
+                    >
                       <h2 className="font-bold">Ask Doubts</h2>
                       <Image
                         src={rightArrow}
@@ -168,9 +182,11 @@ const StudentBody = () => {
                         height={32}
                         className="object-cover"
                       />
-                    </div>
+                    </Link>
                   </div>
                 </div>
+
+                {/* Notice Board Section */}
                 <div className="col-span-1 bg-white shadow-xl rounded-xl p-4">
                   <h2 className="font-bold text-lg text-center">
                     Notice Board
@@ -183,7 +199,9 @@ const StudentBody = () => {
                             href={`${item.link}`}
                             key={item.id}
                             className={`flex justify-between items-center mb-1 ${
-                              index % 2 == 0 ? "bg-slate-300 hover:bg-slate-400" : "bg-slate-400 hover:bg-slate-500"
+                              index % 2 == 0
+                                ? "bg-slate-300 hover:bg-slate-400"
+                                : "bg-slate-400 hover:bg-slate-500"
                             } rounded-lg px-2 py-3 duration-200`}
                           >
                             <h2 className="font-bold">{item.title}</h2>
@@ -201,8 +219,8 @@ const StudentBody = () => {
                 Track Your Progress
               </h3>
               <Link
-                href="#"
-                className="hover:underline hover:text-green-custom duration-200 decoration-solid underline-offset-4 cursor-pointer"
+                href="/"
+                className="hover:underline hover:text-green-500 duration-200 decoration-solid underline-offset-4 cursor-pointer"
               >
                 Check
               </Link>
@@ -229,7 +247,10 @@ const StudentBody = () => {
                           <h2 className="font-bold">{item.progress}</h2>
                         </div>
                       </div>
-                      <div className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
+                      <Link
+                        href={`${item.link}`}
+                        className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                      >
                         <Image
                           src={rightArrow}
                           alt="arrow"
@@ -237,7 +258,7 @@ const StudentBody = () => {
                           height={24}
                           className="object-cover cursor-pointer"
                         />
-                      </div>
+                      </Link>
                     </div>
                   )
               )}
@@ -260,8 +281,8 @@ const StudentBody = () => {
               <div className="flex justify-between items-center mt-3 mb-1">
                 <h3 className="font-bold text-lg md:text-xl">Assignments</h3>
                 <Link
-                  href="#"
-                  className="hover:underline hover:text-green-custom duration-200 decoration-solid underline-offset-4 cursor-pointer"
+                  href="/"
+                  className="hover:underline hover:text-green-500 duration-200 decoration-solid underline-offset-4 cursor-pointer"
                 >
                   See All
                 </Link>
@@ -302,7 +323,10 @@ const StudentBody = () => {
                         >
                           <h2 className="text-xs">{item.statusDesc}</h2>
                         </div>
-                        <div className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3">
+                        <Link
+                          href={`${item.link}`}
+                          className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                        >
                           <Image
                             src={rightArrow}
                             alt="arrow"
@@ -310,7 +334,7 @@ const StudentBody = () => {
                             height={24}
                             className="object-cover cursor-pointer"
                           />
-                        </div>
+                        </Link>
                       </div>
                     )
                 )}

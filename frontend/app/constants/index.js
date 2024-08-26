@@ -200,6 +200,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-green-400",
+    link: "/",
   },
   {
     id: 1,
@@ -208,6 +209,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-blue-400",
+    link: "/",
   },
   {
     id: 2,
@@ -216,6 +218,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-orange-400",
+    link: "/",
   },
   {
     id: 3,
@@ -224,6 +227,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-purple-400",
+    link: "/",
   },
   {
     id: 4,
@@ -232,6 +236,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-green-400",
+    link: "/",
   },
 ];
 
@@ -269,6 +274,7 @@ export const studentAssignments = [
     status: "done",
     statusDesc: "completed",
     bg: "bg-orange-300",
+    link: "/",
   },
   {
     id: 1,
@@ -279,6 +285,7 @@ export const studentAssignments = [
     status: "progress",
     statusDesc: "in progress",
     bg: "bg-blue-300",
+    link: "/",
   },
   {
     id: 2,
@@ -289,6 +296,7 @@ export const studentAssignments = [
     status: "not done",
     statusDesc: "not done",
     bg: "bg-purple-300",
+    link: "/",
   },
 ];
 

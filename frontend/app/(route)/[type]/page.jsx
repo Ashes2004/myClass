@@ -12,6 +12,7 @@ import AddClassRoutineForm from "@/components/Administrator/RoutineManagement/Ad
 
 import EnrollmentForm from "@/components/Student/StudentEnrollmentForm";
 import TeacherEnrollmentForm from "@/components/Teacher/TeacherEnrollmentForm";
+import ProfilePage from "@/components/Pages/ProfilePage";
 
 const pageTitleMap = {
   student: "Student",
@@ -21,6 +22,7 @@ const pageTitleMap = {
   classroutineform: "Class Routine Form",
   studentEnrollment: "Student Enrollment",
   teacherEnrollment: "Teacher Enrollment",
+  profile: "My Profile",
 };
 
 export default function Page({ params }) {
@@ -41,6 +43,8 @@ export default function Page({ params }) {
       return <TeacherBody /> || notFound();
     case "administrator":
       return <AdminitratorBody /> || notFound();
+    case "profile":
+      return <ProfilePage /> || notFound();
     case "library":
       return <DigitalLibrary /> || notFound();
     case "classroutineform":
