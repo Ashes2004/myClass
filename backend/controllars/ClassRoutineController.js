@@ -25,6 +25,10 @@ export const getClassRoutineById = async (req, res) => {
 export const createClassRoutine = async (req, res) => {
     const classRoutine = new ClassRoutine(req.body);
     try {
+        const existingRoutine = await ClassRoutine.findOne({ classId: req.body.classId });
+        if (existingRoutine) {
+            return res.status(400).json({ message: 'A routine with this class ID already exists' });
+        }
         const newClassRoutine = await classRoutine.save();
         const classelement = await Class.findById(req.body.classId);
         if(!classelement)

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import Swal from 'sweetalert2'
 const AddWeeklyRoutineForm = () => {
-  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  const daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
   const [weeklyRoutine, setWeeklyRoutine] = useState(
     daysOfWeek.reduce((acc, day) => {
@@ -85,10 +85,32 @@ const AddWeeklyRoutineForm = () => {
         classId: selectedClassId,
         routine: routineData,
       });
+
+     
+      Swal.fire({
+        title: "Good job!",
+        text: "Routine added Successfully",
+        icon: "success"
+      });
       console.log('Routine added:', response.data);
+    
     } catch (error) {
-      console.error('Error adding routine:', error);
+      if (error.response && error.response.data && error.response.data.message) {
+        // Show the error message from the response
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data.message
+        });
+    } else {
+        // Show a generic error message if no specific error is provided
+        Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: "An unknown error occurred"
+        });
     }
+}
   };
 
   return (
@@ -142,7 +164,7 @@ const AddWeeklyRoutineForm = () => {
               >
                 <option value="">Select a teacher</option>
                 {teachers.map(teacher => (
-                  <option key={teacher._id} value={teacher._id}>{teacher.name}</option>
+                  <option key={teacher._id} value={teacher._id}>{`${teacher.name} (${teacher.subjects})`}</option>
                 ))}
               </select>
 
