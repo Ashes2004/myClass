@@ -1,0 +1,82 @@
+import mongoose from "mongoose";
+
+const studentSchema = new mongoose.Schema({
+  studentName: {
+    type: String,
+    required: true,
+  },
+  gurdianName: {
+    type: String,
+    required: true,
+  },
+  gurdianPhoneNumber: {
+    type: String,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+  bloodGroup: {
+    type: String,
+    required: true
+  },
+  studentDOB: {
+    type: String,
+    required: true
+  },
+  studentEmailID: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  studentId: {
+    type: String,
+    required: true,
+    unique: true
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  studentRoll: {
+    type: String,
+    required: true,
+  },
+
+  classId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Class",
+  },
+  quizResponses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "QuizResForEach",
+    },
+  ],
+  
+  examResults: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Grades",
+    },
+  ],
+
+  numberOfDaysPresent: {
+    type: Number,
+    default: 0,
+  },
+  totalSchoolDays: {
+    type: Number,
+    default: 0,
+  },
+
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
+const Student = mongoose.model("Student", studentSchema);
+
+export default Student;
