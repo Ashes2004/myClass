@@ -183,8 +183,8 @@ const StudentBody = () => {
                             href={`${item.link}`}
                             key={item.id}
                             className={`flex justify-between items-center mb-1 ${
-                              index % 2 == 0 ? "bg-slate-300" : "bg-slate-400"
-                            } rounded-lg px-2 py-3`}
+                              index % 2 == 0 ? "bg-slate-300 hover:bg-slate-400" : "bg-slate-400 hover:bg-slate-500"
+                            } rounded-lg px-2 py-3 duration-200`}
                           >
                             <h2 className="font-bold">{item.title}</h2>
                             <p className="font-semibold">{item.date}</p>

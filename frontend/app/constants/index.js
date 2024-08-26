@@ -353,6 +353,14 @@ export const adminSubjectManagement = [
   },
   {
     id: 2,
+    icon: approval, // Placeholder for an appropriate icon related to management
+    sub: "Enroll Students",
+    type: "Administrative",
+    link: "/studentEnrollment",
+    bg: "bg-orange-400",
+  },
+  {
+    id: 3,
     icon: notes, // Placeholder for an appropriate icon related to management
     sub: "Review Curriculum",
     type: "Administrative",
@@ -360,7 +368,7 @@ export const adminSubjectManagement = [
     bg: "bg-purple-400",
   },
   {
-    id: 3,
+    id: 4,
     icon: classes, // Placeholder for an appropriate icon related to management
     sub: "Allocate Classes",
     type: "Administrative",
@@ -368,7 +376,7 @@ export const adminSubjectManagement = [
     bg: "bg-orange-400",
   },
   {
-    id: 4,
+    id: 5,
     icon: exam, // Placeholder for an appropriate icon related to management
     sub: "Schedule Exams",
     type: "Administrative",

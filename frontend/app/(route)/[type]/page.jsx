@@ -7,6 +7,7 @@ import TeacherBody from "@/components/Teacher/teacher";
 import AdminitratorBody from "@/components/Administrator/adminitrator";
 import DigitalLibrary from "@/components/structComponents/DigitalLibrary";
 import { notFound } from "next/navigation";
+import EnrollmentForm from "@/components/Student/StudentEnrollmentForm";
 
 
 const pageTitleMap = {
@@ -14,6 +15,7 @@ const pageTitleMap = {
   teacher: "Teacher",
   administrator: "Admin",
   library: "Digital Library",
+  studentEnrollment: "Student Enrollment",
 };
 
 export default function Page({ params }) {
@@ -36,6 +38,8 @@ export default function Page({ params }) {
       return <AdminitratorBody /> || notFound();
     case "library":
       return <DigitalLibrary /> || notFound();
+    case "studentEnrollment":
+      return <EnrollmentForm /> || notFound();
     default:
       return notFound();
   }
