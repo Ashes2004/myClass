@@ -1,4 +1,3 @@
-
 import {
   alarm,
   attendance,
@@ -23,7 +22,7 @@ import {
   approval,
   document,
   leaderboard,
-  library
+  library,
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -70,10 +69,10 @@ export const studentSidebarLinks = [
     link: "/",
   },
   {
-    id:8,
-    label:"Leaderboard",
+    id: 8,
+    label: "Leaderboard",
     icon: leaderboard,
-    link:"/student/leaderboard"
+    link: "/student/leaderboard",
   },
   {
     id: 7,
@@ -82,7 +81,6 @@ export const studentSidebarLinks = [
     link: "/",
   },
 ];
-
 
 export const teacherSidebarLinks = [
   {
@@ -291,6 +289,47 @@ export const studentAssignments = [
     status: "not done",
     statusDesc: "not done",
     bg: "bg-purple-300",
+  },
+];
+
+export const notices = [
+  {
+    id: 1,
+    title: "Holiday Notice",
+    date: "25.08.24",
+    description:
+      "School will remain closed on Monday due to the public holiday.",
+    link: "/",
+  },
+  {
+    id: 2,
+    title: "PTA Meeting",
+    date: "28.08.24",
+    description:
+      "Parents-Teachers Association meeting will be held at 10:00 AM in the auditorium.",
+    link: "/",
+  },
+  {
+    id: 3,
+    title: "Science Fair",
+    date: "10.09.24",
+    description:
+      "The annual science fair will take place in the school gymnasium. All students are encouraged to participate.",
+    link: "/",
+  },
+  {
+    id: 4,
+    title: "Project Work",
+    date: "19.09.24",
+    description: "Project Work starts in school.",
+    link: "/",
+  },
+  {
+    id: 5,
+    title: "School Holiday",
+    date: "02.10.24",
+    description: "School will remain closed due to the Gandhi Jayanti.",
+    link: "/",
   },
 ];
 
