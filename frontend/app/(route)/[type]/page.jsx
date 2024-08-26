@@ -20,7 +20,7 @@ const pageTitleMap = {
   administrator: "Admin",
   library: "Digital Library",
 
-  classroutineform: "Class Routine Form"
+  classroutineform: "Class Routine Form",
   studentEnrollment: "Student Enrollment",
 
 };
