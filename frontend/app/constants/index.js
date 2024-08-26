@@ -348,7 +348,7 @@ export const adminSubjectManagement = [
     icon: course, // Placeholder for an appropriate icon related to management
     sub: "Add New Course",
     type: "Administrative",
-    link: "/",
+    link: "/admin/classmaker",
     bg: "bg-blue-400",
   },
   {
@@ -502,6 +502,7 @@ export const adminDataReview = [
     data: "Student Attendance",
     icon: student,
     bg: "bg-green-300",
+    link: "/admin/studentattendance",
   },
   {
     id: 1,

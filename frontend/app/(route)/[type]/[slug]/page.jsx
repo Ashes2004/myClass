@@ -6,10 +6,14 @@ import AttendanceBody from "@/components/Attendance/attendanceBody";
 import LeaderBoardBody from "@/components/Leaderboard/leaderBoardBody";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
+import AttendanceChart from "@/components/Administrator/Attendence/StudentAttendence";
+import ClassForm from "@/components/Administrator/ClassMaker";
 const slugTitleMap = {
   attendance: "Attendance",
   leaderboard: "Leaderboard",
   performance: "Performace",
+  studentattendance: "Student Attendance",
+  classmaker : "Class Form"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -28,6 +32,10 @@ export default function Page({ params }) {
       return type === "student" ? <LeaderBoardBody /> : notFound();
     case "performance":
       return type === "student" ? <PerformaceAnalysisBody /> : notFound();
+    case "studentattendance":
+        return type === "admin" ? <AttendanceChart /> : notFound();  
+    case "classmaker":
+          return type === "admin" ? <ClassForm /> : notFound();      
     default:
       return notFound();
   }
