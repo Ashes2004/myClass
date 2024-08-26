@@ -15,6 +15,7 @@ import TeacherEnrollmentForm from "@/components/Teacher/TeacherEnrollmentForm";
 import StudentProfilePage from "@/components/Pages/StudentProfilePage";
 import TeacherProfilePage from "@/components/Pages/TeacherProfilePage";
 import AdminProfilePage from "@/components/Pages/AdminProfilePage";
+import Timetable from "@/components/Pages/Timetable";
 
 const pageTitleMap = {
   student: "Student",
@@ -27,6 +28,7 @@ const pageTitleMap = {
   studentProfile: "My Profile",
   teacherProfile: "My Profile",
   adminProfile: "My Profile",
+  timetable: "Class Routine",
 };
 
 export default function Page({ params }) {
@@ -57,6 +59,8 @@ export default function Page({ params }) {
       return <DigitalLibrary /> || notFound();
     case "classroutineform":
       return <AddClassRoutineForm /> || notFound();
+    case "timetable":
+      return <Timetable /> || notFound();
     case "studentEnrollment":
       return <EnrollmentForm /> || notFound();
     case "teacherEnrollment":

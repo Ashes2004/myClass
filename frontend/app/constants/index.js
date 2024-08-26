@@ -48,7 +48,7 @@ export const studentSidebarLinks = [
     id: 3,
     label: "Schedule",
     icon: book,
-    link: "/",
+    link: "/timetable",
   },
   {
     id: 4,
@@ -200,7 +200,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-green-400",
-    link: "/",
+    link: "/timetable",
   },
   {
     id: 1,
@@ -209,7 +209,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-blue-400",
-    link: "/",
+    link: "/timetable",
   },
   {
     id: 2,
@@ -218,7 +218,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-orange-400",
-    link: "/",
+    link: "/timetable",
   },
   {
     id: 3,
@@ -227,7 +227,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-purple-400",
-    link: "/",
+    link: "/timetable",
   },
   {
     id: 4,
@@ -236,7 +236,7 @@ export const studentSchedule = [
     duration: 40,
     icon: book,
     bg: "bg-green-400",
-    link: "/",
+    link: "/timetable",
   },
 ];
 
