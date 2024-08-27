@@ -362,9 +362,9 @@ export const adminSubjectManagement = [
   {
     id: 2,
     icon: approval, // Placeholder for an appropriate icon related to management
-    sub: "Enroll Students",
+    sub: "Enroll Students into course",
     type: "Administrative",
-    link: "/studentEnrollment",
+    link: "/admin/studentEnrollment",
     bg: "bg-orange-400",
   },
   {

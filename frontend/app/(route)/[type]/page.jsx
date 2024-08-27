@@ -10,7 +10,7 @@ import DigitalLibrary from "@/components/structComponents/DigitalLibrary";
 
 import AddClassRoutineForm from "@/components/Administrator/RoutineManagement/AddClassRoutineForm";
 
-import EnrollmentForm from "@/components/Student/StudentEnrollmentForm";
+import EnrollmentForm from "@/components/Student/StudentRegistrationForm";
 import TeacherEnrollmentForm from "@/components/Teacher/TeacherEnrollmentForm";
 import StudentProfilePage from "@/components/Pages/StudentProfilePage";
 import TeacherProfilePage from "@/components/Pages/TeacherProfilePage";
@@ -24,7 +24,7 @@ const pageTitleMap = {
   administrator: "Admin",
   library: "Digital Library",
   classroutineform: "Class Routine Form",
-  studentEnrollment: "Student Enrollment",
+  studentRegistration: "Student Enrollment",
   teacherEnrollment: "Teacher Enrollment",
   studentProfile: "My Profile",
   teacherProfile: "My Profile",
@@ -65,7 +65,7 @@ export default function Page({ params }) {
       return <AddClassRoutineForm /> || notFound();
     case "timetable":
       return <Timetable /> || notFound();
-    case "studentEnrollment":
+    case "studentRegistration":
       return <EnrollmentForm /> || notFound();
     case "teacherEnrollment":
       return <TeacherEnrollmentForm /> || notFound();
