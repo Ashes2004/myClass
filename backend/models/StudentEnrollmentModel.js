@@ -3,8 +3,12 @@ import mongoose from "mongoose";
 
 const studentEnrollmentSchema = new mongoose.Schema({
  Student:{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Student",
+  type: String,
+  required: true
+ },
+ Password:{
+  type: String,
+  required: true
  },
  ClassName: {
    type: String,

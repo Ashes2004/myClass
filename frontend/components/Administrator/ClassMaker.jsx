@@ -75,7 +75,7 @@ const ClassForm = () => {
 
         Swal.fire({
             title: "Good job!",
-            text: "Attendence Submitted Successfully",
+            text: "Class created Successfully",
             icon: "success"
           });
       })

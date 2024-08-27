@@ -164,7 +164,7 @@ export const findAttendenceRecord = async (req, res) => {
     const attendanceRecord = await Attendance.findOne({
       classId,
       date: date,
-    }).populate({path: '/'});
+    });
 
     if (!attendanceRecord)
       return res.status(404).json({ message: "Attendance record not found" });
