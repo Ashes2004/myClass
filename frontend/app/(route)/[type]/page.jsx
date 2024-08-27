@@ -16,6 +16,7 @@ import StudentProfilePage from "@/components/Pages/StudentProfilePage";
 import TeacherProfilePage from "@/components/Pages/TeacherProfilePage";
 import AdminProfilePage from "@/components/Pages/AdminProfilePage";
 import Timetable from "@/components/Pages/Timetable";
+import SubjectMaterials from "@/components/Pages/SubjectMaterial";
 
 const pageTitleMap = {
   student: "Student",
@@ -29,6 +30,7 @@ const pageTitleMap = {
   teacherProfile: "My Profile",
   adminProfile: "My Profile",
   timetable: "Class Routine",
+  subjectMaterial: "Subject Materials",
 };
 
 export default function Page({ params }) {
@@ -51,6 +53,8 @@ export default function Page({ params }) {
       return <AdminitratorBody /> || notFound();
     case "studentProfile":
       return <StudentProfilePage /> || notFound();
+    case "subjectMaterial":
+      return <SubjectMaterials /> || notFound();
     case "teacherProfile":
       return <TeacherProfilePage /> || notFound();
     case "adminProfile":

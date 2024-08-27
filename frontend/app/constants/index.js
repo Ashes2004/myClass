@@ -41,8 +41,8 @@ export const studentSidebarLinks = [
   {
     id: 2,
     label: "Subject Materials",
-    icon: notes,
-    link: "/",
+    icon: materials,
+    link: "/subjectMaterial",
   },
   {
     id: 3,
@@ -175,7 +175,7 @@ export const studentSubject = [
     bg: "bg-purple-400",
   },
   {
-    id: 0,
+    id: 3,
     icon: materials,
     sub: "Chemistry",
     type: "Science",
@@ -183,10 +183,10 @@ export const studentSubject = [
     bg: "bg-blue-400",
   },
   {
-    id: 0,
+    id: 4,
     icon: materials,
-    sub: "GK",
-    type: "Language",
+    sub: "Computer",
+    type: "Practical",
     link: "/",
     bg: "bg-red-400",
   },
