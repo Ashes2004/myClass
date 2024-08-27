@@ -1,27 +1,79 @@
 import React, { useState } from "react";
 import AdminLayout from "../Administrator/administratorLayout";
-
+import Swal from 'sweetalert2';
 const EnrollmentForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    studentName: "",
+    guardianName: "",
     gender: "",
-    dateOfBirth: "",
-    grade: "",
-    parentName: "",
-    contactNumber: "",
-    email: "",
+    guardianPhoneNumber: "",
     address: "",
+    bloodGroup: "",
+    studentDOB: "",
+    studentEmailID: "",
+    password: "",
+   
   });
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handlePasswordToggle = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., send data to API)
+
     console.log(formData);
+    try {
+      const response = await fetch("http://localhost/api/students", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+
+        
+
+        Swal.fire({
+          title: "Good job!",
+          text: "Student created successfully",
+          icon: "success",
+        });
+        setFormData({
+          studentName: "",
+          guardianName: "",
+          gender: "",
+          guardianPhoneNumber: "",
+          address: "",
+          bloodGroup: "",
+          studentDOB: "",
+          studentEmailID: "",
+          password: "",
+         
+        });
+      } else {
+        alert("Error enrolling student.");
+      }
+    } catch (error) {
+
+      if (error.response && error.response.data && error.response.data.message) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.response.data.message,
+        });
+      }
+      console.error("Error:", error);
+      alert("An error occurred while enrolling the student.");
+    }
   };
 
   return (
@@ -35,17 +87,16 @@ const EnrollmentForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
               <div>
                 <label
-                  htmlFor="firstName"
+                  htmlFor="studentName"
                   className="block font-bold text-lg md:text-xl"
                 >
-                  First Name
+                  Student Name
                 </label>
                 <input
-                  id="firstName"
+                  id="studentName"
                   type="text"
-                  name="firstName"
-                  autoComplete="given-name"
-                  value={formData.firstName}
+                  name="studentName"
+                  value={formData.studentName}
                   onChange={handleChange}
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                   required
@@ -53,17 +104,16 @@ const EnrollmentForm = () => {
               </div>
               <div>
                 <label
-                  htmlFor="lastName"
+                  htmlFor="guardianName"
                   className="block font-bold text-lg md:text-xl"
                 >
-                  Last Name
+                  Guardian Name
                 </label>
                 <input
-                  id="lastName"
+                  id="guardianName"
                   type="text"
-                  name="lastName"
-                  autoComplete="family-name"
-                  value={formData.lastName}
+                  name="guardianName"
+                  value={formData.guardianName}
                   onChange={handleChange}
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                   required
@@ -79,12 +129,12 @@ const EnrollmentForm = () => {
                 <select
                   id="gender"
                   name="gender"
-                  autoComplete="sex"
                   value={formData.gender}
                   onChange={handleChange}
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                   required
                 >
+                  <option value="">Select Gender</option>
                   <option value="male">Male</option>
                   <option value="female">Female</option>
                   <option value="other">Other</option>
@@ -92,17 +142,50 @@ const EnrollmentForm = () => {
               </div>
               <div>
                 <label
-                  htmlFor="dateOfBirth"
+                  htmlFor="guardianPhoneNumber"
+                  className="block font-bold text-lg md:text-xl"
+                >
+                  Guardian Phone Number (+91)
+                </label>
+                <input
+                  id="guardianPhoneNumber"
+                  type="tel"
+                  name="guardianPhoneNumber"
+                  value={formData.guardianPhoneNumber}
+                  onChange={handleChange}
+                  className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="bloodGroup"
+                  className="block font-bold text-lg md:text-xl"
+                >
+                  Blood Group
+                </label>
+                <input
+                  id="bloodGroup"
+                  type="text"
+                  name="bloodGroup"
+                  value={formData.bloodGroup}
+                  onChange={handleChange}
+                  className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="studentDOB"
                   className="block font-bold text-lg md:text-xl"
                 >
                   Date of Birth
                 </label>
                 <input
-                  id="dateOfBirth"
+                  id="studentDOB"
                   type="date"
-                  name="dateOfBirth"
-                  autoComplete="bday"
-                  value={formData.dateOfBirth}
+                  name="studentDOB"
+                  value={formData.studentDOB}
                   onChange={handleChange}
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                   required
@@ -110,84 +193,54 @@ const EnrollmentForm = () => {
               </div>
               <div>
                 <label
-                  htmlFor="grade"
-                  className="block font-bold text-lg md:text-xl"
-                >
-                  Grade
-                </label>
-                <select
-                  id="grade"
-                  name="grade"
-                  autoComplete="grade"
-                  value={formData.grade}
-                  onChange={handleChange}
-                  className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                  required
-                >
-                  <option value="1">Grade 1</option>
-                  <option value="2">Grade 2</option>
-                  <option value="3">Grade 3</option>
-                  <option value="4">Grade 4</option>
-                  <option value="5">Grade 5</option>
-                  <option value="6">Grade 6</option>
-                  <option value="7">Grade 7</option>
-                  <option value="8">Grade 8</option>
-                  <option value="9">Grade 9</option>
-                  <option value="10">Grade 10</option>
-                  {/* Add more grades as needed */}
-                </select>
-              </div>
-              <div>
-                <label
-                  htmlFor="parentName"
-                  className="block font-bold text-lg md:text-xl"
-                >
-                  Parent/Guardian Name
-                </label>
-                <input
-                  id="parentName"
-                  type="text"
-                  name="parentName"
-                  value={formData.parentName}
-                  onChange={handleChange}
-                  className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="contactNumber"
-                  className="block font-bold text-lg md:text-xl"
-                >
-                  Contact Number (+91)
-                </label>
-                <input
-                  id="contactNumber"
-                  type="tel"
-                  name="contactNumber"
-                  value={formData.contactNumber}
-                  onChange={handleChange}
-                  className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
-                  required
-                />
-              </div>
-              <div>
-                <label
-                  htmlFor="email"
+                  htmlFor="studentEmailID"
                   className="block font-bold text-lg md:text-xl"
                 >
                   Email
                 </label>
                 <input
-                  id="email"
+                  id="studentEmailID"
                   type="email"
-                  name="email"
-                  value={formData.email}
+                  name="studentEmailID"
+                  value={formData.studentEmailID}
                   onChange={handleChange}
                   className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
                   required
                 />
               </div>
+              <div>
+                <label
+                  htmlFor="password"
+                  className="block font-bold text-lg md:text-xl"
+                >
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  className="w-full mt-2 p-2 border rounded-md focus:outline-none focus:ring focus:ring-blue-300"
+                  required
+                />
+                <div className="flex items-center mt-2">
+                  <input
+                    id="showPassword"
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={handlePasswordToggle}
+                    className="mr-2"
+                  />
+                  <label
+                    htmlFor="showPassword"
+                    className="text-sm text-gray-600"
+                  >
+                    Show Password
+                  </label>
+                </div>
+              </div>
+             
               <div className="md:col-span-2">
                 <label
                   htmlFor="address"

@@ -6,6 +6,10 @@ const teacherSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  profilePhoto:{
+    type: String,
+   
+  },
   phoneNumber: {
     type: String,
     required: true,
@@ -47,6 +51,10 @@ const teacherSchema = new mongoose.Schema({
   TeacherRoutine: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "TeacherRoutine",
+  },
+  ClassTeacher: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Class",
   },
   quizzesCreated: [
     {

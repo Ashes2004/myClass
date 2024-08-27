@@ -14,6 +14,18 @@ const classSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  subjects: [
+    {
+      subjectName: {
+        type: String,
+        required: true,
+      },
+      subjectCode: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   allocatedTeachers:[
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -23,6 +35,7 @@ const classSchema = new mongoose.Schema({
   classTeacher: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Teacher",
+    required : true
   },
   students: [
     {

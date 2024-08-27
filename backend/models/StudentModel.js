@@ -6,7 +6,11 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  gurdianName: {
+  profilePhoto:{
+    type: String,
+  
+  },
+  guardianName: {
     type: String,
     required: true,
   },
@@ -14,7 +18,7 @@ const studentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  gurdianPhoneNumber: {
+  guardianPhoneNumber: {
     type: String,
     required: true,
   },

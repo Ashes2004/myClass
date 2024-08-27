@@ -24,7 +24,7 @@ export const getClassById = async (req, res) => {
 
 export const getClassByClassId = async (req, res) => {
   try {
-    const classItem = await Class.findOne({classId : req.params.id});
+    const classItem = await Class.findOne({classId : req.params.id}).populate('students');
     if (!classItem) return res.status(404).json({ message: "Class not found" });
     res.json(classItem);
   } catch (error) {
@@ -50,7 +50,10 @@ export const createClass = async (req, res) => {
         { $addToSet: { allocatedClasses: classItem._id } }
       );
     }
-   
+   const ClassTeacherAdd = await Teacher.findById( req.body.
+    classTeacher);
+    ClassTeacherAdd.ClassTeacher = classItem._id;
+    await ClassTeacherAdd.save();
 
     await classItem.save();
     res.status(201).json(classItem);
@@ -98,7 +101,6 @@ export const updateClass = async (req, res) => {
 
     // Update the class with the new list of students
     classItem.students = updatedStudentIds;
-    await classItem.save();
 
     // Update teachers' allocated classes
     if (req.body.allocatedTeachers && req.body.allocatedTeachers.length > 0) {
@@ -108,7 +110,31 @@ export const updateClass = async (req, res) => {
       );
     }
 
-    res.json(classItem);
+    // Handle class teacher update
+    if (classItem.classTeacher !== req.body.classTeacher) {
+      if (req.body.classTeacher) {
+        const newClassTeacher = await Teacher.findById(req.body.classTeacher);
+        if (newClassTeacher) {
+          newClassTeacher.ClassTeacher = classItem._id;
+          await newClassTeacher.save();
+        } else {
+          return res.status(404).json({ message: "New class teacher not found" });
+        }
+      }
+
+      if (classItem.classTeacher) {
+        const oldClassTeacher = await Teacher.findById(classItem.classTeacher);
+        if (oldClassTeacher) {
+          oldClassTeacher.ClassTeacher = null;
+          await oldClassTeacher.save();
+        } else {
+          return res.status(404).json({ message: "Previous class teacher not found" });
+        }
+      }
+    }
+
+    await classItem.save();
+    res.status(200).json(classItem);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
@@ -120,13 +146,14 @@ export const deleteClass = async (req, res) => {
     const classItem = await Class.findByIdAndDelete(req.params.id);
     if (!classItem) return res.status(404).json({ message: "Class not found" });
 
-    // Optionally, remove the classId from students
     await Student.updateMany(
       { classId: classItem._id },
-      { $set: { classId: null } } // or use $unset to remove the field
+      { $set: { classId: null } } 
     );
 
-  
+    const PrevclassTeacherAdd = await Teacher.findById(classItem.classTeacher);
+    PrevclassTeacherAdd.ClassTeacher = "";
+    await PrevclassTeacherAdd.save();
 
     res.json({ message: "Class deleted" });
   } catch (error) {
