@@ -307,7 +307,7 @@ export const notices = [
     date: "25.08.24",
     description:
       "School will remain closed on Monday due to the public holiday.",
-    link: "/",
+    link: "/notice",
   },
   {
     id: 2,
@@ -315,7 +315,7 @@ export const notices = [
     date: "28.08.24",
     description:
       "Parents-Teachers Association meeting will be held at 10:00 AM in the auditorium.",
-    link: "/",
+    link: "/notice",
   },
   {
     id: 3,
@@ -323,21 +323,45 @@ export const notices = [
     date: "10.09.24",
     description:
       "The annual science fair will take place in the school gymnasium. All students are encouraged to participate.",
-    link: "/",
+    link: "/notice",
   },
   {
     id: 4,
     title: "Project Work",
     date: "19.09.24",
-    description: "Project Work starts in school.",
-    link: "/",
+    description: "Project Work starts in school. Timetable will be provided in due time.",
+    link: "/notice",
   },
   {
     id: 5,
     title: "School Holiday",
     date: "02.10.24",
     description: "School will remain closed due to the Gandhi Jayanti.",
-    link: "/",
+    link: "/notice",
+  },
+  {
+    id: 6,
+    title: "Sports Day",
+    date: "15.10.24",
+    description:
+      "Annual Sports Day will be held on the school grounds. All students must wear sports uniforms.",
+    link: "/notice",
+  },
+  {
+    id: 7,
+    title: "Midterm Exams",
+    date: "20.11.24",
+    description:
+      "Midterm exams will start from 20th November. Students are advised to prepare accordingly.",
+    link: "/notice",
+  },
+  {
+    id: 8,
+    title: "Winter Vacation",
+    date: "23.12.24",
+    description:
+      "The school will remain closed from 23rd December for winter vacation and will reopen on 3rd January.",
+    link: "/notice",
   },
 ];
 
