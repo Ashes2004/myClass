@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import AdminLayout from "../Administrator/administratorLayout";
+
 import Swal from 'sweetalert2';
 const EnrollmentForm = () => {
   const [formData, setFormData] = useState({
@@ -77,7 +77,7 @@ const EnrollmentForm = () => {
   };
 
   return (
-    <AdminLayout>
+    
       <div className="h-full flex justify-center items-center">
         <div className="bg-white max-w-6xl p-10 rounded-xl shadow-xl">
           <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
@@ -270,7 +270,7 @@ const EnrollmentForm = () => {
           </form>
         </div>
       </div>
-    </AdminLayout>
+  
   );
 };
 
