@@ -17,7 +17,7 @@ const TeacherQuizBody = () => {
     const [options, setOptions] = useState([]);
     const [file,setFile] = useState(null);
     const [quiz,setQuiz] = useState([{}]);
-    const [correctAnswer, setCorrectAnswer] = useState('')
+    const [correctAnswer, setCorrectAnswer] = useState(0)
     const [questionNo, setQuestionNumber] = useState(1);
     const activateCreateQuiz = () => {
         if(isCreateActive) return;
