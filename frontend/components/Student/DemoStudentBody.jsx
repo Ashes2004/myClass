@@ -18,46 +18,46 @@ import { useRouter } from "next/navigation";
 import { useState , useEffect } from "react";
 
 
-const StudentBody = () => {
-  // const router = useRouter();
+const DemoStudentBody = () => {
+  const router = useRouter();
   const [studentData, setStudentData] = useState(null);
 
-  // useEffect(() => {
-  //   const token = sessionStorage.getItem("studentToken");
-  //   if (!token) {
-  //     // Redirect to login if no token is present
-  //     router.push("/student/studentLogin");
-  //   } else {
-  //     // Fetch student data if token is present
-  //     const fetchStudentData = async () => {
-  //       try {
-  //         console.log("token: ", token);
-  //         const response = await fetch("http://localhost/api/students/get/student", {
-  //           method: "GET",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         });
+  useEffect(() => {
+    const token = sessionStorage.getItem("studentToken");
+    if (!token) {
+      // Redirect to login if no token is present
+      router.push("/student/studentLogin");
+    } else {
+      // Fetch student data if token is present
+      const fetchStudentData = async () => {
+        try {
+          console.log("token: ", token);
+          const response = await fetch("http://localhost/api/students/get/student", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
 
-  //         if (!response.ok) {
-  //           throw new Error("Failed to fetch student data");
-  //         }
+          if (!response.ok) {
+            throw new Error("Failed to fetch student data");
+          }
 
-  //         const data = await response.json();
-  //         setStudentData(data);
-  //       } catch (error) {
-  //         console.error("Error fetching student data:", error);
-  //       }
-  //     };
+          const data = await response.json();
+          setStudentData(data);
+        } catch (error) {
+          console.error("Error fetching student data:", error);
+        }
+      };
 
-  //     fetchStudentData();
-  //   }
-  // }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
+      fetchStudentData();
+    }
+  }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
 
-  // if (!studentData) {
-  //   return <p>Loading...</p>; // Display a loading state while fetching data
-  // }
+  if (!studentData) {
+    return <p>Loading...</p>; // Display a loading state while fetching data
+  }
 
 
      return (
@@ -67,7 +67,7 @@ const StudentBody = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
-            Welcome back, {studentData?.studentName || "user"} 👋
+            Welcome back, {studentData?.studentName} 👋
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
@@ -395,4 +395,4 @@ const StudentBody = () => {
 
 };
 
-export default StudentBody;
+export default DemoStudentBody;

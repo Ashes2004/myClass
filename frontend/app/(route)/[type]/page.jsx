@@ -18,9 +18,12 @@ import AdminProfilePage from "@/components/Pages/AdminProfilePage";
 import Timetable from "@/components/Pages/Timetable";
 import SubjectMaterials from "@/components/Pages/SubjectMaterial";
 import NoticeBoard from "@/components/Pages/NoticeBoard";
+import DemoStudentBody from "@/components/Student/DemoStudentBody";
+
 
 const pageTitleMap = {
   student: "Student",
+  demostudent: "demo Student",
   teacher: "Teacher",
   administrator: "Admin",
   library: "Digital Library",
@@ -48,7 +51,9 @@ export default function Page({ params }) {
 
   switch (type) {
     case "student":
-      return <StudentBody /> || notFound();
+      return <StudentBody />  || notFound();
+    case "demostudent":
+      return <DemoStudentBody />  || notFound();  
     case "teacher":
       return <TeacherBody /> || notFound();
     case "administrator":

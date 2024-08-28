@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Navbar from "@/components/structComponents/Navbar";
 
+
 export default function Home() {
   return (
     <>
+ 
       <div className="h-screen bg-cream">
         <Navbar />
         <div className="p-6">
@@ -35,6 +37,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+     
     </>
   );
 }

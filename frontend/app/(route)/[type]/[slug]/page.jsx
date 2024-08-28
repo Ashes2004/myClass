@@ -10,6 +10,8 @@ import AttendanceChart from "@/components/Administrator/Attendence/StudentAttend
 import ClassForm from "@/components/Administrator/ClassMaker";
 import StudentEnrollRequest from "@/components/Student/Enrollment/StudentEnrollRequest";
 import StudentEnrollmentManagement from "@/components/Administrator/Enrollment/StudentEnrollment";
+import StudentLoginForm from "@/components/Student/studentLogin";
+
 const slugTitleMap = {
   attendance: "Attendance",
   leaderboard: "Leaderboard",
@@ -17,7 +19,8 @@ const slugTitleMap = {
   studentattendance: "Student Attendance",
   classmaker : "Class Form",
   studentEnrollRequest : "Student Enroll Form",
-  studentEnrollment: "Student Enrollment"
+  studentEnrollment: "Student Enrollment",
+  studentLogin  :"Student Login"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -32,12 +35,14 @@ export default function Page({ params }) {
   switch (slug) {
     case "attendance":
       return type === "teacher" ? <AttendanceBody /> : notFound();
+    case "studentLogin":
+      return type === "student" ? <StudentLoginForm /> : notFound();  
     case "leaderboard":
-      return type === "student" ? <LeaderBoardBody /> : notFound();
+      return type === "student" ? <LeaderBoardBody />  : notFound();
     case "performance":
       return type === "student" ? <PerformaceAnalysisBody /> : notFound();
     case "studentEnrollRequest":
-      return type === "student" ? <StudentEnrollRequest /> : notFound();  
+      return type === "student" ?<StudentEnrollRequest />  : notFound();  
     case "studentattendance":
         return type === "admin" ? <AttendanceChart /> : notFound();  
     case "classmaker":
