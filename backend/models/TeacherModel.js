@@ -40,9 +40,9 @@ const teacherSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  salary: {
-    type: Number,
-  },
+ Qalification:{
+  type: String,
+ },
   allocatedClasses:[ {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Class",

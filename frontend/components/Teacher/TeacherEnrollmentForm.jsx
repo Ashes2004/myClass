@@ -3,16 +3,18 @@ import AdminLayout from "../Administrator/administratorLayout";
 
 const TeacherEnrollmentForm = () => {
   const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
+    phoneNumber: "",
     email: "",
-    phone: "",
-    department: "",
-    experience: "",
+    password: "",
     qualification: "",
+    address: "",
     gender: "",
     dob: "",
   });
+
+  const [subjectInput, setSubjectInput] = useState("");
+  const [subjects, setSubjects] = useState([]);
 
   const handleChange = (e) => {
     setFormData({
@@ -21,10 +23,23 @@ const TeacherEnrollmentForm = () => {
     });
   };
 
+  const handleAddSubject = () => {
+    if (subjectInput.trim()) {
+      setSubjects([...subjects, subjectInput.trim()]);
+      setSubjectInput("");
+    }
+  };
+
+  const handleDeleteSubject = (index) => {
+    const updatedSubjects = subjects.filter((_, i) => i !== index);
+    setSubjects(updatedSubjects);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const finalFormData = { ...formData, subjects };
     // Handle form submission logic here
-    console.log(formData);
+    console.log(finalFormData);
   };
 
   return (
@@ -36,44 +51,41 @@ const TeacherEnrollmentForm = () => {
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
+              {/* Other input fields for name, phoneNumber, email, etc. */}
               <div>
                 <label
-                  htmlFor="firstName"
+                  htmlFor="name"
                   className="block font-bold text-lg md:text-xl"
                 >
-                  First Name
+                  Name
                 </label>
                 <input
                   type="text"
-                  id="firstName"
-                  name="firstName"
-                  value={formData.firstName}
+                  id="name"
+                  name="name"
+                  value={formData.name}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="given-name"
                   required
                 />
               </div>
-
               <div>
                 <label
-                  htmlFor="lastName"
+                  htmlFor="phoneNumber"
                   className="block font-bold text-lg md:text-xl"
                 >
-                  Last Name
+                  Phone Number
                 </label>
                 <input
-                  type="text"
-                  id="lastName"
-                  name="lastName"
-                  value={formData.lastName}
+                  type="tel"
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  value={formData.phoneNumber}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="family-name"
                   required
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="email"
@@ -88,78 +100,26 @@ const TeacherEnrollmentForm = () => {
                   value={formData.email}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="email"
                   required
                 />
               </div>
-
               <div>
                 <label
-                  htmlFor="phone"
+                  htmlFor="password"
                   className="block font-bold text-lg md:text-xl"
                 >
-                  Phone
+                  Password
                 </label>
                 <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={formData.password}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="tel"
                   required
                 />
               </div>
-
-              <div>
-                <label
-                  htmlFor="department"
-                  className="block font-bold text-lg md:text-xl"
-                >
-                  Department
-                </label>
-                <select
-                  id="department"
-                  name="department"
-                  value={formData.department}
-                  onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  required
-                >
-                  <option value="English">English</option>
-                  <option value="Mathematics">Mathematics</option>
-                  <option value="Physics">Physics</option>
-                  <option value="Chemistry">Chemistry</option>
-                  <option value="Biology">Biology</option>
-                  <option value="Computer">Computer</option>
-                  <option value="History">History</option>
-                  <option value="Geography">Geography</option>
-                  <option value="Bengali">Bengali</option>
-                  <option value="Hindi">Hindi</option>
-                  <option value="Physical Education">Physical Education</option>
-                </select>
-              </div>
-
-              <div>
-                <label
-                  htmlFor="experience"
-                  className="block font-bold text-lg md:text-xl"
-                >
-                  Years of Experience
-                </label>
-                <input
-                  type="number"
-                  id="experience"
-                  name="experience"
-                  value={formData.experience}
-                  onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="off"
-                  required
-                />
-              </div>
-
               <div>
                 <label
                   htmlFor="qualification"
@@ -174,33 +134,66 @@ const TeacherEnrollmentForm = () => {
                   value={formData.qualification}
                   onChange={handleChange}
                   className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="off"
+                />
+              </div>
+              <div>
+                <label
+                  htmlFor="address"
+                  className="block font-bold text-lg md:text-xl"
+                >
+                  Address
+                </label>
+                <input
+                  type="text"
+                  id="address"
+                  name="address"
+                  value={formData.address}
+                  onChange={handleChange}
+                  className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                   required
                 />
               </div>
-
-              <div>
-                <label
-                  htmlFor="gender"
-                  className="block font-bold text-lg md:text-xl"
+            </div>
+            
+            <div className="mt-4">
+              <label
+                htmlFor="subject"
+                className="block font-bold text-lg md:text-xl"
+              >
+                Subject
+              </label>
+              <div className="flex">
+                <input
+                  type="text"
+                  id="subject"
+                  value={subjectInput}
+                  onChange={(e) => setSubjectInput(e.target.value)}
+                  className="mt-1 block w-full px-3 py-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                />
+                <button
+                  type="button"
+                  onClick={handleAddSubject}
+                  className="ml-2 px-4 py-2 bg-indigo-400 text-white rounded-lg hover:bg-indigo-700 duration-200"
                 >
-                  Gender
-                </label>
-                <select
-                  id="gender"
-                  name="gender"
-                  value={formData.gender}
-                  onChange={handleChange}
-                  className="mt-1 block w-full px-3 py-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-                  autoComplete="off"
-                  required
-                >
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
-                  <option value="Other">Other</option>
-                </select>
+                  Add Subject
+                </button>
+              </div>
+              <div className="mt-2">
+                {subjects.map((subject, index) => (
+                  <div key={index} className="flex justify-between items-center mt-2 bg-gray-100 p-2 rounded-md">
+                    <span>{subject}</span>
+                    <button
+                      type="button"
+                      onClick={() => handleDeleteSubject(index)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                ))}
               </div>
             </div>
+
             <div>
               <label
                 htmlFor="dob"
@@ -219,6 +212,7 @@ const TeacherEnrollmentForm = () => {
                 required
               />
             </div>
+            
             <div className="flex justify-center mt-4">
               <button
                 type="submit"
