@@ -1,4 +1,5 @@
 
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 
@@ -7,7 +8,7 @@ const StudentLoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-
+  const router = useRouter();
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -36,10 +37,11 @@ const StudentLoginForm = () => {
         text: "You have successfully logged in!",
         icon: "success",
       });
-
+     
       // Reset form fields
       setEmail("");
       setPassword("");
+       router.push("/demostudent");
     } catch (err) {
       Swal.fire({
         icon: "error",

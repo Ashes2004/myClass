@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import Image from "next/image";
 import StudentLayout from "../Student/studentLayout";
 import { sampleProfile } from "@/public/Images";
-
+import { useStudent } from "../Student/StudentContextApi";
 const StudentProfilePage = () => {
   const [profilePic, setProfilePic] = useState(sampleProfile);
-
+  const {studentDetails, setStudentDetails} = useStudent();
   const handleProfilePicChange = (e) => {
     const file = e.target.files[0];
     const reader = new FileReader();
@@ -16,7 +16,7 @@ const StudentProfilePage = () => {
       reader.readAsDataURL(file);
     }
   };
-
+console.log("student: ",studentDetails);
   return (
     <StudentLayout>
       <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center rounded-xl">
@@ -36,7 +36,7 @@ const StudentProfilePage = () => {
               className="mt-3 text-sm text-gray-500"
               onChange={handleProfilePicChange}
             />
-            <h1 className="text-2xl font-bold mt-4">John Doe</h1>
+            <h1 className="text-2xl font-bold mt-4">{studentDetails?.studentName || "user"}</h1>
             <p className="text-lg font-semibold">Class: 10th | Section: A</p>
           </div>
 

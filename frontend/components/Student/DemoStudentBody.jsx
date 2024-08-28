@@ -16,12 +16,13 @@ import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
 import { useState , useEffect } from "react";
+import { useStudent } from "./StudentContextApi";
 
 
 const DemoStudentBody = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(null);
-
+ const {studentDetails, setStudentDetails} = useStudent();
   useEffect(() => {
     const token = sessionStorage.getItem("studentToken");
     if (!token) {
@@ -41,12 +42,17 @@ const DemoStudentBody = () => {
           });
 
           if (!response.ok) {
+            router.push("/student/studentLogin");
             throw new Error("Failed to fetch student data");
+            
           }
 
           const data = await response.json();
           setStudentData(data);
+          setStudentDetails(data);
+          console.log("studentHome: " , studentDetails);
         } catch (error) {
+            
           console.error("Error fetching student data:", error);
         }
       };
@@ -396,3 +402,4 @@ const DemoStudentBody = () => {
 };
 
 export default DemoStudentBody;
+
