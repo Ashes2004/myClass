@@ -11,6 +11,8 @@ import ClassForm from "@/components/Administrator/ClassMaker";
 import StudentEnrollRequest from "@/components/Student/Enrollment/StudentEnrollRequest";
 import StudentEnrollmentManagement from "@/components/Administrator/Enrollment/StudentEnrollment";
 import StudentLoginForm from "@/components/Student/studentLogin";
+import QuizBody from "@/components/QuizStudent/QuizBody";
+import TeacherQuizBody from "@/components/QuizTeacher/TeacherQuizBody";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -20,7 +22,9 @@ const slugTitleMap = {
   classmaker : "Class Form",
   studentEnrollRequest : "Student Enroll Form",
   studentEnrollment: "Student Enrollment",
-  studentLogin  :"Student Login"
+  studentLogin  :"Student Login",
+  teacherQuiz : "Quiz",
+  studentQuiz: "Quiz"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -48,7 +52,11 @@ export default function Page({ params }) {
     case "classmaker":
           return type === "admin" ? <ClassForm /> : notFound(); 
     case "studentEnrollment":
-      return type === "admin" ? <StudentEnrollmentManagement /> : notFound();             
+      return type === "admin" ? <StudentEnrollmentManagement /> : notFound();   
+      case "studentQuiz": 
+      return type==="student"? <QuizBody/> : notFound();
+    case "teacherQuiz":
+      return type==="teacher"? <TeacherQuizBody/> : notFound();          
     default:
       return notFound();
   }
