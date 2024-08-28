@@ -19,7 +19,7 @@ import Timetable from "@/components/Pages/Timetable";
 import SubjectMaterials from "@/components/Pages/SubjectMaterial";
 import NoticeBoard from "@/components/Pages/NoticeBoard";
 import DemoStudentBody from "@/components/Student/DemoStudentBody";
-import { StudentProvider } from "@/components/Student/StudentContextApi";
+
 
 
 const pageTitleMap = {
@@ -54,13 +54,13 @@ export default function Page({ params }) {
     case "student":
       return <StudentBody />  || notFound();
     case "demostudent":
-      return <StudentProvider><DemoStudentBody /> </StudentProvider> || notFound();  
+      return <DemoStudentBody /> || notFound();  
     case "teacher":
       return <TeacherBody /> || notFound();
     case "administrator":
       return <AdminitratorBody /> || notFound();
     case "studentProfile":
-      return <StudentProvider><StudentProfilePage /></StudentProvider> || notFound();
+      return <StudentProfilePage /> || notFound();
     case "subjectMaterial":
       return <SubjectMaterials /> || notFound();
     case "teacherProfile":

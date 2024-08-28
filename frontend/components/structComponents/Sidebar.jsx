@@ -1,9 +1,17 @@
 import { logo, logout } from "@/public/Icons";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import React from "react";
 
-const Sidebar = ({ sidebarList }) => {
+const Sidebar = ({ sidebarList , name }) => {
+  const router = useRouter();
+  const handleLogout = () => {
+   if(name == "student"){
+    sessionStorage.removeItem("studentToken");
+    router.push("/student/studentLogin");
+   }
+  }
   return (
     <div className="hidden md:flex flex-col justify-between bg-slate-bg w-[16rem] sticky z-20 rounded-xl px-6 py-4 text-white">
       <div>
@@ -40,7 +48,7 @@ const Sidebar = ({ sidebarList }) => {
         </ul>
       </div>
 
-      <div className="flex items-center mt-4 pt-4 cursor-pointer px-3 py-4 rounded-full bg-green-custom hover:bg-[#6c8125] shadow-lg duration-300">
+      <div onClick={handleLogout} className="flex items-center mt-4 pt-4 cursor-pointer px-3 py-4 rounded-full bg-green-custom hover:bg-[#6c8125] shadow-lg duration-300">
         <Image src={logout} width={24} height={24} alt="logout" />
         <h2 className="ml-2 text-black text-md lg:font-semibold md:font-medium">
           Log Out

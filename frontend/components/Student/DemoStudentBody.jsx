@@ -15,14 +15,17 @@ import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
-import { useState , useEffect } from "react";
-import { useStudent } from "./StudentContextApi";
+import { useState , useEffect  } from "react";
+
+
 
 
 const DemoStudentBody = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(null);
- const {studentDetails, setStudentDetails} = useStudent();
+ 
+
+ 
   useEffect(() => {
     const token = sessionStorage.getItem("studentToken");
     if (!token) {
@@ -49,8 +52,7 @@ const DemoStudentBody = () => {
 
           const data = await response.json();
           setStudentData(data);
-          setStudentDetails(data);
-          console.log("studentHome: " , studentDetails);
+       
         } catch (error) {
             
           console.error("Error fetching student data:", error);
@@ -65,6 +67,7 @@ const DemoStudentBody = () => {
     return <p>Loading...</p>; // Display a loading state while fetching data
   }
 
+  
 
      return (
 

@@ -6,7 +6,7 @@ export default function StudentLayout({ children }) {
   return (
 
       <div className="flex sm:h-screen bg-cream p-4">
-        <Sidebar sidebarList={studentSidebarLinks} />
+        <Sidebar sidebarList={studentSidebarLinks} name = {"student"} />
 
         <div className="w-full pb-4 pl-3">{children}</div>
       </div>
