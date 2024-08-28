@@ -44,7 +44,7 @@ const EnrollmentForm = () => {
 
         Swal.fire({
           title: "Good job!",
-          text: "Student created successfully",
+          text: "Student Registerd successfully",
           icon: "success",
         });
         setFormData({

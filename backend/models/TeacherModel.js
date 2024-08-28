@@ -10,6 +10,10 @@ const teacherSchema = new mongoose.Schema({
     type: String,
    
   },
+  gender:{
+    type: String,
+    required: true,
+  },
   phoneNumber: {
     type: String,
     required: true,
