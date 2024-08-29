@@ -1,5 +1,5 @@
 import Teacher from "../models/TeacherModel.js";
-
+import jwt from 'jsonwebtoken'
 export const getTeacher = async (req, res) => {
   try {
     const teachers = await Teacher.find();
@@ -8,6 +8,17 @@ export const getTeacher = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getTeacherByIdMiddleWare = async (req, res) => {
+  try {
+    const teacher = await Teacher.findById(req.user.teacherId);
+    if (!teacher) return res.status(404).json({ message: "teacher not found" });
+    res.json(teacher);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 
 export const createTeacher = async (req, res) => {
   try {
@@ -72,5 +83,34 @@ export const deleteTeacher = async (req, res) => {
     res.json({ message: "Teacher deleted" });
   } catch (error) {
     res.status(500).json({ message: error.message });
+  }
+};
+
+
+
+export const teacherLogin = async (req, res) => {
+  const { email , password } = req.body;
+
+  try {
+    
+      const teacher = await Teacher.findOne({ email });
+      if (!teacher) {
+          return res.status(400).json({ message: 'Email not found ' });
+      }
+
+ 
+     
+      if (teacher.password != password) {
+          return res.status(400).json({ message: 'Invalid  password' });
+      }
+
+      
+      const token = jwt.sign({ teacherId: teacher._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+
+     
+      res.json({ token , teacher }  );
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
   }
 };

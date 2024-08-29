@@ -20,13 +20,13 @@ import SubjectMaterials from "@/components/Pages/SubjectMaterial";
 import NoticeBoard from "@/components/Pages/NoticeBoard";
 import DemoStudentBody from "@/components/Student/DemoStudentBody";
 import AssignmentPage from "@/components/Pages/AssignmentPage";
-
-
+import DemoTeacher from "@/components/Teacher/DemoTeacher";
 
 const pageTitleMap = {
   student: "Student",
   demostudent: "demo Student",
   teacher: "Teacher",
+  demoteacher: "Teacher",
   administrator: "Admin",
   library: "Digital Library",
   classroutineform: "Class Routine Form",
@@ -54,11 +54,13 @@ export default function Page({ params }) {
 
   switch (type) {
     case "student":
-      return <StudentBody />  || notFound();
+      return <StudentBody /> || notFound();
     case "demostudent":
-      return <DemoStudentBody /> || notFound();  
+      return <DemoStudentBody /> || notFound();
     case "teacher":
       return <TeacherBody /> || notFound();
+    case "demoteacher":
+      return <DemoTeacher/> || notFound();
     case "administrator":
       return <AdminitratorBody /> || notFound();
     case "studentProfile":
@@ -80,8 +82,7 @@ export default function Page({ params }) {
       return <EnrollmentForm /> || notFound();
     case "notice":
       return <NoticeBoard /> || notFound();
-    case "assignments":
-      return <AssignmentPage /> || notFound();
+
     
     case "teacherEnrollment":
       return <TeacherEnrollmentForm /> || notFound();

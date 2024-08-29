@@ -23,6 +23,7 @@ import {
   document,
   leaderboard,
   library,
+  quiz
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -75,6 +76,12 @@ export const studentSidebarLinks = [
     link: "/student/leaderboard",
   },
   {
+    id: 9,
+    label: "Quiz",
+    icon: quiz,
+    link: "/student/studentQuiz",
+  },
+  {
     id: 7,
     label: "Raise Alarm",
     icon: alarm,
@@ -103,9 +110,9 @@ export const teacherSidebarLinks = [
   },
   {
     id: 3,
-    label: "Classes",
-    icon: classes,
-    link: "/",
+    label: "Quiz",
+    icon: quiz,
+    link: "/teacher/teacherQuiz",
   },
   {
     id: 4,

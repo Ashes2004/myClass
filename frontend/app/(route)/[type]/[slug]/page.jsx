@@ -11,16 +11,22 @@ import ClassForm from "@/components/Administrator/ClassMaker";
 import StudentEnrollRequest from "@/components/Student/Enrollment/StudentEnrollRequest";
 import StudentEnrollmentManagement from "@/components/Administrator/Enrollment/StudentEnrollment";
 import StudentLoginForm from "@/components/Student/studentLogin";
+import QuizBody from "@/components/QuizStudent/QuizBody";
+import TeacherQuizBody from "@/components/QuizTeacher/TeacherQuizBody";
+import TeacherLogin from "@/components/Teacher/teacherLogin";
 
 const slugTitleMap = {
   attendance: "Attendance",
   leaderboard: "Leaderboard",
   performance: "Performace",
   studentattendance: "Student Attendance",
-  classmaker : "Class Form",
-  studentEnrollRequest : "Student Enroll Form",
+  classmaker: "Class Form",
+  studentEnrollRequest: "Student Enroll Form",
   studentEnrollment: "Student Enrollment",
-  studentLogin  :"Student Login"
+  studentLogin: "Student Login",
+  teacherLogin: "Teacher Login",
+  teacherQuiz: "Quiz",
+  studentQuiz: "Quiz",
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -36,19 +42,25 @@ export default function Page({ params }) {
     case "attendance":
       return type === "teacher" ? <AttendanceBody /> : notFound();
     case "studentLogin":
-      return type === "student" ? <StudentLoginForm /> : notFound();  
+      return type === "student" ? <StudentLoginForm /> : notFound();
     case "leaderboard":
-      return type === "student" ? <LeaderBoardBody />  : notFound();
+      return type === "student" ? <LeaderBoardBody /> : notFound();
     case "performance":
       return type === "student" ? <PerformaceAnalysisBody /> : notFound();
     case "studentEnrollRequest":
-      return type === "student" ?<StudentEnrollRequest />  : notFound();  
+      return type === "student" ? <StudentEnrollRequest /> : notFound();
     case "studentattendance":
-        return type === "admin" ? <AttendanceChart /> : notFound();  
+      return type === "admin" ? <AttendanceChart /> : notFound();
     case "classmaker":
-          return type === "admin" ? <ClassForm /> : notFound(); 
+      return type === "admin" ? <ClassForm /> : notFound();
     case "studentEnrollment":
-      return type === "admin" ? <StudentEnrollmentManagement /> : notFound();             
+      return type === "admin" ? <StudentEnrollmentManagement /> : notFound();
+    case "studentQuiz":
+      return type === "student" ? <QuizBody /> : notFound();
+    case "teacherQuiz":
+      return type === "teacher" ? <TeacherQuizBody /> : notFound();
+    case "teacherLogin":
+      return type === "teacher" ? <TeacherLogin /> : notFound();
     default:
       return notFound();
   }

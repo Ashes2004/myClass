@@ -21,7 +21,7 @@ router.get('/get/student',authenticateToken, getStudentByIdMiddleWare);
 // Get a student by student ID
 router.get('/find/:id', getStudentByStudentId);
 // Update a student
-router.patch('/:id', updateStudent);
+router.patch('/:id',authenticateToken, updateStudent);
 // Delete a student
 router.delete('/:id',deleteStudent );
 

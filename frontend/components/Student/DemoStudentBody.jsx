@@ -82,11 +82,11 @@ const DemoStudentBody = () => {
             <SearchBar />
             <Link href="/studentProfile" className="bg-white rounded-full">
               <Image
-                src={sampleProfile}
+                src={studentData?.profilePhoto ||  sampleProfile}
                 alt="profile"
                 width={42}
                 height={42}
-                className="object-cover cursor-pointer"
+                className="object-cover cursor-pointer rounded-full"
               />
             </Link>
           </div>
