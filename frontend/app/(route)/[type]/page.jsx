@@ -77,7 +77,8 @@ export default function Page({ params }) {
       return <AddClassRoutineForm /> || notFound();
     case "timetable":
       return <Timetable /> || notFound();
-
+    case "assignments":
+      return <AssignmentPage /> || notFound();
     case "studentRegistration":
       return <EnrollmentForm /> || notFound();
     case "notice":
