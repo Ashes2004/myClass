@@ -1,4 +1,5 @@
 "use client";
+
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
@@ -14,7 +15,6 @@ import { chatbot, rightArrow } from "@/public/Icons";
 import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
-import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const StudentBody = () => {

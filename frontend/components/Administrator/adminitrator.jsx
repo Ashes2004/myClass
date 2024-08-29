@@ -174,7 +174,7 @@ const AdminBody = () => {
                 Management Options
               </h3>
               <Link
-                href="#"
+                href="/managementOptions"
                 className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
               >
                 View All

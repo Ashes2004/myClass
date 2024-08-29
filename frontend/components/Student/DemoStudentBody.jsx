@@ -1,4 +1,5 @@
-"use client"
+"use client";
+
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
@@ -15,17 +16,12 @@ import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
-import { useState , useEffect  } from "react";
-
-
-
+import { useState, useEffect } from "react";
 
 const DemoStudentBody = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(null);
- 
 
- 
   useEffect(() => {
     const token = sessionStorage.getItem("studentToken");
     if (!token) {
@@ -36,25 +32,25 @@ const DemoStudentBody = () => {
       const fetchStudentData = async () => {
         try {
           console.log("token: ", token);
-          const response = await fetch("http://localhost/api/students/get/student", {
-            method: "GET",
-            headers: {
-              Authorization: `Bearer ${token}`,
-              "Content-Type": "application/json",
-            },
-          });
+          const response = await fetch(
+            "http://localhost/api/students/get/student",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
           if (!response.ok) {
             router.push("/student/studentLogin");
             throw new Error("Failed to fetch student data");
-            
           }
 
           const data = await response.json();
           setStudentData(data);
-       
         } catch (error) {
-            
           console.error("Error fetching student data:", error);
         }
       };
@@ -67,10 +63,7 @@ const DemoStudentBody = () => {
     return <p>Loading...</p>; // Display a loading state while fetching data
   }
 
-  
-
-     return (
-
+  return (
     <StudentLayout>
       <div className="bg-cream text-black flex flex-col p-4">
         {/* Header Section */}
@@ -82,7 +75,7 @@ const DemoStudentBody = () => {
             <SearchBar />
             <Link href="/studentProfile" className="bg-white rounded-full">
               <Image
-                src={studentData?.profilePhoto ||  sampleProfile}
+                src={studentData?.profilePhoto || sampleProfile}
                 alt="profile"
                 width={42}
                 height={42}
@@ -336,7 +329,7 @@ const DemoStudentBody = () => {
               <div className="flex justify-between items-center mt-3 mb-1">
                 <h3 className="font-bold text-lg md:text-xl">Assignments</h3>
                 <Link
-                  href="/"
+                  href="/assignments"
                   className="hover:underline hover:text-green-500 duration-200 decoration-solid underline-offset-4 cursor-pointer"
                 >
                   See All
@@ -399,10 +392,7 @@ const DemoStudentBody = () => {
         </div>
       </div>
     </StudentLayout>
-   
   );
-
 };
 
 export default DemoStudentBody;
-
