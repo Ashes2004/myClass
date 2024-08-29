@@ -327,7 +327,7 @@ const StudentBody = () => {
               <div className="flex justify-between items-center mt-3 mb-1">
                 <h3 className="font-bold text-lg md:text-xl">Assignments</h3>
                 <Link
-                  href="/"
+                  href="/assignments"
                   className="hover:underline hover:text-green-500 duration-200 decoration-solid underline-offset-4 cursor-pointer"
                 >
                   See All

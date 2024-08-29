@@ -19,6 +19,7 @@ import Timetable from "@/components/Pages/Timetable";
 import SubjectMaterials from "@/components/Pages/SubjectMaterial";
 import NoticeBoard from "@/components/Pages/NoticeBoard";
 import DemoStudentBody from "@/components/Student/DemoStudentBody";
+import AssignmentPage from "@/components/Pages/AssignmentPage";
 
 
 
@@ -37,6 +38,7 @@ const pageTitleMap = {
   timetable: "Class Routine",
   subjectMaterial: "Subject Materials",
   notice: "Notice Board",
+  assignments: "Assignments",
 };
 
 export default function Page({ params }) {
@@ -78,7 +80,8 @@ export default function Page({ params }) {
       return <EnrollmentForm /> || notFound();
     case "notice":
       return <NoticeBoard /> || notFound();
-
+    case "assignments":
+      return <AssignmentPage /> || notFound();
     
     case "teacherEnrollment":
       return <TeacherEnrollmentForm /> || notFound();
