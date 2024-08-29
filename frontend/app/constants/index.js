@@ -618,4 +618,14 @@ export const adminDataReview = [
     bg: "bg-pink-300",
     link: "/",
   },
+
+  {
+    id: 7,
+    data: "Student & Teacher Details",
+    icon: parent_teacher,
+    bg: "bg-purple-300",
+    link: "/admin/studentteacherdetails",
+  },
+
+  
 ];

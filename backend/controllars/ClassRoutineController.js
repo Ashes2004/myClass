@@ -10,11 +10,13 @@ export const getClassRoutines = async (req, res) => {
     }
 };
 
+
+
 // Get a specific class routine by ID
 export const getClassRoutineById = async (req, res) => {
     try {
-        const classRoutine = await ClassRoutine.findById(req.params.id).populate('classId');
-        if (!classRoutine) return res.status(404).json({ message: 'Class routine not found' });
+        const classRoutine = await ClassRoutine.findOne({classId : req.params.id}).populate('classId');
+        if (classRoutine.length == 0) return res.status(404).json({ message: 'Class routine not found' });
         res.json(classRoutine);
     } catch (err) {
         res.status(500).json({ message: err.message });

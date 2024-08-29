@@ -2,7 +2,7 @@ import Teacher from "../models/TeacherModel.js";
 import jwt from 'jsonwebtoken'
 export const getTeacher = async (req, res) => {
   try {
-    const teachers = await Teacher.find();
+    const teachers = await Teacher.find().populate("allocatedClasses");
     res.json(teachers);
   } catch (error) {
     res.status(500).json({ message: error.message });

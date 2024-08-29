@@ -8,3 +8,15 @@
         --slate-bg: #212529;
     }
 }
+
+
+
+.custom-scrollbar {
+    overflow: -moz-scrollbars-none; 
+    scrollbar-width: none; 
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+    display: none; 
+}
+

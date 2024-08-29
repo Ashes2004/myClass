@@ -14,6 +14,7 @@ import StudentLoginForm from "@/components/Student/studentLogin";
 import QuizBody from "@/components/QuizStudent/QuizBody";
 import TeacherQuizBody from "@/components/QuizTeacher/TeacherQuizBody";
 import TeacherLogin from "@/components/Teacher/teacherLogin";
+import StudentTeacherDetails from "@/components/Pages/StudentTeacherDetails";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -27,6 +28,7 @@ const slugTitleMap = {
   teacherLogin: "Teacher Login",
   teacherQuiz: "Quiz",
   studentQuiz: "Quiz",
+  studentteacherdetails: "Student and Teacher Details"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -55,6 +57,8 @@ export default function Page({ params }) {
       return type === "admin" ? <ClassForm /> : notFound();
     case "studentEnrollment":
       return type === "admin" ? <StudentEnrollmentManagement /> : notFound();
+      case "studentteacherdetails":
+      return type === "admin" ? <StudentTeacherDetails /> : notFound(); 
     case "studentQuiz":
       return type === "student" ? <QuizBody /> : notFound();
     case "teacherQuiz":

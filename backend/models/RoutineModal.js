@@ -4,25 +4,25 @@ import mongoose from "mongoose";
 const classPeriodSchema = new mongoose.Schema({
   subject: {
     type: String,
-    required: true,
+  
   },
   
   teacherId: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true,
+    
     ref: "Teacher", // Reference to the Teacher model
   },
   roomNumber: {
     type: String,
-    required: true,
+   
   },
   startPeriod: {
     type: String,
-    required: true,
+   
   },
   endPeriod: {
     type: String,
-    required: true,
+   
     
   },
 });
