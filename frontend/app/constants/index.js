@@ -425,7 +425,7 @@ export const notices = [
 export const adminSubjectManagement = [
   {
     id: 0,
-    icon: course, // Placeholder for an appropriate icon related to management
+    icon: classes, // Placeholder for an appropriate icon related to management
     sub: "Add New Course",
     type: "Administrative",
     link: "/admin/classmaker",
@@ -457,14 +457,6 @@ export const adminSubjectManagement = [
   },
   {
     id: 4,
-    icon: classes, // Placeholder for an appropriate icon related to management
-    sub: "Allocate Classes",
-    type: "Administrative",
-    link: "/",
-    bg: "bg-orange-400",
-  },
-  {
-    id: 5,
     icon: exam, // Placeholder for an appropriate icon related to management
     sub: "Schedule Exams",
     type: "Administrative",
