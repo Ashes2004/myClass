@@ -39,9 +39,11 @@ import library from "./library.svg";
 import author from "./author-visit.svg";
 import bookfair from "./bookfair.svg";
 import challenge from "./challenge.svg";
-import quiz from "./extension-puzzle-outline.svg"
-import write from "./pencil-outline.svg"
-import question_mark from "./help-circle.svg"
+import quiz from "./extension-puzzle-outline.svg";
+import write from "./pencil-outline.svg";
+import question_mark from "./help-circle.svg";
+import computer from "./computer.svg";
+import physics from "./physics.svg";
 
 export {
   home,
@@ -84,5 +86,5 @@ export {
   library,
   author,
   bookfair, challenge,
-  quiz,write,question_mark
+  quiz,write,question_mark, physics, computer,
 };

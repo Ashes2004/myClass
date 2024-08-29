@@ -23,7 +23,9 @@ import {
   document,
   leaderboard,
   library,
-  quiz
+  quiz,
+  computer,
+  physics
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -303,6 +305,50 @@ export const studentAssignments = [
     status: "not done",
     statusDesc: "not done",
     bg: "bg-purple-300",
+    link: "/",
+  },
+  {
+    id: 3,
+    task: "History Essay Submission",
+    due: "04.09.24",
+    time: "05:00 PM",
+    icon: eng,
+    status: "done",
+    statusDesc: "Completed",
+    bg: "bg-yellow-300",
+    link: "/",
+  },
+  {
+    id: 4,
+    task: "Physics Lab Report",
+    due: "05.09.24",
+    time: "01:00 PM",
+    icon: physics, 
+    status: "progress",
+    statusDesc: "In Progress",
+    bg: "bg-green-300",
+    link: "/",
+  },
+  {
+    id: 5,
+    task: "Biology Presentation",
+    due: "06.09.24",
+    time: "10:00 AM",
+    icon: chem, 
+    status: "not done",
+    statusDesc: "Not Done",
+    bg: "bg-pink-300",
+    link: "/",
+  },
+  {
+    id: 6,
+    task: "Computer Science Assignment",
+    due: "07.09.24",
+    time: "11:59 PM",
+    icon: computer, 
+    status: "done",
+    statusDesc: "Completed",
+    bg: "bg-red-300",
     link: "/",
   },
 ];
