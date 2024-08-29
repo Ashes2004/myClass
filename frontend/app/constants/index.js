@@ -149,7 +149,7 @@ export const adminSidebarLinks = [
     id: 3,
     label: "Management",
     icon: staff,
-    link: "/",
+    link: "/managementOptions",
   },
   {
     id: 4,

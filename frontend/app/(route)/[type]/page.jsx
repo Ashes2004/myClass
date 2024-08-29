@@ -22,6 +22,7 @@ import DemoStudentBody from "@/components/Student/DemoStudentBody";
 import AssignmentPage from "@/components/Pages/AssignmentPage";
 import DemoTeacher from "@/components/Teacher/DemoTeacher";
 import AdminDataReportPage from "@/components/Pages/DataReports";
+import AdminSubjectManagementPage from "@/components/Pages/ManagementOptions";
 
 const pageTitleMap = {
   student: "Student",
@@ -41,6 +42,7 @@ const pageTitleMap = {
   notice: "Notice Board",
   assignments: "Assignments",
   dataReports: "Data Reports",
+  managementOptions: "Management Options",
 };
 
 export default function Page({ params }) {
@@ -90,6 +92,8 @@ export default function Page({ params }) {
       return <TeacherEnrollmentForm /> || notFound();
     case "dataReports":
       return <AdminDataReportPage /> || notFound();
+    case "managementOptions":
+      return <AdminSubjectManagementPage /> || notFound();
     default:
       return notFound();
   }
