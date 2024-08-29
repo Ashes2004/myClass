@@ -39,7 +39,7 @@ export const studentSidebarLinks = [
     id: 1,
     label: "Assignments",
     icon: notes,
-    link: "/",
+    link: "/assignments",
   },
   {
     id: 2,

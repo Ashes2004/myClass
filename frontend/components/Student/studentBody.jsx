@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
@@ -15,8 +15,7 @@ import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
-import { useState , useEffect } from "react";
-
+import { useState, useEffect } from "react";
 
 const StudentBody = () => {
   // const router = useRouter();
@@ -59,9 +58,7 @@ const StudentBody = () => {
   //   return <p>Loading...</p>; // Display a loading state while fetching data
   // }
 
-
-     return (
-
+  return (
     <StudentLayout>
       <div className="bg-cream text-black flex flex-col p-4">
         {/* Header Section */}
@@ -390,9 +387,7 @@ const StudentBody = () => {
         </div>
       </div>
     </StudentLayout>
-   
   );
-
 };
 
 export default StudentBody;
