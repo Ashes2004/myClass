@@ -44,7 +44,7 @@ const AdminBody = () => {
             <div className="flex justify-between items-center mb-3">
               <h3 className="font-bold text-lg md:text-xl">Data Reports</h3>
               <Link
-                href="#"
+                href="/dataReports"
                 className="hover:underline decoration-solid underline-offset-4 cursor-pointer hover:text-blue-600 duration-200"
               >
                 View All

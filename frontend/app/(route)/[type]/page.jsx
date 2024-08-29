@@ -21,6 +21,7 @@ import NoticeBoard from "@/components/Pages/NoticeBoard";
 import DemoStudentBody from "@/components/Student/DemoStudentBody";
 import AssignmentPage from "@/components/Pages/AssignmentPage";
 import DemoTeacher from "@/components/Teacher/DemoTeacher";
+import AdminDataReportPage from "@/components/Pages/DataReports";
 
 const pageTitleMap = {
   student: "Student",
@@ -39,6 +40,7 @@ const pageTitleMap = {
   subjectMaterial: "Subject Materials",
   notice: "Notice Board",
   assignments: "Assignments",
+  dataReports: "Data Reports",
 };
 
 export default function Page({ params }) {
@@ -60,7 +62,7 @@ export default function Page({ params }) {
     case "teacher":
       return <TeacherBody /> || notFound();
     case "demoteacher":
-      return <DemoTeacher/> || notFound();
+      return <DemoTeacher /> || notFound();
     case "administrator":
       return <AdminitratorBody /> || notFound();
     case "studentProfile":
@@ -84,9 +86,10 @@ export default function Page({ params }) {
     case "notice":
       return <NoticeBoard /> || notFound();
 
-    
     case "teacherEnrollment":
       return <TeacherEnrollmentForm /> || notFound();
+    case "dataReports":
+      return <AdminDataReportPage /> || notFound();
     default:
       return notFound();
   }

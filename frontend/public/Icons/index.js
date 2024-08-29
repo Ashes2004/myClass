@@ -44,6 +44,7 @@ import write from "./pencil-outline.svg";
 import question_mark from "./help-circle.svg";
 import computer from "./computer.svg";
 import physics from "./physics.svg";
+import feedback from "./feedback.svg";
 
 export {
   home,
@@ -85,6 +86,12 @@ export {
   caret_forward,
   library,
   author,
-  bookfair, challenge,
-  quiz,write,question_mark, physics, computer,
+  bookfair,
+  challenge,
+  quiz,
+  write,
+  question_mark,
+  physics,
+  computer,
+  feedback,
 };

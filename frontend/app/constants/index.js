@@ -25,7 +25,9 @@ import {
   library,
   quiz,
   computer,
-  physics
+  physics,
+  bookfair,
+  feedback,
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -135,7 +137,7 @@ export const adminSidebarLinks = [
     id: 1,
     label: "Data Reports",
     icon: attendance,
-    link: "/",
+    link: "/dataReports",
   },
   {
     id: 2,
@@ -323,7 +325,7 @@ export const studentAssignments = [
     task: "Physics Lab Report",
     due: "05.09.24",
     time: "01:00 PM",
-    icon: physics, 
+    icon: physics,
     status: "progress",
     statusDesc: "In Progress",
     bg: "bg-green-300",
@@ -334,7 +336,7 @@ export const studentAssignments = [
     task: "Biology Presentation",
     due: "06.09.24",
     time: "10:00 AM",
-    icon: chem, 
+    icon: chem,
     status: "not done",
     statusDesc: "Not Done",
     bg: "bg-pink-300",
@@ -345,7 +347,7 @@ export const studentAssignments = [
     task: "Computer Science Assignment",
     due: "07.09.24",
     time: "11:59 PM",
-    icon: computer, 
+    icon: computer,
     status: "done",
     statusDesc: "Completed",
     bg: "bg-red-300",
@@ -382,7 +384,8 @@ export const notices = [
     id: 4,
     title: "Project Work",
     date: "19.09.24",
-    description: "Project Work starts in school. Timetable will be provided in due time.",
+    description:
+      "Project Work starts in school. Timetable will be provided in due time.",
     link: "/notice",
   },
   {
@@ -586,11 +589,41 @@ export const adminDataReview = [
     data: "Teacher Attendance",
     icon: teachers,
     bg: "bg-blue-300",
+    link: "/",
   },
   {
     id: 2,
     data: "Student Performance",
     icon: attendance,
     bg: "bg-purple-300",
+    link: "/",
+  },
+  {
+    id: 3,
+    data: "Classroom Management",
+    icon: classes,
+    bg: "bg-yellow-300",
+    link: "/",
+  },
+  {
+    id: 4,
+    data: "School Events",
+    icon: bookfair, 
+    bg: "bg-red-300",
+    link: "/",
+  },
+  {
+    id: 5,
+    data: "Finance Reports",
+    icon: budget,
+    bg: "bg-orange-300",
+    link: "/",
+  },
+  {
+    id: 6,
+    data: "Parent Feedback",
+    icon: feedback,
+    bg: "bg-pink-300",
+    link: "/",
   },
 ];
