@@ -310,17 +310,6 @@ export const studentAssignments = [
     link: "/",
   },
   {
-    id: 3,
-    task: "History Essay Submission",
-    due: "04.09.24",
-    time: "05:00 PM",
-    icon: eng,
-    status: "done",
-    statusDesc: "Completed",
-    bg: "bg-yellow-300",
-    link: "/",
-  },
-  {
     id: 4,
     task: "Physics Lab Report",
     due: "05.09.24",

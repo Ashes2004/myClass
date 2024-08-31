@@ -52,7 +52,7 @@ const AssignmentPage = () => {
                 <span className="font-semibold">Time:</span> {assignment.time}
               </p>
 
-              <div className="flex justify-between items-center">
+              <div className="flex flex-col gap-2">
                 <Link
                   href={assignment.link}
                   className="text-sm font-medium text-blue-600 underline hover:text-blue-800 transition-colors"
@@ -63,9 +63,9 @@ const AssignmentPage = () => {
                 <div className="flex flex-col items-center space-y-2 w-full md:w-auto md:flex-row md:space-y-0 md:space-x-2 mt-4 md:mt-0">
                   <input
                     type="file"
-                    className="border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent w-full md:w-auto"
+                    className="border border-gray-300 p-2 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent max-w-16 lg:max-w-48"
                   />
-                  <button className="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors w-full md:w-auto">
+                  <button className="bg-blue-600 text-white font-semibold px-4 py-2 rounded-lg shadow-lg hover:bg-blue-700 transition-colors">
                     Upload
                   </button>
                 </div>
