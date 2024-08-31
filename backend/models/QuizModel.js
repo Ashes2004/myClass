@@ -83,6 +83,21 @@ const quizSchema = new mongoose.Schema({
       ref: "QuizResForEach",
     },
   ],
+ quizDate:{
+     type:String,
+     required: true
+
+ },
+ quizStartTime:{
+  type:String,
+  required: true
+
+},
+quizEndTime:{
+  type:String,
+  required: true
+
+},
   createdAt: {
     type: Date,
     default: Date.now,

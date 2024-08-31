@@ -17,6 +17,8 @@ const StudentProfilePage = () => {
     if (!token) {
       router.push("/student/studentLogin");
     } else {
+
+    
       const fetchStudentData = async () => {
         try {
           console.log("token: ", token);

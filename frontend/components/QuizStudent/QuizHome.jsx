@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/navigation'; 
 import './QuizHome.css'; 
+import QuizLayout from './QuizLayout';
 
 const QuizHome = ({ Id, quizName }) => {
   const [quiz, setQuiz] = useState(null);
@@ -131,8 +132,9 @@ const QuizHome = ({ Id, quizName }) => {
   }
 
   return (
+    <QuizLayout>
     <div className="p-4 max-w-3xl mx-auto relative">
-      <h1 className="text-3xl font-bold mb-4 text-center">{quizName}</h1> {/* Added heading here */}
+      <h1 className="text-3xl font-bold mb-4 text-center">{quiz.quizName}</h1> {/* Added heading here */}
       <div className="flex justify-between items-center mb-4">
         <div className="flex-1">
           <div className="text-lg font-bold mb-2">Time Left: {formatTime(timer)}</div>
@@ -220,6 +222,7 @@ const QuizHome = ({ Id, quizName }) => {
         </div>
       )}
     </div>
+    </QuizLayout>
   );
 };
 
