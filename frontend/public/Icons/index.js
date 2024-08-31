@@ -7,6 +7,7 @@ import classes from "./class.svg";
 import sun from "./sun.svg";
 import moon from "./moon.svg";
 import hamburger from "./hamburger.svg";
+import close from "./close.svg";
 import book from "./book.svg";
 import materials from "./materials.svg";
 import chatbot from "./chatbot.svg";
@@ -56,6 +57,7 @@ export {
   sun,
   moon,
   hamburger,
+  close,
   book,
   materials,
   rightArrow,

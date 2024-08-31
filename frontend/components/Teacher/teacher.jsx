@@ -110,7 +110,12 @@ const TeacherBody = () => {
                     <div
                       className={`rounded-full flex justify-center items-center p-4 ${course.bgColour}`}
                     >
-                      <Image src={book_outline} height={20} width={20}></Image>
+                      <Image
+                        src={book_outline}
+                        height={20}
+                        width={20}
+                        alt="image"
+                      ></Image>
                     </div>
                     <div className="flex flex-col">
                       <div className="md:font-semibold font-medium">
@@ -152,7 +157,12 @@ const TeacherBody = () => {
                       <div
                         className={`${lecture.bgColour} md:rounded-full rounded-tl-md rounded-tr-md md:mr-3 p-3 flex items-center justify-center`}
                       >
-                        <Image src={calendar_outline} width={20} height={20} />
+                        <Image
+                          src={calendar_outline}
+                          width={20}
+                          height={20}
+                          alt="image"
+                        />
                       </div>
                       <div className="md:flex flex-col mt-2 ml-2 mr-2">
                         <div className="md:font-semibold font-medium md:text-md text-sm tracking-wide">
@@ -175,7 +185,12 @@ const TeacherBody = () => {
                         href="#"
                         className="md:bg-slate-200 bg-slate-300 p-2 rounded-lg"
                       >
-                        <Image src={rightArrow} height={20} width={20}></Image>
+                        <Image
+                          src={rightArrow}
+                          height={20}
+                          width={20}
+                          alt="image"
+                        ></Image>
                       </Link>
                     </div>
                   </div>
