@@ -62,6 +62,10 @@ const quizResForEachSchema = new mongoose.Schema({
 
 // Schema for the quiz object
 const quizSchema = new mongoose.Schema({
+  quizName : {
+    type: String,
+    required: true,
+  },
   classId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Class",

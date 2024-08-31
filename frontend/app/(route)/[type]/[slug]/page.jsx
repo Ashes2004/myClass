@@ -15,6 +15,8 @@ import QuizBody from "@/components/QuizStudent/QuizBody";
 import TeacherQuizBody from "@/components/QuizTeacher/TeacherQuizBody";
 import TeacherLogin from "@/components/Teacher/teacherLogin";
 import StudentTeacherDetails from "@/components/Pages/StudentTeacherDetails";
+import Edubot from "@/components/Pages/Edubot";
+import AdminAuth from "@/components/Administrator/adminAuth";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -28,7 +30,9 @@ const slugTitleMap = {
   teacherLogin: "Teacher Login",
   teacherQuiz: "Quiz",
   studentQuiz: "Quiz",
-  studentteacherdetails: "Student and Teacher Details"
+  studentteacherdetails: "Student and Teacher Details",
+  edubot: "Edubot",
+  adminAuth: "Admin Auth",
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -51,16 +55,20 @@ export default function Page({ params }) {
       return type === "student" ? <PerformaceAnalysisBody /> : notFound();
     case "studentEnrollRequest":
       return type === "student" ? <StudentEnrollRequest /> : notFound();
+    case "edubot":
+      return type === "student" ? <Edubot /> : notFound();
+    case "studentQuiz":
+      return type === "student" ? <QuizBody /> : notFound();
     case "studentattendance":
       return type === "admin" ? <AttendanceChart /> : notFound();
     case "classmaker":
       return type === "admin" ? <ClassForm /> : notFound();
     case "studentEnrollment":
       return type === "admin" ? <StudentEnrollmentManagement /> : notFound();
-      case "studentteacherdetails":
-      return type === "admin" ? <StudentTeacherDetails /> : notFound(); 
-    case "studentQuiz":
-      return type === "student" ? <QuizBody /> : notFound();
+    case "studentteacherdetails":
+      return type === "admin" ? <StudentTeacherDetails /> : notFound();
+    case "adminAuth":
+      return type === "admin" ? <AdminAuth /> : notFound();
     case "teacherQuiz":
       return type === "teacher" ? <TeacherQuizBody /> : notFound();
     case "teacherLogin":

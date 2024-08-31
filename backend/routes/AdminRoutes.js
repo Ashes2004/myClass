@@ -1,18 +1,18 @@
-
-// routes/administrativeRoutes.js
-
 import express from 'express';
 import {
   getAdministrative,
   createAdministrative,
   updateAdministrative,
+  adminLogin,
 
 } from '../controllars/AdminControllar.js';
+import authenticateToken from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-router.get('/', getAdministrative);
+router.get('/find', authenticateToken, getAdministrative);
 router.post('/', createAdministrative);
+router.post('/login', adminLogin);
 router.patch('/', updateAdministrative);
 
 

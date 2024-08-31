@@ -9,9 +9,9 @@ import classRoutes from './routes/ClassRoutes.js';
 import roomRoutes from './routes/RoomRoutes.js';
 import studentEnrollRoutes from './routes/StudentEnrollment.js'
 import cors from 'cors';
-// import quizRoutes from './routes/QuizRoutes.js';
+import quizRoutes from './routes/QuizRoutes.js';
 // import studentQuizRoutes from './routes/StudentQuizRoutes.js';
-// import administrativeRoutes from './routes/AdminRoutes.js';
+import administrativeRoutes from './routes/AdminRoutes.js';
 // import authenticateToken from './middleware/authMiddleware.js';
 import errorHandler from "./middleware/errorHandler.js";
 import attendenceRoutes from './routes/AttendenceRoutes.js';
@@ -36,12 +36,12 @@ app.use("/api/teachers", teacherRoutes);
 app.use("/api/class-routine", classRoutineRoutes);
 app.use("/api/teacher-routine", teacherRoutineRoutes);
 app.use('/api/classes',  classRoutes);
-// app.use('/api/quizzes', quizRoutes);
+app.use('/api/quizzes', quizRoutes);
 // app.use('/api/student-quizzes', studentQuizRoutes);
 app.use('/api/attendence', attendenceRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/student-enroll', studentEnrollRoutes);
-// app.use('/api/administratives', authenticateToken, administrativeRoutes);
+app.use('/api/admin',  administrativeRoutes);
 
 // Error handling middleware
 app.use(errorHandler);

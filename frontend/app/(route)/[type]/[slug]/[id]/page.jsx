@@ -5,11 +5,13 @@ import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBod
 import LeaderBoardBody from "@/components/Leaderboard/leaderBoardBody";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
+import QuizHome from "@/components/QuizStudent/QuizHome";
 
 const slugTitleMap = {
   attendance: "Attendance",
   leaderboard: "Leaderboard",
   performance: "Performance",
+  studentQuiz: "Student Quiz",
 };
 
 export default function Page({ params }) {
@@ -29,7 +31,13 @@ export default function Page({ params }) {
     case "leaderboard":
       return type === "student" ? <LeaderBoardBody Id={id} /> : notFound();
     case "performance":
-      return type === "student" ? <PerformaceAnalysisBody Id={id} /> : notFound();
+      return type === "student" ? (
+        <PerformaceAnalysisBody Id={id} />
+      ) : (
+        notFound()
+      );
+    case "studentQuiz":
+      return type === "student" ? <QuizHome Id={id} /> : notFound();
     default:
       return notFound();
   }

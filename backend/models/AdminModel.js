@@ -6,6 +6,11 @@ const administrativeSchema = new mongoose.Schema({
         type: String,
         required: true,
       },
+      InstituteCode: {
+        type: String,
+        required: true,
+        unique:true
+      },
       contactNumber: {
         type: String,
         required: true,

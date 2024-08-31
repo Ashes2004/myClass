@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import QuizLayout from "./QuizLayout";
 import Link from "next/link";
 const QuizBody = () => {
@@ -60,6 +60,10 @@ const QuizBody = () => {
       duration: "40 Mins",
     },
   ]);
+  useEffect(()=>{
+    
+    localStorage.removeItem('quizTimer');
+  },[])
   return (
     <QuizLayout>
       <div className="mb-6">
@@ -79,7 +83,7 @@ const QuizBody = () => {
           >
             <p className="">
               <Link
-                href={`/student/quiz/#`}
+                href={`/student/studentQuiz/66d2bb35ecda3c7befe37c44`}
                 className="text-blue-600 underline underline-offset-2"
               >
                 {quiz.name}
