@@ -126,6 +126,22 @@ const QuizBody = () => {
     }
   }, [quizData, classId]);
 
+  function convertTo12Hour(time24) {
+   
+    const [hours, minutes] = time24.split(':').map(Number);
+    
+   
+    const suffix = hours >= 12 ? 'PM' : 'AM';
+    
+   
+    const hours12 = hours % 12 || 12; 
+    
+   
+    const minutesFormatted = minutes.toString().padStart(2, '0');
+    
+    
+    return `${hours12}:${minutesFormatted} ${suffix}`;
+}
  
 
   return (
@@ -187,7 +203,7 @@ const QuizBody = () => {
               </Link>
             </p>
             <p className="whitespace-pre">
-              {quiz.quizDate} {quiz.quizStartTime}
+              {quiz.quizDate}  :  {convertTo12Hour(quiz.quizStartTime)}
             </p>
             <p className="whitespace-pre hidden md:block">{quiz.totalMarks}</p>
             <p className="hidden md:block">{quiz.duration} mins</p>

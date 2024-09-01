@@ -40,10 +40,10 @@ const LeaderBoardBody = () => {
       },
       {
         _id: 17,
-        points: 70,
+        points: 72,
         profilePicture: "",
         name: "Ayan Santra",
-      },
+      }
     ],
   ]);
   const [rank, setRank] = useState(4);
@@ -92,6 +92,7 @@ const LeaderBoardBody = () => {
         profilePicture: "",
         name: "Shreemoy Dhemna",
       },
+      
     ],
     [
       {

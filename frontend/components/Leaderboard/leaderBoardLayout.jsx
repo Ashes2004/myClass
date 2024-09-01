@@ -20,7 +20,7 @@ const LeaderBoardLayout = ({ children }) => {
       </header>
       <div className="fixed z-50 shadow-xl md:hidden transition-all delay-300 duration-300 -right-40 hover:-right-0 flex p-4 gap-2 justify-center items-center text-white bg-blue-800 rounded-l-full">
         <CaretLeftIcon width={24} height={24} />
-        <Link href="/performance">Performace Analysis</Link>
+        <Link href="/student/performance">Performace Analysis</Link>
       </div>
       <div
         className={`flex justify-center items-center fixed gap-2 bg-violet-900 p-1 tracking-wider shadow-xl lg:translate-y-1/2 rounded-full  text-[10px] md:text-sm`}

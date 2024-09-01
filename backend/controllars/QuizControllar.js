@@ -1,10 +1,27 @@
 import { Quiz, QuizResForEach } from "../models/QuizModel.js";  // Adjust the import path as necessary
-
+import Teacher from "../models/TeacherModel.js";
+import Class from "../models/ClassModel.js";
 // Create a new quiz
 export const createQuiz = async (req, res) => {
   try {
     const quiz = new Quiz(req.body);
+    const teacher = await Teacher.findById(req.body.teacherId);
+    if(!teacher)
+    {
+      res.status(404).json({ message: "teacher not found" });
+    }
+    const classes = await Class.findById(req.body.classId);
+    if(!classes)
+      {
+        res.status(404).json({ message: "classes not found" });
+      }
+   
     await quiz.save();
+    console.log("quiz id : " , quiz._id);
+    classes.quizzes.push(quiz._id);
+    teacher.quizzesCreated.push(quiz._id);
+    await classes.save();
+    await teacher.save();
     res.status(201).json(quiz);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -64,6 +81,7 @@ export const deleteQuiz = async (req, res) => {
 export const createQuizResponse = async (req, res) => {
   try {
     const quizResponse = new QuizResForEach(req.body);
+   
     await quizResponse.save();
     res.status(201).json(quizResponse);
   } catch (error) {

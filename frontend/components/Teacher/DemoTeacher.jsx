@@ -119,6 +119,7 @@ const DemoTeacher = () => {
 
           const data = await response.json();
           setTeacherData(data);
+          sessionStorage.setItem("teacherID" , data._id);
        console.log("teacherData: " , teacherData );
         } catch (error) {
             

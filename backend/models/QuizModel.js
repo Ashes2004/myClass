@@ -6,6 +6,12 @@ const questionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  details:{
+    type: String,
+  },
+  image:{
+    type: String,
+  },
   options: {
     type: [String],
     required: true,

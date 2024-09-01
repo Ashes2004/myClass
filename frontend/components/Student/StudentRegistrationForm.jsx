@@ -70,7 +70,7 @@ const EnrollmentForm = () => {
         });
       }
       console.error("Error:", error);
-      alert("An error occurred while enrolling the student.");
+      
     }
   };
 

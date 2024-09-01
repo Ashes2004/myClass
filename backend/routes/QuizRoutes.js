@@ -15,7 +15,7 @@ const router = express.Router();
 router.post('/', createQuiz);  // Create a new quiz
 router.get('', getAllQuizzes);  // Get all quizzes
 router.get('/:id', getQuizById);  // Get a single quiz by ID
-router.put('/:id', updateQuiz);  // Update a quiz by ID
+router.patch('/:id', updateQuiz);  // Update a quiz by ID
 router.delete('/:id', deleteQuiz);  // Delete a quiz by ID
 
 // Quiz response routes
