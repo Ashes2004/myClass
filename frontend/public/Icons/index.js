@@ -46,6 +46,8 @@ import question_mark from "./help-circle.svg";
 import computer from "./computer.svg";
 import physics from "./physics.svg";
 import feedback from "./feedback.svg";
+import send from "./send-sharp.svg"
+import time from "./time-outline.svg"
 
 export {
   home,
@@ -96,4 +98,6 @@ export {
   physics,
   computer,
   feedback,
+  send,time
+
 };

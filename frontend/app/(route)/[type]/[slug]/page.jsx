@@ -17,6 +17,9 @@ import TeacherLogin from "@/components/Teacher/teacherLogin";
 import StudentTeacherDetails from "@/components/Pages/StudentTeacherDetails";
 import Edubot from "@/components/Pages/Edubot";
 import AdminAuth from "@/components/Administrator/adminAuth";
+import AssignmentMarksSubmission from "@/components/Pages/AssignmentMarksSubmission";
+
+
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -33,6 +36,8 @@ const slugTitleMap = {
   studentteacherdetails: "Student and Teacher Details",
   edubot: "Edubot",
   adminAuth: "Admin Auth",
+  assignmentMarks: "Assignments"
+
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -72,7 +77,9 @@ export default function Page({ params }) {
     case "teacherQuiz":
       return type === "teacher" ? <TeacherQuizBody /> : notFound();
     case "teacherLogin":
-      return type === "teacher" ? <TeacherLogin /> : notFound();
+      return type === "teacher" ? <TeacherLogin /> : notFound();  
+    case "assignmentMarks":
+      return type === "teacher"? <AssignmentMarksSubmission/> : notFound();       
     default:
       return notFound();
   }
