@@ -1,6 +1,7 @@
 import { Quiz, QuizResForEach } from "../models/QuizModel.js";  // Adjust the import path as necessary
 import Teacher from "../models/TeacherModel.js";
 import Class from "../models/ClassModel.js";
+import Student from "../models/StudentModel.js";
 // Create a new quiz
 export const createQuiz = async (req, res) => {
   try {
@@ -81,7 +82,13 @@ export const deleteQuiz = async (req, res) => {
 export const createQuizResponse = async (req, res) => {
   try {
     const quizResponse = new QuizResForEach(req.body);
-   
+    const student = await   Student.findById(req.body.studentId);
+    if(!student)
+    {
+      res.status(404).json({ message: "student not found" });
+    }
+    student.quizResponses.push(quizResponse._id);
+    await student.save();
     await quizResponse.save();
     res.status(201).json(quizResponse);
   } catch (error) {

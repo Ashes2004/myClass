@@ -51,6 +51,7 @@ const DemoStudentBody = () => {
           const data = await response.json();
           setStudentData(data);
          sessionStorage.setItem("studentClassId" , data.classId._id);
+         sessionStorage.setItem("studentId" , data._id);
         } catch (error) {
           console.error("Error fetching student data:", error);
         }

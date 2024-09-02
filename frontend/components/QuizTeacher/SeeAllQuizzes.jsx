@@ -207,7 +207,7 @@ const SeeAllQuizzes = ({ teacherId }) => {
                     Cancel
                   </button>
                 </div>
-                <div className="flex gap-2">
+                {/* <div className="flex gap-2">
                   <button
                     onClick={handlePrevious}
                     disabled={currentIndex === 0}
@@ -222,11 +222,12 @@ const SeeAllQuizzes = ({ teacherId }) => {
                   >
                     Next quiz
                   </button>
-                </div>
+                </div> */}
               </div>
             ) : (
               <div className="flex justify-between items-center">
                 <span className="text-lg font-semibold">{quiz.quizName}</span>
+                <span className="text-md ">[{quiz.classId.name}]</span>
                 <button
                   onClick={() => handleEditClick(index)}
                   className="bg-violet-500 text-white py-1 px-4 rounded-lg shadow-sm hover:bg-violet-600"

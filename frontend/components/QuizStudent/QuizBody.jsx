@@ -8,6 +8,7 @@ const QuizBody = () => {
   const [upcomingQuiz, setUpcomingQuiz] = useState([]);
   const [pastQuiz, setPastQuiz] = useState([]);
   const [quizData, setQuizData] = useState([]);
+  const [studentResponses, setStudentResponses] = useState([]);
   
   const [classId, setClassId] = useState("");
   const router = useRouter();
@@ -20,8 +21,10 @@ const QuizBody = () => {
       return;
     }
     const classID = sessionStorage.getItem("studentClassId");
-    console.log("class: " , classID);
+    console.log("class: ", classID);
     setClassId(classID);
+
+    // Uncomment and adjust the following block when fetching student data is needed
     // const fetchStudentData = async () => {
     //   try {
     //     const response = await fetch(
@@ -34,23 +37,39 @@ const QuizBody = () => {
     //         },
     //       }
     //     );
-
     //     if (!response.ok) {
     //       throw new Error("Failed to fetch student data");
     //     }
-
     //     const data = await response.json();
     //     setStudentData(data);
-    //     localStorage.setItem("student: " , data.);
     //     setClassId(data.classId._id);
     //   } catch (error) {
     //     console.error("Error fetching student data:", error);
     //     router.push("/student/studentLogin");
     //   }
     // };
-
     // fetchStudentData();
-  }, [router ]);
+  }, [router]);
+
+  // Fetch student responses
+  useEffect(() => {
+    const fetchStudentResponses = async () => {
+      const studentId = sessionStorage.getItem("studentId");
+      try {
+        const response = await fetch(
+          `http://localhost/api/students/${studentId}`
+        );
+        if (!response.ok) {
+          throw new Error("Failed to fetch responses");
+        }
+        const responseData = await response.json();
+        setStudentResponses(responseData.quizResponses || []); // Adjust based on the actual response structure
+      } catch (error) {
+        console.error("Error fetching student responses:", error);
+      }
+    };
+    fetchStudentResponses();
+  }, []);
 
   // Fetch quizzes
   useEffect(() => {
@@ -71,13 +90,12 @@ const QuizBody = () => {
 
   // Categorize quizzes
   useEffect(() => {
-    const currentDate = new Date();
-
     const categorizeQuizzes = () => {
+      const currentDate = new Date();
       const live = [];
       const upcoming = [];
       const past = [];
-
+   
       quizData.forEach((quiz) => {
         if (classId && quiz.classId._id !== classId) {
           return; // Skip this quiz if classId doesn't match
@@ -87,6 +105,17 @@ const QuizBody = () => {
 
         const totalQuestions = quiz.questions.length;
         const quizDuration = totalQuestions; // Duration in minutes
+         console.log("studentResponse : ",studentResponses);
+         console.log("quiz id: ", quiz._id);
+         
+          
+         const attemptStatus = studentResponses.some(response => response.quizId === quiz._id)
+          ? "Attempted"
+          : currentDate >= quizStart && currentDate <= quizEnd
+          ? "Live"
+          : currentDate < quizStart
+          ? "Upcoming"
+          : "Unattempted";
 
         const quizWithDetails = {
           ...quiz,
@@ -98,12 +127,7 @@ const QuizBody = () => {
               : "Past",
           totalMarks: totalQuestions,
           duration: quizDuration,
-          attemptStatus:
-            currentDate >= quizStart && currentDate <= quizEnd
-              ? "Live"
-              : currentDate < quizStart
-              ? "Upcoming"
-              : "Unattempted",
+          attemptStatus,
         };
 
         if (quizWithDetails.status === "Live") {
@@ -124,28 +148,18 @@ const QuizBody = () => {
       categorizeQuizzes();
       localStorage.removeItem("quizTimer");
     }
-  }, [quizData, classId]);
+  }, [quizData, classId, studentResponses ]);
 
   function convertTo12Hour(time24) {
-   
     const [hours, minutes] = time24.split(':').map(Number);
-    
-   
     const suffix = hours >= 12 ? 'PM' : 'AM';
-    
-   
-    const hours12 = hours % 12 || 12; 
-    
-   
+    const hours12 = hours % 12 || 12;
     const minutesFormatted = minutes.toString().padStart(2, '0');
-    
-    
     return `${hours12}:${minutesFormatted} ${suffix}`;
-}
- 
+  }
 
   return (
-    <QuizLayout >
+    <QuizLayout>
       {/* Render live, upcoming, and past quizzes */}
       <div className="mb-6">
         <div className="text-2xl lg:text-4xl font-bold py-2 px-2 text-gray-700">
