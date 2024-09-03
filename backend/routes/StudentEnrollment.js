@@ -36,7 +36,8 @@ router.post("/", async (req, res) => {
 
         // Check if the password matches
         if (student.password === req.body.Password) {
-            let studentenrollments = new StudentEnrollment(req.body); 	
+            let studentenrollments = new StudentEnrollment(req.body); 
+            studentenrollments.studentID = student._id;	
             await studentenrollments.save();	
             return res.status(200).json({ studentenrollments });
         } else {
@@ -50,10 +51,12 @@ router.post("/", async (req, res) => {
 
 router.delete("/:id", async (req, res) => {
 
-    try{
-        let studentenrollments = await StudentEnrollment.findByIdAndDelete(req.params.id); 	
-        if (!studentenrollments) return res.status(404).json({ message: "studentenrollments not found" });
-        	res.status(200).json({message: " studentenrollments Deleted successfully"});
+    try{ 
+        let student = await StudentEnrollment.findOne({studentID : req.params.id});
+        if (student.length == 0) return res.status(404).json({ message: "studentenrollments not found" });
+        let studentenrollments = await StudentEnrollment.findByIdAndDelete(student.id); 	
+        
+        res.status(200).json({message: " studentenrollments Deleted successfully"});
     }catch(error)
     {
         res.status(500).json({ message: error.message });

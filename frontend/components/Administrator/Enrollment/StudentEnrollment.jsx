@@ -95,6 +95,9 @@ const StudentEnrollmentManagement = () => {
             icon: "success"
           });
           // Optionally, reset the state or provide feedback to the user
+
+          deleteRequest();
+
         })
         .catch(error => {
           if (error.response && error.response.data && error.response.data.message) {
@@ -110,11 +113,38 @@ const StudentEnrollmentManagement = () => {
     }
   };
 
-  const handleSubmit = () => {
+
+
+  const deleteRequest = async()=>{
+    for (const studentID of studentIds) {
+      try {
+          const response = await fetch(`http://localhost/api/student-enroll/${studentID}`, {
+              method: 'DELETE',
+          });
+
+          if (response.ok) {
+              console.log(`Successfully deleted student with ID: ${studentID}`);
+          } else {
+              console.error(`Failed to delete student with ID: ${studentID}. Status: ${response.status}`);
+          }
+      } catch (error) {
+          console.error(`Error deleting student with ID: ${studentID}`, error);
+      }
+  }
+   
+  }
+
+  const handleSubmit = async () => {
     console.log('Student IDs array:', studentIds);
-    updateClassStudents(); // Update the class with the new list of students
-    // Perform further processing or send to backend if necessary
-  };
+
+    // Loop through each studentID and send a DELETE request
+   
+
+    updateClassStudents(); 
+
+   
+};
+
 
   const uniqueMainClasses = Array.from(new Set(studentEnrollments.map(enrollment => enrollment.ClassName)));
 

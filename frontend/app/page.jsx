@@ -31,7 +31,7 @@ export default function Home() {
             </Link>
             <Link href="/administrator" className="admin">
               <div className="bg-white p-6 rounded-md shadow-md text-center hover:bg-blue-400 duration-300">
-                <h2 className="text-xl font-semibold">Aministrator Login</h2>
+                <h2 className="text-xl font-semibold">Administrator Login</h2>
               </div>
             </Link>
           </div>

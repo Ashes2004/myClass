@@ -3,15 +3,20 @@
 import * as React from "react";
 import { useState } from "react";
 
-export default function AlertSystem() {
+export default function AlertSystem({name }) {
   const [alert, setAlert] = useState(null);
-
+  let says = "is saying";
+   if(!name)
+   {
+    name = "";
+    says = "";
+   }
   const triggerAlert = (type) => {
     setAlert({
       type: type,
       message:
         type === "fire"
-          ? "🚨 Fire Alert! Please evacuate immediately!"
+          ? `🚨${name} ${says}  Fire Alert! Please evacuate immediately!`
           : "⚠️ Emergency Alert! Please follow the safety protocols!",
     });
   };

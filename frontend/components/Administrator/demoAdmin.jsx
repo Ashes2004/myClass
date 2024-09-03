@@ -3,24 +3,52 @@ import AdminLayout from "./administratorLayout";
 import SearchBar from "../structComponents/SearchBar";
 import {
   adminTasks,
+  adminProgressTracking,
   adminSchedule,
   adminSubjectManagement,
   adminDataReview,
 } from "@/app/constants";
 import Image from "next/image";
-import { inventory, rightArrow } from "@/public/Icons";
+import { attendance, chatbot, rightArrow } from "@/public/Icons";
 import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+const DemoAdminBody = () => {
+    const [adminData ,setAdminData] = useState();
+    const router = useRouter();
+  useEffect(() => {
+    const token = sessionStorage.getItem("adminToken");
+    if (!token) {
+        router.push("/admin/adminAuth");
+    }
 
-const AdminBody = () => {
+    const fetchAdmin = async()=>{
+      const response =   await fetch('http://localhost/api/admin/find' ,  {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      })
+      if (!response.ok) {
+        router.push("/admin/adminAuth");
+        
+      }
+
+      const data = await response.json();
+      setAdminData(data);
+    } 
+    fetchAdmin();
+  }, [router]);
   return (
     <AdminLayout>
       <div className="bg-lightGray text-black flex flex-col p-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
-            Welcome back, Admin 👋
+            Welcome back, {adminData?.InstituteName || "Admin"} 👋
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
@@ -125,44 +153,50 @@ const AdminBody = () => {
                 )}
               </div>
 
-              {/* Inventory Management Section */}
-              <div className="bg-white flex flex-col shadow-xl rounded-lg p-4">
+              {/* Progress Tracking Section */}
+              <div className="bg-white flex justify-center flex-col shadow-xl rounded-lg p-4">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex flex-col">
                     <h2 className="font-bold text-lg md:text-xl">
-                      Inventory Management
+                      Progress Tracking
                     </h2>
                     <p className="font-semibold text-base">
-                      Manage school inventory
+                      Recent administrative updates
                     </p>
                   </div>
                   <div className="bg-yellow-300 rounded-full p-3">
                     <Image
-                      src={inventory}
-                      alt="inventory"
+                      src={attendance}
+                      alt="tracking"
                       width={32}
                       height={32}
                       className="object-cover"
                     />
                   </div>
                 </div>
-                <div>
-                  <p className="text-gray-700 text-lg">
-                    Manage school inventory including textbooks, supplies, and
-                    equipment efficiently.
-                  </p>
-                  <div className="pt-6">
-                    <Link href="/inventory">
-                      <div className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl duration-200">
-                        Go to Inventory
-                      </div>
-                    </Link>
-                  </div>
+                <div className="flex flex-col gap-2">
+                  {adminProgressTracking.map(
+                    (item, index) =>
+                      index < 3 && (
+                        <div
+                          key={item.id}
+                          className="bg-gray-100 p-3 rounded-lg flex justify-between items-center"
+                        >
+                          <div>
+                            <h2 className="font-bold">{item.progress}</h2>
+                            <p className="text-sm">Tracking: {item.type}</p>
+                          </div>
+                          <div className={`p-2 px-3 rounded-full ${item.bg}`}>
+                            <h2 className="text-xs text-white">Progress</h2>
+                          </div>
+                        </div>
+                      )
+                  )}
                 </div>
               </div>
             </div>
 
-            <div className="flex justify-between items-center my-3 lg:pt-3">
+            <div className="flex justify-between items-center my-3">
               <h3 className="font-bold text-lg md:text-xl">
                 Management Options
               </h3>
@@ -285,4 +319,4 @@ const AdminBody = () => {
   );
 };
 
-export default AdminBody;
+export default DemoAdminBody;

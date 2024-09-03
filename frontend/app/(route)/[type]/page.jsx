@@ -23,6 +23,8 @@ import AssignmentPage from "@/components/Pages/AssignmentPage";
 import DemoTeacher from "@/components/Teacher/DemoTeacher";
 import AdminDataReportPage from "@/components/Pages/DataReports";
 import AdminSubjectManagementPage from "@/components/Pages/ManagementOptions";
+import TaskManagement from "@/components/Pages/TaskPage";
+import DemoAdminBody from "@/components/Administrator/demoAdmin";
 import Inventory from "@/components/structComponents/Inventory";
 
 const pageTitleMap = {
@@ -31,6 +33,7 @@ const pageTitleMap = {
   teacher: "Teacher",
   demoteacher: "Teacher",
   administrator: "Admin",
+  demoadmin: " Demo Admin",
   library: "Digital Library",
   classroutineform: "Class Routine Form",
   studentRegistration: "Student Enrollment",
@@ -44,6 +47,7 @@ const pageTitleMap = {
   assignments: "Assignments",
   dataReports: "Data Reports",
   managementOptions: "Management Options",
+  tasks: "Manage Tasks",
   inventory: "School Inventory",
 };
 
@@ -69,6 +73,8 @@ export default function Page({ params }) {
       return <DemoTeacher /> || notFound();
     case "administrator":
       return <AdminitratorBody /> || notFound();
+    case "demoadmin":
+      return <DemoAdminBody /> || notFound();
     case "studentProfile":
       return <StudentProfilePage /> || notFound();
     case "subjectMaterial":
@@ -96,6 +102,8 @@ export default function Page({ params }) {
       return <AdminDataReportPage /> || notFound();
     case "managementOptions":
       return <AdminSubjectManagementPage /> || notFound();
+    case "tasks":
+      return <TaskManagement /> || notFound();
     case "inventory":
       return <Inventory /> || notFound();
     default:

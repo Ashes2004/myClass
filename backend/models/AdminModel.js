@@ -11,6 +11,9 @@ const administrativeSchema = new mongoose.Schema({
         required: true,
         unique:true
       },
+      profilePhoto:{
+        type:String
+      },
       contactNumber: {
         type: String,
         required: true,

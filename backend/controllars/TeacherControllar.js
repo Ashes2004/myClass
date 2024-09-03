@@ -44,7 +44,9 @@ export const createTeacher = async (req, res) => {
     const teacherId = `${yearMonthPrefix}${serialNumberStr}`;
     console.log(teacherId);
     // Create new teacher with generated teacherId
-    const teacherData = { ...req.body, teacherId };
+
+    const password = `${teacherId}@Tc`;
+    const teacherData = { ...req.body, teacherId , password };
     const teacher = new Teacher(teacherData);
 
     await teacher.save();
