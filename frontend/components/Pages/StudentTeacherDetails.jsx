@@ -81,7 +81,7 @@ const TeacherStudentToggle = () => {
                                     className="mb-6 px-4 py-2 rounded border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 >
                                     <option value="All">Select Class</option>
-                                    {Array.from(new Set(students.map(student => student.classId.classId))).map((classId, index) => (
+                                    {Array.from(new Set(students.map(student => student?.classId?.classId))).map((classId, index) => (
                                         <option key={index} value={classId}>{classId}</option>
                                     ))}
                                 </select>
@@ -92,16 +92,16 @@ const TeacherStudentToggle = () => {
                                             <div key={index} className="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
                                                 <h3 className="text-2xl font-bold mb-2 text-gray-800">{student.studentName}</h3>
                                                 <p className="text-gray-600 mb-1">Student ID: {student.studentId}</p>
-                                                <p className="text-gray-600">Class: {student.classId.classId}</p>
+                                                <p className="text-gray-600">Class: {student?.classId?.classId|| "NA"}</p>
                                             </div>
                                         ))
                                         : students
-                                            .filter(student => student.classId.classId === selectedStudentOption)
+                                            .filter(student => student?.classId?.classId === selectedStudentOption)
                                             .map((student, index) => (
                                                 <div key={index} className="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
                                                     <h3 className="text-2xl font-bold mb-2 text-gray-800">{student.studentName}</h3>
                                                     <p className="text-gray-600 mb-1">Student ID: {student.studentId}</p>
-                                                    <p className="text-gray-600">Class: {student.classId.classId}</p>
+                                                    <p className="text-gray-600">Class: {student?.classId?.classId}</p>
                                                 </div>
                                             ))}
                                 </div>

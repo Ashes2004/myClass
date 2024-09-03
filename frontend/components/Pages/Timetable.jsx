@@ -58,7 +58,7 @@ const Timetable = () => {
         setStudentData(data);
         console.log(data);
         // Fetch routine data based on class ID
-        fetchRoutineData(data.classId._id);
+        fetchRoutineData(data?.classId?._id);
       } catch (error) {
         setError(error.message);
         setLoading(false);
@@ -67,6 +67,7 @@ const Timetable = () => {
 
     const fetchRoutineData = async (classid) => {
       try {
+        if(classid){
         const response = await fetch(`http://localhost/api/class-routine/${classid}`, {
           method: "GET",
           headers: {
@@ -79,25 +80,30 @@ const Timetable = () => {
         }
 
         const data = await response.json();
-        setRoutineData(data.routine); // Assuming routine data is in the `routine` field
+        setRoutineData(data?.routine); // Assuming routine data is in the `routine` field
 
         // Set colors for each unique subject
         const uniqueSubjects = [...new Set(data.routine.flatMap(day => day.periods.map(p => p.subject)))];
         const colors = assignColorsSequentially(uniqueSubjects);
         setSubjectColors(colors);
+      }else{
+        return <Text className = "text-3xl text-blue-500 font-semibold text-center">You have not enrolled any Classes</Text>
+      }
       } catch (error) {
         setError(error.message);
       } finally {
         setLoading(false);
       }
+      
     };
+  
 
     fetchStudentData();
   }, [router]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!routineData.length) return <p>No routine data available</p>;
+  if (!routineData.length) return <p className = "text-3xl text-blue-500 font-semibold text-center">No routine data available</p>;
 
   const periods = [
     { desc: "1st Period", time: "09:00 - 09:40" },
@@ -123,10 +129,10 @@ const Timetable = () => {
     <StudentLayout>
       <div className="h-full flex flex-col gap-7 justify-center items-center p-4">
         <h2 className="font-bold text-center text-3xl md:text-6xl underline">
-          Class Routine of {studentData ? studentData.classId.name : "Loading..."}
+          Class Routine of {studentData ? studentData.classId?.name : "Loading..."}
         </h2>
         <h3 className="font-semibold text-xl md:text-3xl">
-          Class Teacher: {studentData ? studentData.classId.classTeacher.name : "Loading..."}
+          Class Teacher: {studentData ? studentData.classId?.classTeacher?.name : "Loading..."}
         </h3>
         <div className="overflow-x-auto w-full">
           <table className="min-w-full border">
@@ -135,7 +141,7 @@ const Timetable = () => {
                 <th className="px-2 py-3 border border-gray-300">
                   Day / Period
                 </th>
-                {periods.map((period, index) => (
+                {studentData?.classId && periods.map((period, index) => (
                   <th key={index} className="px-2 py-3 border border-gray-300">
                     <h2 className="text-xs md:text-lg font-bold">
                       {period.desc}

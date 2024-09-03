@@ -113,6 +113,7 @@ const ClassForm = () => {
   };
 
   const handleSubmit = (e) => {
+    console.log("prevdata: ", formData);
     e.preventDefault();
     const url = mode === 'create' ? 'http://localhost/api/classes' : `http://localhost/api/classes/${selectedClassId}`;
     const method = mode === 'create' ? 'post' : 'patch';
@@ -131,6 +132,7 @@ const ClassForm = () => {
           classTeacher: '',
           subjects: [],
         });
+
         setSelectedClassId('');
         Swal.fire({
           title: "Good job!",
@@ -190,7 +192,7 @@ const ClassForm = () => {
                 type="text"
                 id="classId"
                 name="classId"
-                placeholder='example:- C10A [ C10 means class10 , A means section A]'
+                placeholder='example:- 10A '
                 value={formData.classId}
                 onChange={handleChange}
                 className="mt-1 block w-full border-gray-300 border-2 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -552,3 +554,8 @@ const ClassForm = () => {
 };
 
 export default ClassForm;
+
+
+
+
+

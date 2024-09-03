@@ -12,7 +12,11 @@ const teacherSchema = new mongoose.Schema({
   },
   gender:{
     type: String,
+    required:true
     
+  },
+  dob:{
+    type: String,
   },
   phoneNumber: {
     type: String,

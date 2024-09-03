@@ -10,6 +10,7 @@ const StudentEnrollmentManagement = () => {
   const [selectedMainClass, setSelectedMainClass] = useState('');
   const [selectedStudent, setSelectedStudent] = useState('');
   const [studentIds, setStudentIds] = useState([]);
+  const [studentNameData, setStudentNameData] = useState([]);
 
   useEffect(() => {
     // Fetch classes from the API
@@ -48,10 +49,17 @@ const StudentEnrollmentManagement = () => {
   useEffect(() => {
     if (selectedClass) {
       // Fetch students from the selected class
-      axios.get(`http://localhost/api/classes/${selectedClass}`)
+      axios.get(`http://localhost/api/classes/ID/${selectedClass}`)
         .then(response => {
-          const existingStudents = response.data.students || [];
+          console.log(response);
+          const existingStudents =  [];
+          const exitingNameData = [];
+          for (const student of response?.data?.students) {
+            existingStudents.push(student._id);
+            exitingNameData.push(`${student.studentName}  ${student.studentId}`);
+          }
           setStudentIds(existingStudents);
+          setStudentNameData(exitingNameData);
         })
         .catch(error => {
           console.error('Error fetching students for the selected class:', error);
@@ -66,10 +74,12 @@ const StudentEnrollmentManagement = () => {
       axios.get(`http://localhost/api/students/find/${selectedStudent}`)
         .then(response => {
           const studentId = response.data._id; // Assuming the API returns an object with _id
-
+          const studentNamedata = `${response.data.studentName} ${response.data.studentId}`;
           // Check if studentId is already in the studentIds array
           if (!studentIds.includes(studentId)) {
             setStudentIds([...studentIds, studentId]);
+            setStudentNameData([...studentNameData , studentNamedata]);
+
           }
 
           setSelectedStudent(''); // Clear selection
@@ -145,6 +155,11 @@ const StudentEnrollmentManagement = () => {
    
 };
 
+const handleDelete = ()=>{
+  setStudentIds([]);
+  setStudentNameData([]);
+}
+
 
   const uniqueMainClasses = Array.from(new Set(studentEnrollments.map(enrollment => enrollment.ClassName)));
 
@@ -172,7 +187,7 @@ const StudentEnrollmentManagement = () => {
           </div>
 
           <div className="mb-4">
-            <label htmlFor="mainClass" className="block text-sm font-medium text-gray-700">Main Class</label>
+            <label htmlFor="mainClass" className="block text-sm font-medium text-gray-700">Requested Class</label>
             <select
               id="mainClass"
               value={selectedMainClass}
@@ -218,6 +233,13 @@ const StudentEnrollmentManagement = () => {
           >
             Submit
           </button>
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="mt-4 w-full px-4 py-2 bg-red-600 text-white font-semibold rounded-md hover:bg-red-700"
+          >
+            Delete All Students
+          </button>
         </div>
 
         {/* Selected Students Column */}
@@ -226,7 +248,7 @@ const StudentEnrollmentManagement = () => {
           {studentIds.length > 0 ? (
             studentIds.map((studentId, index) => (
               <div key={index} className="flex items-center justify-between bg-gray-200 p-2 rounded mb-2">
-                <span className="text-gray-700">{studentId}</span>
+                <span className="text-gray-700">{studentId}..... {studentNameData[index]}</span>
                 <button
                   type="button"
                   onClick={() => handleDeleteStudent(studentId)}

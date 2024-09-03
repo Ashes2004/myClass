@@ -97,7 +97,7 @@ const QuizBody = () => {
       const past = [];
    
       quizData.forEach((quiz) => {
-        if (classId && quiz.classId._id !== classId) {
+        if ((classId && quiz.classId._id !== classId) || !classId) {
           return; // Skip this quiz if classId doesn't match
         }
         const quizStart = new Date(`${quiz.quizDate} ${quiz.quizStartTime}`);

@@ -5,6 +5,7 @@ import { sampleProfile } from "@/public/Images";
 import { useRouter } from "next/navigation";
 import { storage } from "@/app/Firebase"; // import storage from your firebase configuration
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage functions
+import Link from "next/link";
 
 const StudentProfilePage = () => {
   const router = useRouter();
@@ -91,7 +92,11 @@ const StudentProfilePage = () => {
     <StudentLayout>
       <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center p-4">
         <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-4xl text-black overflow-hidden">
+          <div>
+           <a href = '/student/studentEnrollRequest'> <button className="bg-green-500 p-2 rounded text-white text-lg">Enrollment request</button></a>
+          </div>
           <div className="flex flex-col items-center mb-8">
+
             <div 
               className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-blue-500 cursor-pointer"
               onClick={togglePopup} // Toggle popup on click
