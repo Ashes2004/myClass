@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useRouter } from 'next/navigation';
 const AdminAuth = () => {
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(true);
 
   // Handler for form submission
@@ -42,6 +44,7 @@ const AdminAuth = () => {
 
           // Save the JWT token in session storage
           sessionStorage.setItem("adminToken", token);
+          router.push("/demoadmin");
         console.log("Login result:", result);
       } catch (error) {
         if (error.response && error.response.data && error.response.data.message) {
@@ -74,7 +77,7 @@ const AdminAuth = () => {
         const result = await response.json();
         Swal.fire({
             title: "Good job!",
-            text: "Registration Successfull",
+            text: "Registration Successfull .. Now login",
             icon: "success"
           });
         console.log("Registration result:", result);

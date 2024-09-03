@@ -17,7 +17,8 @@ export const getAdministrative = async (req, res) => {
 
 // Create the administrative record
 export const createAdministrative = async (req, res) => {
-  const { InstituteName, InstituteCode ,  contactNumber, email, password } = req.body;
+  const { InstituteName, InstituteCode, contactNumber, email, password } =
+    req.body;
 
   try {
     // const existingAdmin = await Administrative.findOne({InstituteCode : InstituteCode});
@@ -43,13 +44,13 @@ export const createAdministrative = async (req, res) => {
 
 // Update the administrative record
 export const updateAdministrative = async (req, res) => {
-  const { InstituteName, contactNumber, email, password } = req.body;
-
   try {
-    const administrative = await Administrative.findOneAndUpdate(
-      {},
-      { InstituteName, contactNumber, email, password },
-      { new: true, runValidators: true, upsert: true }
+   
+    const administrative = await Administrative.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+
+      { new: true }
     );
     res.status(200).json(administrative);
   } catch (error) {
@@ -57,30 +58,26 @@ export const updateAdministrative = async (req, res) => {
   }
 };
 
-
 export const adminLogin = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    
-      const admin = await Administrative.findOne({ email });
-      if (!admin) {
-          return res.status(400).json({ message: 'Email not found ' });
-      }
+    const admin = await Administrative.findOne({ email });
+    if (!admin) {
+      return res.status(400).json({ message: "Email not found " });
+    }
 
- 
-     
-      if (admin.password != password) {
-          return res.status(400).json({ message: 'Invalid  password' });
-      }
+    if (admin.password != password) {
+      return res.status(400).json({ message: "Invalid  password" });
+    }
 
-      
-      const token = jwt.sign({adminId: admin._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+    const token = jwt.sign({ adminId: admin._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
-     
-      res.json({ token , admin }  );
+    res.json({ token, admin });
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: 'Server error' });
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };

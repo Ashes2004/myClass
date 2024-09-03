@@ -1,32 +1,102 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { sampleProfile } from "@/public/Images";
-import AdminLayout from "../Administrator/administratorLayout";
+import AdminLayout from "../Administrator/administratorLayout"; 
+import { sampleProfile } from "@/public/Images"; 
+import { useRouter } from "next/navigation";
+import { storage } from "@/app/Firebase"; 
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; 
 
 const AdminProfilePage = () => {
+  const router = useRouter();
+  const [adminData, setAdminData] = useState(null);
   const [profilePic, setProfilePic] = useState(sampleProfile);
+  const [isPopupOpen, setIsPopupOpen] = useState(false); 
 
-  const handleProfilePicChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setProfilePic(reader.result);
-    };
-    if (file) {
-      reader.readAsDataURL(file);
+  useEffect(() => {
+    const token = sessionStorage.getItem("adminToken");
+    if (!token) {
+      router.push("/admin/adminAuth");
+    } else {
+      const fetchAdminData = async () => {
+        try {
+          const response = await fetch("http://localhost/api/admin/find", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            router.push("/admin/adminAuth");
+            throw new Error("Failed to fetch admin data");
+          }
+
+          const data = await response.json();
+          setAdminData(data);
+          setProfilePic(data.profilePhoto || sampleProfile); // Set existing profile photo
+        } catch (error) {
+          console.error("Error fetching admin data:", error);
+        }
+      };
+
+      fetchAdminData();
     }
+  }, [router]);
+
+  if (!adminData) {
+    return <p className="text-center mt-8 text-white">Loading...</p>;
+  }
+
+  const handleProfilePicChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const storageRef = ref(storage, `admin_profile_pics/${file.name}`);
+    
+    try {
+      const snapshot = await uploadBytes(storageRef, file);
+      const photoURL = await getDownloadURL(snapshot.ref);
+      setProfilePic(photoURL);
+
+      const token = sessionStorage.getItem("adminToken");
+      console.log("id: ", adminData._id);
+      const response = await fetch(`http://localhost/api/admin/${adminData._id}`, {
+        method: "PATCH",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ profilePhoto: photoURL }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to update profile photo in the backend");
+      }
+
+      console.log("Profile photo updated successfully");
+    } catch (error) {
+      console.error("Error uploading file or updating profile photo:", error);
+    }
+  };
+
+  const togglePopup = () => {
+    setIsPopupOpen(!isPopupOpen);
   };
 
   return (
     <AdminLayout>
-      <div className="h-full bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center rounded-xl">
-        <div className="bg-white rounded-xl shadow-xl p-8 w-full md:w-3/4 lg:w-1/2 text-black">
-          <div className="flex flex-col items-center">
-            <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-blue-500">
+      <div className="min-h-screen bg-gradient-to-r from-blue-400 to-purple-500 flex items-center justify-center p-4">
+        <div className="bg-white rounded-xl shadow-2xl p-8 w-full max-w-4xl text-black overflow-hidden">
+          <div className="flex flex-col items-center mb-8">
+            <div 
+              className="relative w-24 h-24 rounded-full overflow-hidden border-4 border-blue-500 cursor-pointer"
+              onClick={togglePopup} // Toggle popup on click
+            >
               <Image
                 src={profilePic}
-                layout="fill"
                 alt="Profile Picture"
+                layout="fill"
                 className="object-cover"
               />
             </div>
@@ -36,54 +106,47 @@ const AdminProfilePage = () => {
               className="mt-3 text-sm text-gray-500"
               onChange={handleProfilePicChange}
             />
-            <h1 className="text-2xl font-bold mt-4">John Doe</h1>
+            <h1 className="text-3xl font-bold mt-4 text-gray-800">
+              {adminData?.InstituteName || "Admin"}
+            </h1>
+            <p className="text-lg font-semibold text-gray-600">
+              {adminData?.InstituteCode}
+            </p>
           </div>
 
-          <div className="mt-6">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label htmlFor="phone" className="block text-lg font-medium">
-                  Phone Number
-                </label>
-                <input
-                  type="text"
-                  id="phone"
-                  name="phone"
-                  autoComplete="tel"
-                  className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
-                  defaultValue="+91 9XXXX XXX89"
-                />
+          <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[
+              { label: "Institute Code", value: adminData?.InstituteCode || "N/A" },
+              { label: "Contact Number", value: adminData?.contactNumber || "N/A" },
+              { label: "Email", value: adminData?.email || "N/A" }
+            ].map((item, index) => (
+              <div key={index} className="bg-gray-100 p-6 rounded-lg shadow-md">
+                <h3 className="text-xl font-medium text-gray-700">{item.label}</h3>
+                <p className="mt-2 text-gray-600">{item.value}</p>
               </div>
+            ))}
+          </div>
 
-              <div>
-                <label htmlFor="email" className="block text-lg font-medium">
-                  Email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  autoComplete="email"
-                  className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
-                  defaultValue="johndoe@example.com"
+          {/* Popup Modal */}
+          {isPopupOpen && (
+            <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+              <div className="bg-white object-cover rounded p-2">
+                <Image
+                  src={profilePic}
+                  alt="Full Size Profile Picture"
+                  width={200}
+                  height={200}
+                  className="object-cover rounded"
                 />
               </div>
-
-              <div className="sm:col-span-2">
-                <label htmlFor="address" className="block text-lg font-medium">
-                  Address
-                </label>
-                <input
-                  type="text"
-                  id="address"
-                  name="address"
-                  autoComplete="street-address"
-                  className="mt-1 p-2 block w-full shadow-sm sm:text-sm border border-gray-300 rounded-md"
-                  defaultValue="123 Main St, Springfield"
-                />
-              </div>
+              <button
+                className="absolute top-0 right-0 mt-4 mr-4 text-white bg-red-500 rounded-full p-2 focus:outline-none"
+                onClick={togglePopup}
+              >
+                Close
+              </button>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </AdminLayout>

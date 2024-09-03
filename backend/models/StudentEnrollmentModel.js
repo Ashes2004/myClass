@@ -6,6 +6,10 @@ const studentEnrollmentSchema = new mongoose.Schema({
   type: String,
   required: true
  },
+ studentID:{
+    type:mongoose.Schema.Types.ObjectId,
+    ref:'Student'
+ },
  Password:{
   type: String,
   required: true

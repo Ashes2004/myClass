@@ -155,7 +155,7 @@ export const adminSidebarLinks = [
     id: 4,
     label: "Tasks",
     icon: approval,
-    link: "/",
+    link: "/tasks",
   },
 ];
 
@@ -452,6 +452,14 @@ export const adminSubjectManagement = [
     link: "/",
     bg: "bg-red-400",
   },
+  {
+    id: 5,
+    icon: alarm, // Placeholder for an appropriate icon related to management
+    sub: "Notices",
+    type: "Administrative",
+    link: "/",
+    bg: "bg-yellow-400",
+  },
 ];
 
 export const adminSchedule = [
@@ -535,10 +543,10 @@ export const adminTasks = [
   },
   {
     id: 1,
-    task: "Approve New Teachers",
+    task: "Register New Teachers",
     due: "02.09.24",
     time: "03:00 PM",
-    icon: approval, // Placeholder for a teacher or approval icon
+    icon: approval, 
     status: "pending",
     statusDesc: "pending approval",
     bg: "bg-green-300",
@@ -546,15 +554,26 @@ export const adminTasks = [
   },
   {
     id: 2,
-    task: "Budget Allocation",
-    due: "01.09.24",
-    time: "11:59 PM",
-    icon: budget, // Placeholder for a budget or finance icon
-    status: "completed",
-    statusDesc: "completed",
-    bg: "bg-purple-300",
-    link: "/",
+    task: "Register New Students",
+    due: "02.09.24",
+    time: "03:00 PM",
+    icon: teachers,
+    status: "pending",
+    statusDesc: "pending approval",
+    bg: "bg-yellow-300",
+    link: "/studentRegistration",
   },
+  // {
+  //   id: 3,
+  //   task: "Budget Allocation",
+  //   due: "01.09.24",
+  //   time: "11:59 PM",
+  //   icon: budget, // Placeholder for a budget or finance icon
+  //   status: "completed",
+  //   statusDesc: "completed",
+  //   bg: "bg-purple-300",
+  //   link: "/",
+  // },
 ];
 
 export const adminDataReview = [

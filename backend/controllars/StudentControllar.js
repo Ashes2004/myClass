@@ -28,9 +28,9 @@ export const createStudent = async (req, res) => {
 
     const serialNumberStr = serialNumber.toString().padStart(2, '0');
     const studentId = `${yearPrefix}${serialNumberStr}`;
-
+    const password = `${studentId}@St`;
     
-    const studentData = { ...req.body, studentId };
+    const studentData = { ...req.body, studentId , password};
     const student = new Student(studentData);
 
     await student.save();

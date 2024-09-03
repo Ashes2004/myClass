@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import Swal from "sweetalert2";
+import AdminLayout from "../Administrator/administratorLayout";
 const EnrollmentForm = () => {
   const [formData, setFormData] = useState({
     studentName: "",
@@ -11,10 +12,10 @@ const EnrollmentForm = () => {
     bloodGroup: "",
     studentDOB: "",
     studentEmailID: "",
-    password: "",
+
   });
 
-  const [showPassword, setShowPassword] = useState(false);
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,7 +53,7 @@ const EnrollmentForm = () => {
           bloodGroup: "",
           studentDOB: "",
           studentEmailID: "",
-          password: "",
+         
         });
       } else {
         alert("Error enrolling student.");
@@ -75,6 +76,7 @@ const EnrollmentForm = () => {
   };
 
   return (
+    <AdminLayout>
     <div className="h-full flex justify-center items-center">
       <div className="bg-white max-w-6xl p-10 rounded-xl shadow-xl">
         <h2 className="text-2xl md:text-3xl font-bold text-center mb-6">
@@ -205,7 +207,7 @@ const EnrollmentForm = () => {
                 required
               />
             </div>
-            <div>
+            {/* <div>
               <label
                 htmlFor="password"
                 className="block font-bold text-lg md:text-xl"
@@ -233,7 +235,7 @@ const EnrollmentForm = () => {
                   Show Password
                 </label>
               </div>
-            </div>
+            </div> */}
 
             <div className="md:col-span-2">
               <label
@@ -264,6 +266,7 @@ const EnrollmentForm = () => {
         </form>
       </div>
     </div>
+    </AdminLayout>
   );
 };
 

@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/find', authenticateToken, getAdministrative);
 router.post('/', createAdministrative);
 router.post('/login', adminLogin);
-router.patch('/', updateAdministrative);
+router.patch('/:id',authenticateToken , updateAdministrative);
 
 
 export default router;

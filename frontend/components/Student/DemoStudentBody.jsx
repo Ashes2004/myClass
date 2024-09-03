@@ -189,10 +189,10 @@ const DemoStudentBody = () => {
                     )
                 )}
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+           <div>
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2"> */}
                 {/* Chatbot Section */}
-                <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
+                {/* <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
                   <div className="flex justify-between items-center mb-4">
                     <div className="bg-purple-300 rounded-full p-2">
                       <Image
@@ -234,7 +234,7 @@ const DemoStudentBody = () => {
                       />
                     </Link>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Notice Board Section */}
                 <div className="col-span-1 bg-white shadow-xl rounded-xl p-4">
@@ -323,7 +323,7 @@ const DemoStudentBody = () => {
                   This is an Alarm System. Raise this alarm ONLY in case of FIRE
                   or any other EMERGENCY!!!
                 </h2>
-                <AlertSystem />
+                <AlertSystem name={studentData?.studentName}/>
               </div>
               <div className="flex justify-center items-center mt-4 drop-shadow-xl">
                 <CalendarDemo />

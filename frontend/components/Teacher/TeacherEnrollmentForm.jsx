@@ -8,7 +8,6 @@ const TeacherEnrollmentForm = () => {
     name: "",
     phoneNumber: "",
     email: "",
-    password: "",
     qualification: "",
     address: "",
     gender: "",
@@ -19,7 +18,7 @@ const TeacherEnrollmentForm = () => {
   const [subjects, setSubjects] = useState([]);
   const [loading, setLoading] = useState(false); // To handle the loading state
   const [error, setError] = useState(null); // To handle errors
-  const [showPassword, setShowPassword] = useState(false); 
+ 
 
   const handleChange = (e) => {
     setFormData({
@@ -75,7 +74,6 @@ const TeacherEnrollmentForm = () => {
         name: "",
         phoneNumber: "",
         email: "",
-        password: "",
         qualification: "",
         address: "",
         gender: "",
@@ -107,7 +105,7 @@ const TeacherEnrollmentForm = () => {
           {error && <p className="text-red-500">{error}</p>}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-black">
-              {/* Other input fields for name, phoneNumber, email, etc. */}
+            
               <div>
                 <label
                   htmlFor="name"
@@ -159,7 +157,7 @@ const TeacherEnrollmentForm = () => {
                   required
                 />
               </div>
-              <div>
+              {/* <div>
                 <label
                   htmlFor="password"
                   className="block font-bold text-lg md:text-xl"
@@ -184,7 +182,7 @@ const TeacherEnrollmentForm = () => {
                     {showPassword ? "Hide" : "Show"}
                   </button>
                 </div>
-              </div>
+              </div> */}
               <div>
                 <label
                   htmlFor="qualification"

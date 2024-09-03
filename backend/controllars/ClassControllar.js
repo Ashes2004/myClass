@@ -93,7 +93,7 @@ export const updateClass = async (req, res) => {
       } else {
         // Assign new roll number if not present
         await Student.findByIdAndUpdate(studentId, {
-          $set: { classId: classItem._id, studentRoll: nextRollNumber.toString() }
+          $set: { classId: classItem._id, studentRoll: nextRollNumber.toString() , quizResponses: [] , attendance:[] , numberOfDaysPresent:0 ,totalSchoolDays: 0 }
         });
         nextRollNumber++; // Increment roll number for next student
       }
@@ -148,7 +148,7 @@ export const deleteClass = async (req, res) => {
 
     await Student.updateMany(
       { classId: classItem._id },
-      { $set: { classId: null } } 
+      { $set: { classId: null ,quizResponses: [] , attendance:[] ,  numberOfDaysPresent:0,  totalSchoolDays: 0 } } 
     );
 
     const PrevclassTeacherAdd = await Teacher.findById(classItem.classTeacher);
