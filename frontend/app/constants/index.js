@@ -28,6 +28,7 @@ import {
   physics,
   bookfair,
   feedback,
+  inventory,
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -156,6 +157,12 @@ export const adminSidebarLinks = [
     label: "Tasks",
     icon: approval,
     link: "/",
+  },
+  {
+    id: 5,
+    label: "Inventory",
+    icon: inventory,
+    link: "/inventory",
   },
 ];
 
@@ -497,30 +504,6 @@ export const adminSchedule = [
   },
 ];
 
-export const adminProgressTracking = [
-  {
-    id: 0,
-    progress: "Teacher Performance",
-    icon: staff, // Placeholder for a performance icon
-    link: "/",
-    bg: "bg-purple-300",
-  },
-  {
-    id: 1,
-    progress: "Student Enrollment",
-    icon: student, // Placeholder for an enrollment icon
-    link: "/",
-    bg: "bg-green-300",
-  },
-  {
-    id: 2,
-    progress: "Budget Utilization",
-    icon: budget, // Placeholder for a budget icon
-    link: "/",
-    bg: "bg-orange-300",
-  },
-];
-
 export const adminTasks = [
   {
     id: 0,
@@ -589,7 +572,7 @@ export const adminDataReview = [
   {
     id: 4,
     data: "School Events",
-    icon: bookfair, 
+    icon: bookfair,
     bg: "bg-red-300",
     link: "/",
   },
@@ -615,6 +598,4 @@ export const adminDataReview = [
     bg: "bg-purple-300",
     link: "/admin/studentteacherdetails",
   },
-
-  
 ];

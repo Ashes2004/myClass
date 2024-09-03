@@ -23,6 +23,7 @@ import AssignmentPage from "@/components/Pages/AssignmentPage";
 import DemoTeacher from "@/components/Teacher/DemoTeacher";
 import AdminDataReportPage from "@/components/Pages/DataReports";
 import AdminSubjectManagementPage from "@/components/Pages/ManagementOptions";
+import Inventory from "@/components/structComponents/Inventory";
 
 const pageTitleMap = {
   student: "Student",
@@ -43,6 +44,7 @@ const pageTitleMap = {
   assignments: "Assignments",
   dataReports: "Data Reports",
   managementOptions: "Management Options",
+  inventory: "School Inventory",
 };
 
 export default function Page({ params }) {
@@ -94,6 +96,8 @@ export default function Page({ params }) {
       return <AdminDataReportPage /> || notFound();
     case "managementOptions":
       return <AdminSubjectManagementPage /> || notFound();
+    case "inventory":
+      return <Inventory /> || notFound();
     default:
       return notFound();
   }
