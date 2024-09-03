@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import AdminLayout from "../Administrator/administratorLayout";
 import SearchBar from "./SearchBar";
 import Image from "next/image";
@@ -29,8 +31,8 @@ const itemDetails = {
   Furniture: furnitureDetails,
 };
 
-// Utility function to calculate maintenance date and color
-const getMaintenanceInfo = (purchaseDate, itemType) => {
+// Utility function to calculate condition rating and color
+const getConditionInfo = (purchaseDate, itemType) => {
   const purchase = dayjs(purchaseDate);
   let maintenanceDate;
 
@@ -55,27 +57,46 @@ const getMaintenanceInfo = (purchaseDate, itemType) => {
 
   const now = dayjs();
   const diffMonths = maintenanceDate.diff(now, "month");
+  let condition;
   let color;
 
-  if (diffMonths > 12) {
-    color = "bg-green-200";
-  } else if (diffMonths > 6) {
+  if (diffMonths <= 2) {
+    condition = "Poor";
+    color = "bg-red-200";
+  } else if (diffMonths <= 12) {
+    condition = "Average";
     color = "bg-yellow-200";
   } else {
-    color = "bg-red-200";
+    condition = "Good";
+    color = "bg-green-200";
   }
 
-  return { maintenanceDate: maintenanceDate.format("YYYY-MM-DD"), color };
+  return { condition, color };
 };
 
 const Inventory = () => {
-  const [selectedItem, setSelectedItem] = useState("");
+  const [selectedItem, setSelectedItem] = useState("Blackboard");
   const [details, setDetails] = useState([]);
+  const [displayedDetails, setDisplayedDetails] = useState([]);
+
+  useEffect(() => {
+    const selectedDetails = itemDetails[selectedItem] || [];
+    setDetails(selectedDetails);
+
+    const calculatedDetails = selectedDetails.map((detail) => {
+      const { condition, color } = getConditionInfo(
+        detail.purchaseDate,
+        detail.itemName
+      );
+      return { ...detail, condition, color };
+    });
+
+    setDisplayedDetails(calculatedDetails);
+  }, [selectedItem]);
 
   const handleChange = (event) => {
     const selected = event.target.value;
     setSelectedItem(selected);
-    setDetails(itemDetails[selected] || []);
   };
 
   const tableHead = [
@@ -85,7 +106,7 @@ const Inventory = () => {
     "Purchase Date",
     "Location",
     "Invoice Link",
-    "Maintenance Date",
+    "Condition Rating",
   ];
 
   const inventoryHead = ["Sl. No.", "Item Name", "Category", "Quantity"];
@@ -195,7 +216,7 @@ const Inventory = () => {
                   </thead>
                   <tbody className="text-center">
                     {details.map((detail, index) => {
-                      const { maintenanceDate, color } = getMaintenanceInfo(
+                      const { condition, color } = getConditionInfo(
                         detail.purchaseDate,
                         detail.itemName
                       );
@@ -226,7 +247,7 @@ const Inventory = () => {
                             </Link>
                           </td>
                           <td className={`py-2 px-4 border-b ${color}`}>
-                            {maintenanceDate}
+                            {condition}
                           </td>
                         </tr>
                       );
@@ -303,7 +324,10 @@ const Inventory = () => {
                       className="bg-gray-200 rounded-lg flex justify-between items-center p-2"
                     >
                       <h2 className="font-bold text-lg">{item}</h2>
-                      <Link href="/" className="bg-gray-300 hover:bg-gray-600 duration-200 p-3 rounded-full">
+                      <Link
+                        href="/"
+                        className="bg-gray-300 hover:bg-gray-600 duration-200 p-3 rounded-full"
+                      >
                         <Image
                           src={rightArrow}
                           alt="arrow"

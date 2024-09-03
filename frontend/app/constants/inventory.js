@@ -1,11 +1,8 @@
 export const items = [
-  "Blackboard",
-  "Computers",
-  "Projector",
-  "White Board",
-  "Scanner",
-  "Printer",
+  "Class Material",
+  "Electronic Equipments",
   "Furniture",
+  "Lab Equipments",
 ];
 
 export const currentInventory = [
@@ -18,13 +15,13 @@ export const currentInventory = [
   {
     id: 1,
     item: "Computers",
-    category: "Equipments",
+    category: "Electronic Equipments",
     quantity: 210,
   },
   {
     id: 2,
     item: "Projector",
-    category: "Equipments",
+    category: "Electronic Equipments",
     quantity: 20,
   },
   {

@@ -3,43 +3,42 @@ import AdminLayout from "./administratorLayout";
 import SearchBar from "../structComponents/SearchBar";
 import {
   adminTasks,
-  adminProgressTracking,
   adminSchedule,
   adminSubjectManagement,
   adminDataReview,
 } from "@/app/constants";
 import Image from "next/image";
-import { attendance, chatbot, rightArrow } from "@/public/Icons";
+import { attendance, chatbot, inventory, rightArrow } from "@/public/Icons";
 import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
 const DemoAdminBody = () => {
-    const [adminData ,setAdminData] = useState();
-    const router = useRouter();
+  const [adminData, setAdminData] = useState();
+  const router = useRouter();
   useEffect(() => {
     const token = sessionStorage.getItem("adminToken");
     if (!token) {
-        router.push("/admin/adminAuth");
+      router.push("/admin/adminAuth");
     }
 
-    const fetchAdmin = async()=>{
-      const response =   await fetch('http://localhost/api/admin/find' ,  {
+    const fetchAdmin = async () => {
+      const response = await fetch("http://localhost/api/admin/find", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
-      })
+      });
       if (!response.ok) {
         router.push("/admin/adminAuth");
-        
       }
 
       const data = await response.json();
       setAdminData(data);
-    } 
+    };
     fetchAdmin();
   }, [router]);
   return (
@@ -153,62 +152,118 @@ const DemoAdminBody = () => {
                 )}
               </div>
 
-              {/* Progress Tracking Section */}
-              <div className="bg-white flex justify-center flex-col shadow-xl rounded-lg p-4">
+              {/* Inventory Management Section */}
+              <div className="bg-white flex flex-col shadow-xl rounded-lg p-4">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex flex-col">
                     <h2 className="font-bold text-lg md:text-xl">
-                      Progress Tracking
+                      Inventory Management
                     </h2>
                     <p className="font-semibold text-base">
-                      Recent administrative updates
+                      Manage school inventory
                     </p>
                   </div>
                   <div className="bg-yellow-300 rounded-full p-3">
                     <Image
-                      src={attendance}
-                      alt="tracking"
+                      src={inventory}
+                      alt="inventory"
                       width={32}
                       height={32}
                       className="object-cover"
                     />
                   </div>
                 </div>
-                <div className="flex flex-col gap-2">
-                  {adminProgressTracking.map(
-                    (item, index) =>
-                      index < 3 && (
-                        <div
-                          key={item.id}
-                          className="bg-gray-100 p-3 rounded-lg flex justify-between items-center"
-                        >
-                          <div>
-                            <h2 className="font-bold">{item.progress}</h2>
-                            <p className="text-sm">Tracking: {item.type}</p>
-                          </div>
-                          <div className={`p-2 px-3 rounded-full ${item.bg}`}>
-                            <h2 className="text-xs text-white">Progress</h2>
-                          </div>
-                        </div>
-                      )
-                  )}
+                <div>
+                  <p className="text-gray-700 text-lg">
+                    Manage school inventory including textbooks, supplies, and
+                    equipment efficiently.
+                  </p>
+                  <div className="pt-6">
+                    <Link href="/inventory">
+                      <div className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl duration-200">
+                        Go to Inventory
+                      </div>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
+          </div>
 
-            <div className="flex justify-between items-center my-3">
-              <h3 className="font-bold text-lg md:text-xl">
-                Management Options
-              </h3>
+          <div className="flex justify-between items-center my-3">
+            <h3 className="font-bold text-lg md:text-xl">Management Options</h3>
+            <Link
+              href="/managementOptions"
+              className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
+            >
+              View All
+            </Link>
+          </div>
+          <div className="flex flex-col gap-3">
+            {adminSubjectManagement.map(
+              (item, index) =>
+                index < 3 && (
+                  <div
+                    key={item.id}
+                    className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
+                  >
+                    <div className="flex gap-2 items-center">
+                      <div className={`${item.bg} rounded-full p-3`}>
+                        <Image
+                          src={item.icon}
+                          alt={item.sub}
+                          width={24}
+                          height={24}
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="flex flex-col">
+                        <h2 className="font-bold">{item.sub}</h2>
+                        <h2 className="font-semibold">{item.type}</h2>
+                      </div>
+                    </div>
+                    <Link
+                      href={`${item.link}`}
+                      className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                    >
+                      <Image
+                        src={rightArrow}
+                        alt="arrow"
+                        width={24}
+                        height={24}
+                        className="object-cover cursor-pointer"
+                      />
+                    </Link>
+                  </div>
+                )
+            )}
+          </div>
+        </div>
+
+        {/* Right Section */}
+        <div className="col-span-2 pt-3">
+          <div className="flex flex-col gap-2">
+            <div className="flex flex-col justify-center items-center bg-white p-2 rounded-lg shadow-xl">
+              <h2 className="font-bold text-center md:text-xl lg:text-2xl">
+                This is an Alarm System. Raise this alarm ONLY in case of FIRE
+                or any other EMERGENCY!!!
+              </h2>
+              <AlertSystem />
+            </div>
+            <div className="flex justify-center items-center mt-4 drop-shadow-xl">
+              <CalendarDemo />
+            </div>
+            <div className="flex justify-between items-center mt-3 mb-1">
+              <h3 className="font-bold text-lg md:text-xl">Admin Tasks</h3>
               <Link
-                href="/managementOptions"
+                href="/tasks"
                 className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
               >
-                View All
+                See All
               </Link>
             </div>
-            <div className="flex flex-col gap-3">
-              {adminSubjectManagement.map(
+            <div className="flex flex-col gap-2">
+              {adminTasks.map(
                 (item, index) =>
                   index < 3 && (
                     <div
@@ -219,15 +274,17 @@ const DemoAdminBody = () => {
                         <div className={`${item.bg} rounded-full p-3`}>
                           <Image
                             src={item.icon}
-                            alt={item.sub}
+                            alt={item.task}
                             width={24}
                             height={24}
                             className="object-cover"
                           />
                         </div>
                         <div className="flex flex-col">
-                          <h2 className="font-bold">{item.sub}</h2>
-                          <h2 className="font-semibold">{item.type}</h2>
+                          <h2 className="font-bold">{item.task}</h2>
+                          {/* <h2 className="font-semibold text-xs">
+                              {item.statusDesc}
+                            </h2> */}
                         </div>
                       </div>
                       <Link
@@ -245,72 +302,6 @@ const DemoAdminBody = () => {
                     </div>
                   )
               )}
-            </div>
-          </div>
-
-          {/* Right Section */}
-          <div className="col-span-2 pt-3">
-            <div className="flex flex-col gap-2">
-              <div className="flex flex-col justify-center items-center bg-white p-2 rounded-lg shadow-xl">
-                <h2 className="font-bold text-center md:text-xl lg:text-2xl">
-                  This is an Alarm System. Raise this alarm ONLY in case of FIRE
-                  or any other EMERGENCY!!!
-                </h2>
-                <AlertSystem />
-              </div>
-              <div className="flex justify-center items-center mt-4 drop-shadow-xl">
-                <CalendarDemo />
-              </div>
-              <div className="flex justify-between items-center mt-3 mb-1">
-                <h3 className="font-bold text-lg md:text-xl">Admin Tasks</h3>
-                <Link
-                  href="/tasks"
-                  className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
-                >
-                  See All
-                </Link>
-              </div>
-              <div className="flex flex-col gap-2">
-                {adminTasks.map(
-                  (item, index) =>
-                    index < 3 && (
-                      <div
-                        key={item.id}
-                        className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
-                      >
-                        <div className="flex gap-2 items-center">
-                          <div className={`${item.bg} rounded-full p-3`}>
-                            <Image
-                              src={item.icon}
-                              alt={item.task}
-                              width={24}
-                              height={24}
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="flex flex-col">
-                            <h2 className="font-bold">{item.task}</h2>
-                            {/* <h2 className="font-semibold text-xs">
-                              {item.statusDesc}
-                            </h2> */}
-                          </div>
-                        </div>
-                        <Link
-                          href={`${item.link}`}
-                          className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
-                        >
-                          <Image
-                            src={rightArrow}
-                            alt="arrow"
-                            width={24}
-                            height={24}
-                            className="object-cover cursor-pointer"
-                          />
-                        </Link>
-                      </div>
-                    )
-                )}
-              </div>
             </div>
           </div>
         </div>
