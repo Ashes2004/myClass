@@ -121,9 +121,9 @@ export const teacherSidebarLinks = [
   },
   {
     id: 4,
-    label: "Classes",
+    label: "Meeting",
     icon: classes,
-    link: "/",
+    link: "/teacher/meeting",
   },
 ];
 
