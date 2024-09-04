@@ -6,12 +6,14 @@ import LeaderBoardBody from "@/components/Leaderboard/leaderBoardBody";
 import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import QuizHome from "@/components/QuizStudent/QuizHome";
+import QuizResponses from "@/components/QuizTeacher/QuizResonses";
 
 const slugTitleMap = {
   attendance: "Attendance",
   leaderboard: "Leaderboard",
   performance: "Performance",
   studentQuiz: "Student Quiz",
+  quizresonse: "Quiz Responses",
 };
 
 export default function Page({ params }) {
@@ -21,7 +23,7 @@ export default function Page({ params }) {
     if (slug in slugTitleMap) {
       document.title = `${slugTitleMap[slug]} || MyClass`;
     } else {
-      document.title = "Page Not Found || MyClass";
+      document.title = "MyClass";
     }
   }, [slug]);
 
@@ -38,6 +40,8 @@ export default function Page({ params }) {
       );
     case "studentQuiz":
       return type === "student" ? <QuizHome Id={id} /> : notFound();
+    case "quizresponse":
+      return type === "teacher" ? <QuizResponses quizId={id} /> : notFound();
     default:
       return notFound();
   }

@@ -8,6 +8,7 @@ import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import SeeAllQuizzes from "./SeeAllQuizzes";
+import QuizList from "./QuizList";
 const TeacherQuizBody = () => {
   const [isCreateActive, setIsCreateActive] = useState(true);
   const [isShowAnswerActive, setIsShowAnswerActive] = useState(false);
@@ -420,6 +421,9 @@ const TeacherQuizBody = () => {
    {isShowAnswerActive &&  <div>
          <SeeAllQuizzes teacherId={teacherId}/>
       </div> }
+      {isShowResultActive && <div>
+           <QuizList teacherId={teacherId} />
+        </div>}
     </TeacherQuizLayout>
   );
 };
