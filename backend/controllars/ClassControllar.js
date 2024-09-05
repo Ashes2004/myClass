@@ -78,101 +78,97 @@ export const updateClass = async (req, res) => {
     const classItem = await Class.findById(req.params.id);
     if (!classItem) return res.status(404).json({ message: "Class not found" });
 
-   
-    const currentStudentIds = classItem.students.map((s) => s.toString());
-    const updatedStudentIds = req.body.students.map((s) => s.toString());
+    if (req.body.students && req.body.students.length > 0) {
+      const currentStudentIds = classItem.students.map((s) => s.toString());
+      const updatedStudentIds = req.body.students.map((s) => s.toString());
 
-    const removedStudents = currentStudentIds.filter(
-      (id) => !updatedStudentIds.includes(id)
-    );
-
-
-    const currentteahers = classItem.allocatedTeachers.map((s) => s.toString());
-    const updatedteahers  = req.body.allocatedTeachers.map((s) => s.toString());
-
-    const removedteachers  = currentteahers .filter(
-      (id) => !updatedteahers .includes(id)
-    );
-
-
-    await Student.updateMany(
-      { _id: { $in: removedStudents } },
-      { $unset: { classId: "", studentRoll: "" } }
-    );
-
-    await Teacher.updateMany(
-      { _id: { $in: removedteachers } },
-      { $pull: { allocatedClasses: classItem._id } }
-    );
-
-    // Prepare for updating/assigning roll numbers
-    let nextRollNumber = 1; // Start roll number from 1
-    for (let i = 0; i < updatedStudentIds.length; i++) {
-      const studentId = updatedStudentIds[i];
-      const student = await Student.findById(studentId);
-
-      if (student && student.studentRoll) {
-        // Retain existing roll number if present
-        nextRollNumber = parseInt(student.studentRoll) + 1;
-      } else {
-        // Assign new roll number if not present
-        await Student.findByIdAndUpdate(studentId, {
-          $set: {
-            classId: classItem._id,
-            studentRoll: nextRollNumber.toString(),
-            quizResponses: [],
-            attendance: [],
-            numberOfDaysPresent: 0,
-            totalSchoolDays: 0,
-          },
-        });
-        nextRollNumber++; 
-      }
-    }
-
-   
-    classItem.students = updatedStudentIds;
-
-   classItem.allocatedTeachers = updatedteahers;
-    if (req.body.allocatedTeachers && req.body.allocatedTeachers.length > 0) {
-      console.log("allcated teacher" ,req.body.allocatedTeachers );
-      await Teacher.updateMany(
-        { _id: { $in: req.body.allocatedTeachers } },
-        { $addToSet: { allocatedClasses: classItem._id } }
+      const removedStudents = currentStudentIds.filter(
+        (id) => !updatedStudentIds.includes(id)
       );
-    }
 
-   
-    if (classItem.classTeacher !== req.body.classTeacher) {
-      if (classItem.classTeacher) {
+      await Student.updateMany(
+        { _id: { $in: removedStudents } },
+        { $unset: { classId: "", studentRoll: "" } }
+      );
+
+      let nextRollNumber = 1;
+      for (let i = 0; i < updatedStudentIds.length; i++) {
+        const studentId = updatedStudentIds[i];
+        const student = await Student.findById(studentId);
+
+        if (student && student.studentRoll) {
+          nextRollNumber = parseInt(student.studentRoll) + 1;
+        } else {
+          await Student.findByIdAndUpdate(studentId, {
+            $set: {
+              classId: classItem._id,
+              studentRoll: nextRollNumber.toString(),
+              quizResponses: [],
+              attendance: [],
+              numberOfDaysPresent: 0,
+              totalSchoolDays: 0,
+            },
+          });
+          nextRollNumber++;
+        }
+      }
+
+      classItem.students = updatedStudentIds;
+      await classItem.save();
+      return res.status(200).json(classItem);
+    } else {
+      const currentTeachers = classItem.allocatedTeachers.map((s) => s.toString());
+      const updatedTeachers = req.body.allocatedTeachers.map((s) => s.toString());
+
+      const removedTeachers = currentTeachers.filter(
+        (id) => !updatedTeachers.includes(id)
+      );
+
+      await Teacher.updateMany(
+        { _id: { $in: removedTeachers } },
+        { $pull: { allocatedClasses: classItem._id } }
+      );
+
+      classItem.allocatedTeachers = updatedTeachers;
+      if (req.body.allocatedTeachers && req.body.allocatedTeachers.length > 0) {
+        await Teacher.updateMany(
+          { _id: { $in: req.body.allocatedTeachers } },
+          { $addToSet: { allocatedClasses: classItem._id } }
+        );
+      }
+
+      if (classItem.classTeacher !== req.body.classTeacher) {
+        if (classItem.classTeacher) {
           const oldClassTeacher = await Teacher.findById(classItem.classTeacher);
           if (oldClassTeacher) {
-              oldClassTeacher.ClassTeacher = null;
-              await oldClassTeacher.save();
+            oldClassTeacher.ClassTeacher = null;
+            await oldClassTeacher.save();
           } else {
-              return res.status(404).json({ message: "Previous class teacher not found" });
+            return res.status(404).json({ message: "Previous class teacher not found" });
           }
-      }
-  
-      if (req.body.classTeacher) {
+        }
+
+        if (req.body.classTeacher) {
           const newClassTeacher = await Teacher.findById(req.body.classTeacher);
           if (newClassTeacher) {
-              newClassTeacher.ClassTeacher = classItem._id;
-              await newClassTeacher.save();
+            newClassTeacher.ClassTeacher = classItem._id;
+            await newClassTeacher.save();
           } else {
-              return res.status(404).json({ message: "New class teacher not found" });
+            return res.status(404).json({ message: "New class teacher not found" });
           }
+        }
+
+        classItem.classTeacher = req.body.classTeacher;
       }
-  
-      classItem.classTeacher = req.body.classTeacher;
-  }
-  
-    await classItem.save();
-    res.status(200).json(classItem);
+
+      await classItem.save();
+      res.status(200).json(classItem);
+    }
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
 };
+
 
 export const deleteClass = async (req, res) => {
   try {

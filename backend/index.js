@@ -14,6 +14,7 @@ import quizRoutes from './routes/QuizRoutes.js';
 import administrativeRoutes from './routes/AdminRoutes.js';
 // import authenticateToken from './middleware/authMiddleware.js';
 import errorHandler from "./middleware/errorHandler.js";
+import onlineClassRoutes from "./routes/OnlineClassRoutes.js"
 import attendenceRoutes from './routes/AttendenceRoutes.js';
 dotenv.config();
 
@@ -42,7 +43,7 @@ app.use('/api/attendence', attendenceRoutes);
 app.use('/api/rooms', roomRoutes);
 app.use('/api/student-enroll', studentEnrollRoutes);
 app.use('/api/admin',  administrativeRoutes);
-
+app.use('/api/online-class' ,onlineClassRoutes );
 // Error handling middleware
 app.use(errorHandler);
 

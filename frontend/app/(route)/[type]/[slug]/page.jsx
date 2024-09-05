@@ -18,7 +18,7 @@ import StudentTeacherDetails from "@/components/Pages/StudentTeacherDetails";
 import Edubot from "@/components/Pages/Edubot";
 import AdminAuth from "@/components/Administrator/adminAuth";
 import AssignmentMarksSubmission from "@/components/Pages/AssignmentMarksSubmission";
-
+import MeetingsPage from "@/components/Pages/MeetingsPage";
 
 
 const slugTitleMap = {
@@ -36,7 +36,8 @@ const slugTitleMap = {
   studentteacherdetails: "Student and Teacher Details",
   edubot: "Edubot",
   adminAuth: "Admin Auth",
-  assignmentMarks: "Assignments"
+  assignmentMarks: "Assignments",
+  meeting: "Meeting"
 
 };
 export default function Page({ params }) {
@@ -79,7 +80,9 @@ export default function Page({ params }) {
     case "teacherLogin":
       return type === "teacher" ? <TeacherLogin /> : notFound();  
     case "assignmentMarks":
-      return type === "teacher"? <AssignmentMarksSubmission/> : notFound();       
+      return type === "teacher"? <AssignmentMarksSubmission/> : notFound();      
+    case "meeting":
+      return type === "teacher"? <MeetingsPage/> : notFound(); 
     default:
       return notFound();
   }

@@ -3,8 +3,9 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/navigation";
 import "./QuizHome.css";
 import QuizLayout from "./QuizLayout";
+import Image from "next/image";
 
-const QuizHome = ({ Id, quizName }) => {
+const QuizHome = ({ Id }) => {
   const [quiz, setQuiz] = useState(null);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState({});
@@ -57,7 +58,9 @@ const QuizHome = ({ Id, quizName }) => {
 
         // Check if the quiz date and time have passed
         const currentDateTime = new Date();
-        const quizEndDateTime = new Date(`${data.quizDate}T${data.quizEndTime}:00`);
+        const quizEndDateTime = new Date(
+          `${data.quizDate}T${data.quizEndTime}:00`
+        );
         if (currentDateTime > quizEndDateTime) {
           setIsQuizActive(false);
         }
@@ -222,7 +225,17 @@ const QuizHome = ({ Id, quizName }) => {
     <QuizLayout>
       <div className="p-4 max-w-3xl mx-auto relative">
         <h1 className="text-3xl font-bold mb-4 text-center">{quiz.quizName}</h1>
-      {!isQuizActive &&  (studentResponses.length != 0 ?  <h1 className="text-xl text-blue-600 font-bold mb-4 text-center">Your score is : {studentResponses[0].scoreEarned} out of {studentResponses[0].fullScore} </h1> : <h1 className="text-xl text-blue-600 font-bold mb-4 text-center">You did not attempt the quiz</h1>) }
+        {!isQuizActive &&
+          (studentResponses.length != 0 ? (
+            <h1 className="text-xl text-blue-600 font-bold mb-4 text-center">
+              Your score is : {studentResponses[0].scoreEarned} out of{" "}
+              {studentResponses[0].fullScore}{" "}
+            </h1>
+          ) : (
+            <h1 className="text-xl text-blue-600 font-bold mb-4 text-center">
+              You did not attempt the quiz
+            </h1>
+          ))}
         <div className="flex justify-between items-center mb-4">
           {isQuizActive ? (
             <>
@@ -264,6 +277,15 @@ const QuizHome = ({ Id, quizName }) => {
               <p className="mb-4">
                 {quiz.questions[currentQuestionIndex].name}
               </p>
+              {quiz?.questions?.[currentQuestionIndex]?.image && (
+                <Image
+                  src={quiz.questions[currentQuestionIndex].image}
+                  height={200}
+                  width={200}
+                  className="mb-3"
+                />
+              )}
+
               {quiz.questions[currentQuestionIndex].options.map(
                 (option, index) => (
                   <div

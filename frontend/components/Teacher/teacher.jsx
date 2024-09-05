@@ -8,6 +8,7 @@ import {
   rightArrow,
 } from "@/public/Icons/index";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
+import { video_calling } from "@/public/Images";
 
 const TeacherBody = () => {
   const [userTeacher, setUserTeacher] = useState({ name: "Dr. Subhamita" });
