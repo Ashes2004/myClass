@@ -4,28 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { video_calling, close, alarm_clock, trash } from "@/public/Images";
 import { arrow_back } from "@/public/Icons";
-const monthMap = (month) => {
-  const months = {
-    1: "Jan",
-    2: "Feb",
-    3: "Mar",
-    4: "Apr",
-    5: "May",
-    6: "Jun",
-    7: "Jul",
-    8: "Aug",
-    9: "Sept",
-    10: "Oct",
-    11: "Nov",
-    12: "Dec",
-  };
-  return months[Number(month)];
-};
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+
 const MeetingsPage = () => {
   const [isReminderClicked, setIsReminderClicked] = useState(false);
   const [overallMargin, setOverallMargin] = useState({ left: 0, top: 0 });
-  const [createMeetingWindowVisible, setCreateMeetingWindowVisible] =
-    useState(false);
+  const [createMeetingWindowVisible, setCreateMeetingWindowVisible] = useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [toBeDeletedMeetings, setToBeDeletedMeetings] = useState([]);
   const [meetingInputTime, setMeetingInputTime] = useState("");
@@ -35,39 +20,48 @@ const MeetingsPage = () => {
   const [meetingClassInput, setMeetingClassInput] = useState("");
   const [reminderClickedId, setReminderClickedId] = useState(0);
   const [reminderTime, setReminderTime] = useState("");
-  const [meetings, setMeetings] = useState([
-    {
-      id: 1,
-      meetingTime: "8:00 AM",
-      meetingDate: "05/09/2024",
-      withClass: "9",
-      section: "B",
-      reminder: "7:30 AM",
-      subject: "Physical Science",
-      meetingLink: "https://meet.google.com/abc-mnop-xyz",
-    },
-    {
-      id: 2,
-      meetingTime: "10:00 AM",
-      meetingDate: "05/09/2024",
-      withClass: "10",
-      section: "B",
-      reminder: "9:45 AM",
-      subject: "Biology",
-      meetingLink: "https://meet.google.com/abc-mnop-kmn",
-    },
-    {
-      id: 3,
-      meetingTime: "12:00 PM",
-      meetingDate: "05/09/2024",
-      withClass: "8",
-      section: "A",
-      reminder: "11:50 AM",
-      subject: "Chemistry",
-      meetingLink: "https://meet.google.com/abc-mnop-qrs",
-    },
-  ]);
+  const [allocatedClasses, setAllocatedClasses] = useState([]);
+  const [meetings, setMeetings] = useState([]);
+  const teacherId = sessionStorage.getItem("teacherID");
+  const router = useRouter();
+
   useEffect(() => {
+    if (!teacherId) {
+      router.push('/teacher/teacherLogin');
+    }
+
+    const fetchAllocatedClasses = async () => {
+      try {
+        const res = await fetch(`http://localhost/api/teachers/${teacherId}`);
+        const data = await res.json();
+        setAllocatedClasses(data.allocatedClasses); 
+        console.log("allocated classes: ", allocatedClasses);
+      } catch (error) {
+        console.error("Error fetching allocated classes:", error);
+      }
+    };
+
+    const fetchMeetings = async () => {
+      try {
+        const res = await fetch(`http://localhost/api/online-class/teacher/${teacherId}`);
+        const data = await res.json();
+        setMeetings(data); 
+      } catch (error) {
+        if (error.response && error.response.data && error.response.data.message) {
+          // Show the error message from the response
+          Swal.fire({
+            icon: "error",
+            title: "Oops...",
+            text: error.response.data.message
+          });
+        }
+        console.error("Error fetching meetings:", error);
+      }
+    };
+
+    fetchAllocatedClasses();
+    fetchMeetings();
+
     const getOverallMargin = () => {
       if (window.innerWidth < 350)
         return [(window.innerWidth - 300) / 2, (window.innerHeight - 463) / 2];
@@ -75,35 +69,69 @@ const MeetingsPage = () => {
     };
     let marginArray = getOverallMargin();
     setOverallMargin({ left: marginArray[0], top: marginArray[1] });
-  }, []);
+  }, [teacherId]);
+
   const deleteMeetings = (e, id) => {
-    console.log(e.target.checked);
     if (e.target.checked) {
       setToBeDeletedMeetings((prev) => [...prev, id]);
     } else {
       setToBeDeletedMeetings(toBeDeletedMeetings.filter((Id) => Id !== id));
     }
-    console.log(toBeDeletedMeetings);
   };
 
-  const createMeeting = () => {
+  const createMeeting = async () => {
     let [hours, minutes] = meetingInputTime.split(":").map(Number);
     let period = hours >= 12 ? " PM" : " AM";
     hours = hours % 12 || 12;
-    let timeIn12HrFormat = `${hours}:${minutes
-      .toString()
-      .padStart(2, "0")}${period}`;
-    setMeetings((prev) => [
-      ...prev,
-      {
-        id: Math.random(),
-        meetingDate: meetingInputDate,
-        meetingTime: timeIn12HrFormat,
-        subject: inputSubject,
-        withClass: meetingClassInput,
-        meetingLink: meetingLink,
-      },
-    ]);
+    let timeIn12HrFormat = `${hours}:${minutes.toString().padStart(2, "0")}${period}`;
+  
+    const newMeeting = {
+      Subject: inputSubject,
+      Teacher:teacherId,
+      Class: meetingClassInput,
+      Date: meetingInputDate,
+      StartTime: timeIn12HrFormat,
+      Link: meetingLink,
+    };
+  console.log("new meet: ", newMeeting);
+    try {
+
+      const res = await fetch("http://localhost/api/online-class", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newMeeting),
+      });
+       
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+  
+      const data = await res.json();
+      console.log("New meeting data:", data); // Debugging line
+  
+      // Ensure that `data` is an object representing the new meeting
+      if (data && typeof data === "object") {
+       if(meetings.length > 0) {meetings.push(data);}
+        Swal.fire({
+          title: "Good job!",
+          text: "Meeting created successfully .",
+          icon: "success",
+        });
+      } else {
+        throw new Error("Invalid data format");
+      }
+    } catch (error) {
+      console.error("Error creating meeting:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Something went wrong",
+      });
+    }
+  
+    // Clear form fields
     setMeetingClassInput("");
     setInputSubject("");
     setMeetingInputDate("");
@@ -111,15 +139,13 @@ const MeetingsPage = () => {
     setMeetingLink("");
     setCreateMeetingWindowVisible(false);
   };
-
-  const deleteTheseMeetings = () => {
-    console.log(toBeDeletedMeetings);
+  
+  const deleteTheseMeetings = async () => {
     const updatedMeetings = meetings.filter(
-      (meeting) => !toBeDeletedMeetings.includes(meeting.id)
+      (meeting) => !toBeDeletedMeetings.includes(meeting._id) // Use _id if that's the key
     );
     setMeetings(updatedMeetings);
     setToBeDeletedMeetings([]);
-    console.log(updatedMeetings);
     setDeleteClicked(false);
   };
 
@@ -131,17 +157,16 @@ const MeetingsPage = () => {
   const setReminder = () => {
     setMeetings(
       meetings.map((meeting) => {
-        if (meeting.id === reminderClickedId)
+        if (meeting._id === reminderClickedId) // Use _id if that's the key
           return { ...meeting, reminderTime: reminderTime };
         else return meeting;
       })
     );
-    console.log(reminderClickedId);
-    console.log(meetings);
     setReminderClickedId(0);
     setReminderTime("");
     setIsReminderClicked(false);
   };
+
   return (
     <>
       <header className="flex items-center w-full p-3 bg-violet-600">
@@ -158,36 +183,11 @@ const MeetingsPage = () => {
           Meeting
         </p>
       </header>
+     
       <div
-        className={`z-50 fixed top-1/3 left-11 lg:left-1/2 ${
-          isReminderClicked ? "block" : "hidden"
-        } left-6 top-0.5 text-black p-3 w-[240px] bg-slate-100 border border-violet-500 shadow-md shadow-violet-300 rounded-md blur-none`}
-      >
-        <p className="mb-1 text-violet-600 font-medium text-[14px]">Set Time</p>
-        <input
-          type="time"
-          className="px-3 py-1.5 rounded-md w-full border border-violet-500 text-violet-500 bg-gradient-to-tl from-slate-300 to-slate-100"
-          onChange={(e) => setReminderTime(e.target.value)}
-        />
-        <div className="flex justify-center items-center mt-6 text-violet-500 gap-3">
-          <button
-            onClick={() => setIsReminderClicked(!isReminderClicked)}
-            className="text-white bg-violet-500 shadow-md shadow-violet-300 p-1 rounded-md font-medium border-2 border-white"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={() => setReminder()}
-            className="bg-white p-1 rounded-md shadow-md font-medium shadow-violet-300 border-2 border-violet-500"
-          >
-            Set Reminder
-          </button>
-        </div>
-      </div>
-      <div
-        className={`z-50 fixed ${
+        className={`z-50 mt-10 flex-1 fixed ${
           createMeetingWindowVisible ? "block" : "hidden"
-        } bg-white rounded-md border-2 border-violet-500 p-6 w-[300px] md:w-[400px]`}
+        } bg-white rounded-md border-2 border-violet-500 p-6 w-[400px] md:w-[400px]`}
         style={{ left: overallMargin.left, top: overallMargin.top }}
       >
         <div className="flex justify-end px-3">
@@ -195,13 +195,7 @@ const MeetingsPage = () => {
             onClick={() => setCreateMeetingWindowVisible(false)}
             className="bg-violet-500 p-1 rounded-md"
           >
-            <Image
-              src={close}
-              width={14}
-              height={14}
-              alt="close"
-              className="invert"
-            />
+            <Image src={close} width={14} height={14} alt="close" className="invert" />
           </button>
         </div>
         <p className="text-xl font-bold tracking-wide text-center text-violet-500">
@@ -211,50 +205,53 @@ const MeetingsPage = () => {
           <p className="text-[14px] text-violet-400">Subject Name</p>
           <input
             type="text"
-            className="w-full border-b border-violet-500 outline-none text[14px] text-violet-500 "
+            className="w-full border-b border-violet-500 outline-none text-[14px] text-violet-500"
             onChange={(e) => setInputSubject(e.target.value)}
             value={inputSubject}
-          ></input>
+          />
           <div className="mt-3 flex items-center gap-3">
             <p className="text-[14px] text-violet-400">Class</p>
-            <input
-              type="text"
+            <select
               className="border-b border-violet-400 text-[14px] text-violet-500 w-[100px] outline-none"
               onChange={(e) => setMeetingClassInput(e.target.value)}
               value={meetingClassInput}
-            />
+            >
+              <option value="">Select Class</option>
+              {allocatedClasses.map((allocatedClass) => (
+                <option key={allocatedClass._id} value={allocatedClass._id}>
+                  {allocatedClass.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="flex mt-3 justify-between">
-            <p className="text-[14px] text-violet-400 ">Set Date</p>
+            <p className="text-[14px] text-violet-400">Set Date</p>
             <input
               type="date"
               className="text-[14px] text-violet-500"
-              onChange={(e) =>
-                setMeetingInputDate(
-                  e.target.value.split("-").reverse().join("/")
-                )
-              }
-            ></input>
+              onChange={(e) => setMeetingInputDate(e.target.value.split("-").reverse().join("/"))}
+            />
           </div>
           <div className="flex mt-3 justify-between">
-            <p className="text-[14px] text-violet-400 ">Set Time</p>
+            <p className="text-[14px] text-violet-400">Set Time</p>
             <input
               type="time"
               className="text-violet-500"
               onChange={(e) => setMeetingInputTime(e.target.value)}
-            ></input>
+            />
           </div>
-          <p className="text-[14px] text-violet-400 mt-2">
-            Provide Meeting Link
-          </p>
-          <input
-            className="w-full border-b border-violet-500 outline-none text[14px] text-violet-500"
-            onChange={(e) => setMeetingLink(e.target.value)}
-            value={meetingLink}
-          ></input>
+          <div className="flex mt-3 justify-between">
+            <p className="text-[14px] text-violet-400">Meeting Link</p>
+            <input
+              type="text"
+              className="w-full border-b border-violet-500 outline-none text-[14px] text-violet-500"
+              onChange={(e) => setMeetingLink(e.target.value)}
+              value={meetingLink}
+            />
+          </div>
           <div className="flex justify-center items-center mt-2">
             <button
-              onClick={(e) => createMeeting()}
+              onClick={createMeeting}
               className="p-2 rounded-md border-2 border-violet-500 shadow-md shadow-violet-300 bg-white text-violet-500 font-semibold tracking-wide"
             >
               Create
@@ -262,120 +259,90 @@ const MeetingsPage = () => {
           </div>
         </div>
       </div>
-      <div
-        className={`mx-2 xl:mx-80 lg:mx-6 ${
-          createMeetingWindowVisible ? "blur-sm" : ""
-        } ${isReminderClicked ? "blur-sm" : ""}`}
-      >
-        <div className="bg-white mt-6 md:mt-3 md:ml-3 md:mr-3 rounded-lg p-3 shadow-xl z-0">
-          <p className="text-xl font-semibold px-3 tracking-wide">
-            Meeting Schedule
-          </p>
-          <div className="flex justify-end mt-2">
-            <button
-              onClick={() => setCreateMeetingWindowVisible(true)}
-              className="text-[12px] px-2 py-1 bg-purple-400 rounded-xl text-white shadow-md shadow-purple-300"
-            >
-              <span className="mr-1">➕</span>Create Meeting
-            </button>
-            <button
-              onClick={() => setDeleteClicked(!deleteClicked)}
-              className={`ml-3 p-1.5 rounded-full shadow-inner shadow-red-600`}
-            >
-              <Image src={trash} width={20} height={20} alt="delete" />
-            </button>
-          </div>
-          <div className="mt-2">
-            {meetings.map((meeting) => (
+      {/* Meeting list */}
+      <div className={`mx-2 my-6`}>
+        <div className="flex justify-between px-4 py-4 items-center">
+          <h1 className="text-lg font-bold text-violet-500 tracking-wider">
+            Scheduled Meetings
+          </h1>
+          <button
+            className="text-sm tracking-wide px-4 py-2 bg-violet-500 text-white rounded-md shadow-lg shadow-violet-300"
+            onClick={() => setCreateMeetingWindowVisible(true)}
+          >
+            Create Meeting
+          </button>
+        </div>
+        {meetings.length > 0 ? (
+          <div className="flex flex-col gap-3">
+            {meetings.map((meeting, i) => (
               <div
-                key={meeting.id}
-                className="flex justify-between items-center "
+                key={i}
+                className="border-violet-400 bg-violet-100 border-2 mx-4 p-3 rounded-lg"
               >
-                <div className="flex md:gap-3 items-center w-8/12">
-                  <div
-                    className={`flex justify-center items-center m-3 ${
-                      !deleteClicked
-                        ? "w-[36px] h-[36px] shadow-md shadow-purple-400 bg-purple-500"
-                        : ""
-                    } rounded-lg  `}
-                  >
-                    {!deleteClicked ? (
-                      <Image
-                        src={video_calling}
-                        width={24}
-                        height={24}
-                        alt="video-calling"
-                        className="invert"
-                      />
-                    ) : (
-                      <input
-                        type="checkbox"
-                        onChange={(e) => deleteMeetings(e, meeting.id)}
-                        className="w-9 h-9 accent-purple-500"
-                      />
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-1">
-                    <p className="flex gap-2 text-[12px] md:text-sm tracking-wide">
-                      From{" "}
-                      <span className="font-semibold">
-                        {meeting.meetingTime}
-                      </span>
-                    </p>
-                    <p className="text-[12px] md:text-sm tracking-wide">
-                      With{" "}
-                      <span className="font-semibold">
-                        Class {meeting.withClassOrTeacher}
-                        {meeting.section}
-                      </span>
-                    </p>
-                  </div>
-                  <div
-                    className={`relative md:hidden ${
-                      isReminderClicked ? "block" : ""
-                    } ml-3.5 flex justify-center items-center rounded-full `}
-                  >
-                    <button onClick={() => createReminder(meeting.id)}>
+                <div className="flex justify-between items-center">
+                  <p className="text-violet-600 font-semibold tracking-wide">
+                    {meeting.Subject}
+                  </p>
+                  <div className="flex gap-4">
+                    <button
+                      className="p-1 bg-violet-500 text-white rounded-md"
+                      onClick={() => createReminder(meeting._id)}
+                    >
                       <Image
                         src={alarm_clock}
-                        width={20}
-                        height={20}
-                        alt="alarm-clock"
+                        alt="reminder"
+                        width={16}
+                        height={16}
+                      />
+                    </button>
+                    <button
+                      className="p-1 bg-violet-500 text-white rounded-md"
+                      onClick={(e) => deleteMeetings(e, meeting._id)}
+                    >
+                      <Image
+                        src={trash}
+                        alt="delete"
+                        width={16}
+                        height={16}
                       />
                     </button>
                   </div>
-                  <div className="xl:mx-16 md text-[14px] hidden md:block rounded-full bg-purple-400 text-white py-1 px-2 shadow-md shadow-purple-300 justify-self-end">
-                    <button onClick={() => createReminder(meeting.id)}>
-                      Set Reminder
-                    </button>
-                  </div>
-                  <div className="bg-purple-400 hidden lg:block rounded-full shadow-md shadow-purple-300">
-                    <p className="text-[14px] text-white px-2 py-1">
-                      {meeting.meetingDate}
-                    </p>
-                  </div>
                 </div>
-                <div className="bg-purple-400 text-white px-2 py-1 rounded-full shadow-md shadow-purple-300">
-                  <Link href={"#"} className="text-[12px] md:text-sm">
-                    {"See Details" || "Join Meeting"}
-                  </Link>
+                <div className="flex justify-between items-center">
+                  <p className="text-[14px] text-violet-400">{meeting.Date}</p>
+                  <p className="text-[14px] text-violet-400">
+                    {meeting.StartTime}
+                  </p>
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <p className="text-[14px] text-violet-400">Link: {meeting.Link}</p>
+                  <a
+                    href={meeting.Link}
+                    className="text-violet-500 underline"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {meeting.Link}
+                  </a>
                 </div>
               </div>
             ))}
+            {deleteClicked ? (
+              <div className="flex justify-end">
+                <button
+                  onClick={deleteTheseMeetings}
+                  className="text-sm tracking-wide px-4 py-2 bg-violet-500 text-white rounded-md shadow-lg shadow-violet-300 mx-6"
+                >
+                  Delete
+                </button>
+              </div>
+            ) : null}
           </div>
-          <div
-            className={`flex justify-center items-center mt-3 ${
-              toBeDeletedMeetings.length >= 1 ? "visible" : "hidden"
-            }`}
-          >
-            <button
-              onClick={() => deleteTheseMeetings()}
-              className={`p-1.5 bg-red-400 rounded-md text-white font-semibold`}
-            >
-              {toBeDeletedMeetings?.length >= 1 ? "Delete" : ""}
-            </button>
-          </div>
-        </div>
+        ) : (
+          <p className="text-center text-sm text-violet-400 tracking-wide">
+            No meetings available.
+          </p>
+        )}
       </div>
     </>
   );
