@@ -268,9 +268,8 @@ const Inventory = () => {
                     Stationary Details
                   </h2>
                   <Link
-                    href="/"
+                    href="/stationary-order"
                     className="text-blue-500 hover:underline"
-                    target="_blank"
                   >
                     Place Order
                   </Link>
@@ -325,8 +324,9 @@ const Inventory = () => {
                     >
                       <h2 className="font-bold text-lg">{item}</h2>
                       <Link
-                        href="/"
+                        href="/inventory-order"
                         className="bg-gray-300 hover:bg-gray-600 duration-200 p-3 rounded-full"
+                        target="_blank"
                       >
                         <Image
                           src={rightArrow}

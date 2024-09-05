@@ -26,6 +26,8 @@ import AdminSubjectManagementPage from "@/components/Pages/ManagementOptions";
 import TaskManagement from "@/components/Pages/TaskPage";
 import DemoAdminBody from "@/components/Administrator/demoAdmin";
 import Inventory from "@/components/structComponents/Inventory";
+import StationaryOrderPage from "@/components/Pages/StationaryOrderPage";
+import InventoryOrderPage from "@/components/Pages/InventoryOrderPage";
 
 const pageTitleMap = {
   student: "Student",
@@ -49,6 +51,8 @@ const pageTitleMap = {
   managementOptions: "Management Options",
   tasks: "Manage Tasks",
   inventory: "School Inventory",
+  "stationary-order": "Stationary Order Form",
+  "inventory-order": "Inventory Order Form",
 };
 
 export default function Page({ params }) {
@@ -106,6 +110,10 @@ export default function Page({ params }) {
       return <TaskManagement /> || notFound();
     case "inventory":
       return <Inventory /> || notFound();
+    case "stationary-order":
+      return <StationaryOrderPage /> || notFound();
+    case "inventory-order":
+      return <InventoryOrderPage /> || notFound();
     default:
       return notFound();
   }
