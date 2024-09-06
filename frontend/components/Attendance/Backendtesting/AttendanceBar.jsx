@@ -6,7 +6,6 @@ import { useAttendanceContext } from "./attendenceBody";
 const AttendanceBar = () => {
   const {
     isOpen,
-    Id,
     rollNumber,
     handleAbsent,
     handleUpdate,
@@ -18,26 +17,29 @@ const AttendanceBar = () => {
     currStudent,
     students,
   } = useAttendanceContext();
-  
+
   const [attendenceTaken, setAttendenceTaken] = useState(false);
   const [holidayDisabled, setHolidayDisabled] = useState(false);
   const [attendanceDisable, setAttendanceDisabled] = useState(false);
+  const [loading, setLoading] = useState(true); // New loading state
 
   useEffect(() => {
-    // Fetch attendance data once on component mount
     const fetchAttendance = async () => {
+      const ID = sessionStorage.getItem("classteacher");
       try {
         let attendenceDate = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
-        console.log(Id + " ***" + attendenceDate);
+        console.log(ID + " ***" + attendenceDate);
 
-        const response = await fetch(`http://localhost/api/attendence/${Id}/${attendenceDate}`);
+        const response = await fetch(`http://localhost/api/attendence/${ID}/${attendenceDate}`);
         if (response.ok) {
-          setAttendenceTaken(true);
+          setAttendenceTaken(true); // Attendance has been taken for the day
         } else {
-          throw new Error("Network response was not ok " + response.statusText);
+          setAttendenceTaken(false); // No attendance for today
         }
       } catch (error) {
         console.error("There has been a problem with your fetch operation:", error);
+      } finally {
+        setLoading(false); // Fetch completed
       }
     };
     fetchAttendance();
@@ -78,7 +80,7 @@ const AttendanceBar = () => {
         Attendance Sheet
       </p>
       <p className="text-center tracking-wider font-medium text-sm md:text-md md:font-semibold underline underline-offset-4 p-1  ">
-        Date:{date}/{month}/{year}
+        Date: {date}/{month}/{year}
       </p>
       <div className="md:flex justify-between grid grid-cols-3 gap-3 mt-6 items-center outline outline-black outline-2 p-4 rounded-lg shadow-md shadow-slate-500">
         <button onClick={handleLeftClick}>
@@ -96,65 +98,70 @@ const AttendanceBar = () => {
       </div>
 
       <div className="mt-10 flex flex-col md:gap-6 gap-3">
-        <button
-          onClick={handlePresentClick}
-          disabled={attendanceDisable}
-          className="mb-1 p-4"
-        >
-          <span
-            className={` ${
-              attendanceDisable ? "opacity-30 hover:opacity-30" : ""
-            } w-1/2 p-3 rounded-md shadow-md shadow-slate-600 bg-green-500 text-white hover:opacity-80 `}
-          >
-            Present
-          </span>
-        </button>
-        <button
-          onClick={handleAbsentClick}
-          disabled={attendanceDisable}
-          className="mb-1 p-4"
-        >
-          <span
-            className={` ${
-              attendanceDisable ? "opacity-30 hover:opacity-30" : ""
-            } w-1/2 p-3 rounded-md  shadow-md shadow-slate-600 bg-red-500 text-white hover:opacity-80 `}
-          >
-            Absent
-          </span>
-        </button>
-        <button
-          onClick={handleHolidayClick}
-          disabled={holidayDisabled}
-          className="md:mb-20 mb-10 p-4"
-        >
-          <span
-            className={` ${
-              holidayDisabled ? "opacity-30 hover:opacity-30" : ""
-            } w-1/2 p-3 rounded-md  shadow-md shadow-slate-600 bg-gray-600 text-white hover:opacity-80 `}
-          >
-            Holiday
-          </span>
-        </button>
+        {/* Show buttons only when loading is complete */}
+        {!loading && (
+          <>
+            <button
+              onClick={handlePresentClick}
+              disabled={attendanceDisable}
+              className="mb-1 p-4"
+            >
+              <span
+                className={` ${
+                  attendanceDisable ? "opacity-30 hover:opacity-30" : ""
+                } w-1/2 p-3 rounded-md shadow-md shadow-slate-600 bg-green-500 text-white hover:opacity-80 `}
+              >
+                Present
+              </span>
+            </button>
+            <button
+              onClick={handleAbsentClick}
+              disabled={attendanceDisable}
+              className="mb-1 p-4"
+            >
+              <span
+                className={` ${
+                  attendanceDisable ? "opacity-30 hover:opacity-30" : ""
+                } w-1/2 p-3 rounded-md  shadow-md shadow-slate-600 bg-red-500 text-white hover:opacity-80 `}
+              >
+                Absent
+              </span>
+            </button>
+            <button
+              onClick={handleHolidayClick}
+              disabled={holidayDisabled}
+              className="md:mb-20 mb-10 p-4"
+            >
+              <span
+                className={` ${
+                  holidayDisabled ? "opacity-30 hover:opacity-30" : ""
+                } w-1/2 p-3 rounded-md  shadow-md shadow-slate-600 bg-gray-600 text-white hover:opacity-80 `}
+              >
+                Holiday
+              </span>
+            </button>
 
-        <button
-          onClick={() => {
-            attendenceTaken ? handleUpdateClick() : handleSubmitClick();
-          }}
-          className="p-4 mb-3"
-        >
-          <span
-            className={`w-1/2 p-3 rounded-md shadow-md ${
-              (currStudent &&
-                currStudent.attendanceStatus !== "" &&
-                currStudent === students[students.length - 1]) ||
-              (!holidayDisabled && currStudent !== students[0])
-                ? "visible"
-                : "hidden"
-            } shadow-slate-600 bg-blue-500 text-white hover:opacity-80`}
-          >
-            {attendenceTaken ? "Update" : "Submit"}
-          </span>
-        </button>
+            <button
+              onClick={() => {
+                attendenceTaken ? handleUpdateClick() : handleSubmitClick();
+              }}
+              className="p-4 mb-3"
+            >
+              <span
+                className={`w-1/2 p-3 rounded-md shadow-md ${
+                  (currStudent &&
+                    currStudent.attendanceStatus !== "" &&
+                    currStudent === students[students.length - 1]) ||
+                  (!holidayDisabled && currStudent !== students[0])
+                    ? "visible"
+                    : "hidden"
+                } shadow-slate-600 bg-blue-500 text-white hover:opacity-80`}
+              >
+                {attendenceTaken ? "Update" : "Submit"}
+              </span>
+            </button>
+          </>
+        )}
       </div>
     </div>
   );

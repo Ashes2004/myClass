@@ -18,24 +18,24 @@ import AdminProfilePage from "@/components/Pages/AdminProfilePage";
 import Timetable from "@/components/Pages/Timetable";
 import SubjectMaterials from "@/components/Pages/SubjectMaterial";
 import NoticeBoard from "@/components/Pages/NoticeBoard";
-import DemoStudentBody from "@/components/Student/DemoStudentBody";
+
 import AssignmentPage from "@/components/Pages/AssignmentPage";
-import DemoTeacher from "@/components/Teacher/DemoTeacher";
+
 import AdminDataReportPage from "@/components/Pages/DataReports";
 import AdminSubjectManagementPage from "@/components/Pages/ManagementOptions";
 import TaskManagement from "@/components/Pages/TaskPage";
-import DemoAdminBody from "@/components/Administrator/demoAdmin";
+
 import Inventory from "@/components/structComponents/Inventory";
 import StationaryOrderPage from "@/components/Pages/StationaryOrderPage";
 import InventoryOrderPage from "@/components/Pages/InventoryOrderPage";
 
 const pageTitleMap = {
   student: "Student",
-  demostudent: "demo Student",
+  
   teacher: "Teacher",
-  demoteacher: "Teacher",
+
   administrator: "Admin",
-  demoadmin: " Demo Admin",
+ 
   library: "Digital Library",
   classroutineform: "Class Routine Form",
   studentRegistration: "Student Enrollment",
@@ -69,16 +69,13 @@ export default function Page({ params }) {
   switch (type) {
     case "student":
       return <StudentBody /> || notFound();
-    case "demostudent":
-      return <DemoStudentBody /> || notFound();
+   
     case "teacher":
       return <TeacherBody /> || notFound();
-    case "demoteacher":
-      return <DemoTeacher /> || notFound();
+   
     case "administrator":
       return <AdminitratorBody /> || notFound();
-    case "demoadmin":
-      return <DemoAdminBody /> || notFound();
+   
     case "studentProfile":
       return <StudentProfilePage /> || notFound();
     case "subjectMaterial":

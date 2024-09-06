@@ -66,6 +66,7 @@ const TeacherStudentToggle = () => {
                                     <div key={index} className="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
                                         <h3 className="text-2xl font-bold mb-2 text-gray-800">{teacher.name}</h3>
                                         <p className="text-gray-600 mb-1"><b>Email:</b> {teacher.email}</p>
+                                        <p className="text-gray-600 mb-1"><b>Password:</b> {teacher.password}</p>
                                         <p className="text-gray-600"><b>Subjects:</b> {teacher?.subjects?.join(", ") || " "}</p>
                                     </div>
                                 ))}
@@ -92,6 +93,7 @@ const TeacherStudentToggle = () => {
                                             <div key={index} className="bg-white p-6 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 hover:shadow-xl">
                                                 <h3 className="text-2xl font-bold mb-2 text-gray-800">{student.studentName}</h3>
                                                 <p className="text-gray-600 mb-1">Student ID: {student.studentId}</p>
+                                                <p className="text-gray-600 mb-1">Password: {student.password}</p>
                                                 <p className="text-gray-600">Class: {student?.classId?.classId|| "NA"}</p>
                                             </div>
                                         ))

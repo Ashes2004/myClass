@@ -3,24 +3,59 @@ import React, { useState, useContext, createContext, useEffect } from "react";
 import AttendanceLayout from "./attendanceLayout";
 import next from "next";
 import Swal from 'sweetalert2'
-const AttendanceBody = ({ Id }) => {
+import { useRouter } from "next/navigation";
+const AttendanceBody = () => {
   const [students, setStudents] = useState([]);
   const [rollNumber, setRollNumber] = useState(null);
   const [currStudent, setCurrStudent] = useState(null);
   const [prevStudent, setPrevStudent] = useState(null);
   const [nextStudent, setNextStudent] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [Id , setId] = useState("");
+
+const router = useRouter();
+  const teacherID = sessionStorage.getItem("teacherID");
+  const ID = sessionStorage.getItem("classteacher");
   const [attendenceData, setAttendenceData] = useState({
     date: `${new Date().getDate()}-${
       new Date().getMonth() + 1
     }-${new Date().getFullYear()}`,
-    classId: Id,
+    classId: ID,
     isHoliday: false,
     studentAttendances: [],
   });
 
-  const fetchapi = () => {
-    fetch(`http://localhost/api/classes/classid/${Id}`)
+
+
+  const fetchapi = async() => {
+   if(!teacherID)
+   {
+    router.push("/teacher/teacherLogin");
+   } 
+
+   if(!ID)
+   {
+    Swal.fire("Error", "You are not allocated as class teacher till now", "error");
+    return;
+   }else{
+    setId(ID);
+   }
+
+
+
+  //  await fetch(`http://localhost/api/teachers/${teacherID}`)
+  //  .then((response) => {
+  //   if (!response.ok) {
+  //     throw new Error("Network response was not ok " + response.statusText);
+  //   }
+  //   return response.json();
+  // })
+  // .then((data) => {
+  //   setID(data.ClassTea)
+    
+  // })
+
+    await fetch(`http://localhost/api/classes/classid/${ID}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok " + response.statusText);
@@ -305,7 +340,7 @@ const AttendanceBody = ({ Id }) => {
     <attendanceContext.Provider
       value={{
         isOpen,
-        Id,
+      
         rollNumber,
         attendenceData,
         students,

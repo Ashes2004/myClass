@@ -11,7 +11,7 @@ export const getTeacher = async (req, res) => {
 
 export const getTeacherByIdMiddleWare = async (req, res) => {
   try {
-    const teacher = await Teacher.findById(req.user.teacherId);
+    const teacher = await Teacher.findById(req.user.teacherId).populate("ClassTeacher");
     if (!teacher) return res.status(404).json({ message: "teacher not found" });
     res.json(teacher);
   } catch (error) {
@@ -58,7 +58,7 @@ export const createTeacher = async (req, res) => {
 
 export const getTeacherById = async (req, res) => {
   try {
-    const teacher = await Teacher.findById(req.params.id).populate("allocatedClasses");
+    const teacher = await Teacher.findById(req.params.id).populate("allocatedClasses").populate("ClassTeacher");
     if (!teacher) return res.status(404).json({ message: "Teacher not found" });
     res.json(teacher);
   } catch (error) {

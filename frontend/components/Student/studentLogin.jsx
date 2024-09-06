@@ -41,7 +41,7 @@ const StudentLoginForm = () => {
       // Reset form fields
       setEmail("");
       setPassword("");
-      router.push("/demostudent");
+      router.push("/student");
     } catch (err) {
       Swal.fire({
         icon: "error",

@@ -41,7 +41,7 @@ const TeacherLogin = () => {
       // Reset form fields
       setEmail("");
       setPassword("");
-      router.push("/demoteacher");
+      router.push("/teacher");
     } catch (err) {
       Swal.fire({
         icon: "error",

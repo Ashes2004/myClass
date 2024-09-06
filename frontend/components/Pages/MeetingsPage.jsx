@@ -10,7 +10,8 @@ import Swal from "sweetalert2";
 const MeetingsPage = () => {
   const [isReminderClicked, setIsReminderClicked] = useState(false);
   const [overallMargin, setOverallMargin] = useState({ left: 0, top: 0 });
-  const [createMeetingWindowVisible, setCreateMeetingWindowVisible] = useState(false);
+  const [createMeetingWindowVisible, setCreateMeetingWindowVisible] =
+    useState(false);
   const [deleteClicked, setDeleteClicked] = useState(false);
   const [toBeDeletedMeetings, setToBeDeletedMeetings] = useState([]);
   const [meetingInputTime, setMeetingInputTime] = useState("");
@@ -23,18 +24,19 @@ const MeetingsPage = () => {
   const [allocatedClasses, setAllocatedClasses] = useState([]);
   const [meetings, setMeetings] = useState([]);
   const teacherId = sessionStorage.getItem("teacherID");
+  const teacherToken = sessionStorage.getItem("teacherToken");
   const router = useRouter();
 
   useEffect(() => {
-    if (!teacherId) {
-      router.push('/teacher/teacherLogin');
+    if (!teacherId || !teacherToken) {
+      router.push("/teacher/teacherLogin");
     }
 
     const fetchAllocatedClasses = async () => {
       try {
         const res = await fetch(`http://localhost/api/teachers/${teacherId}`);
         const data = await res.json();
-        setAllocatedClasses(data.allocatedClasses); 
+        setAllocatedClasses(data.allocatedClasses);
         console.log("allocated classes: ", allocatedClasses);
       } catch (error) {
         console.error("Error fetching allocated classes:", error);
@@ -43,16 +45,22 @@ const MeetingsPage = () => {
 
     const fetchMeetings = async () => {
       try {
-        const res = await fetch(`http://localhost/api/online-class/teacher/${teacherId}`);
+        const res = await fetch(
+          `http://localhost/api/online-class/teacher/${teacherId}`
+        );
         const data = await res.json();
-        setMeetings(data); 
+        setMeetings(data);
       } catch (error) {
-        if (error.response && error.response.data && error.response.data.message) {
+        if (
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
           // Show the error message from the response
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: error.response.data.message
+            text: error.response.data.message,
           });
         }
         console.error("Error fetching meetings:", error);
@@ -71,31 +79,26 @@ const MeetingsPage = () => {
     setOverallMargin({ left: marginArray[0], top: marginArray[1] });
   }, [teacherId]);
 
-  const deleteMeetings = (e, id) => {
-    if (e.target.checked) {
-      setToBeDeletedMeetings((prev) => [...prev, id]);
-    } else {
-      setToBeDeletedMeetings(toBeDeletedMeetings.filter((Id) => Id !== id));
-    }
-  };
+
 
   const createMeeting = async () => {
     let [hours, minutes] = meetingInputTime.split(":").map(Number);
     let period = hours >= 12 ? " PM" : " AM";
     hours = hours % 12 || 12;
-    let timeIn12HrFormat = `${hours}:${minutes.toString().padStart(2, "0")}${period}`;
-  
+    let timeIn12HrFormat = `${hours}:${minutes
+      .toString()
+      .padStart(2, "0")}${period}`;
+
     const newMeeting = {
       Subject: inputSubject,
-      Teacher:teacherId,
+      Teacher: teacherId,
       Class: meetingClassInput,
       Date: meetingInputDate,
       StartTime: timeIn12HrFormat,
       Link: meetingLink,
     };
-  console.log("new meet: ", newMeeting);
+    console.log("new meet: ", newMeeting);
     try {
-
       const res = await fetch("http://localhost/api/online-class", {
         method: "POST",
         headers: {
@@ -103,17 +106,21 @@ const MeetingsPage = () => {
         },
         body: JSON.stringify(newMeeting),
       });
-       
+
       if (!res.ok) {
         throw new Error("Network response was not ok");
       }
-  
+
       const data = await res.json();
       console.log("New meeting data:", data); // Debugging line
-  
+
       // Ensure that `data` is an object representing the new meeting
       if (data && typeof data === "object") {
-       if(meetings.length > 0) {meetings.push(data);}
+        if (meetings.length > 0) {
+          meetings.push(data);
+        }else{
+          window.location.reload();
+        }
         Swal.fire({
           title: "Good job!",
           text: "Meeting created successfully .",
@@ -130,7 +137,7 @@ const MeetingsPage = () => {
         text: error.message || "Something went wrong",
       });
     }
-  
+
     // Clear form fields
     setMeetingClassInput("");
     setInputSubject("");
@@ -139,13 +146,37 @@ const MeetingsPage = () => {
     setMeetingLink("");
     setCreateMeetingWindowVisible(false);
   };
-  
-  const deleteTheseMeetings = async () => {
+
+ 
+
+  const deleteTheseMeetings = async (id) => {
     const updatedMeetings = meetings.filter(
-      (meeting) => !toBeDeletedMeetings.includes(meeting._id) // Use _id if that's the key
+      (meeting) => (meeting._id != id) // Use _id if that's the key
     );
+    
+   try {
+    const res = await fetch(`http://localhost/api/online-class/${id}`, {
+      method: "DELETE"
+    });
+
+    if (!res.ok) {
+      throw new Error("Network response was not ok");
+    }
+    console.log("succesfully deleted!!");
+    
+   } catch (error) {
+    
+    Swal.fire({
+      icon: "error",
+      title: "Oops...",
+      text: error.message || "Something went wrong",
+    });
+
+   }
+    console.log(updatedMeetings);
+    
     setMeetings(updatedMeetings);
-    setToBeDeletedMeetings([]);
+  
     setDeleteClicked(false);
   };
 
@@ -157,7 +188,8 @@ const MeetingsPage = () => {
   const setReminder = () => {
     setMeetings(
       meetings.map((meeting) => {
-        if (meeting._id === reminderClickedId) // Use _id if that's the key
+        if (meeting._id === reminderClickedId)
+          // Use _id if that's the key
           return { ...meeting, reminderTime: reminderTime };
         else return meeting;
       })
@@ -183,7 +215,7 @@ const MeetingsPage = () => {
           Meeting
         </p>
       </header>
-     
+
       <div
         className={`z-50 mt-10 flex-1 fixed ${
           createMeetingWindowVisible ? "block" : "hidden"
@@ -195,7 +227,13 @@ const MeetingsPage = () => {
             onClick={() => setCreateMeetingWindowVisible(false)}
             className="bg-violet-500 p-1 rounded-md"
           >
-            <Image src={close} width={14} height={14} alt="close" className="invert" />
+            <Image
+              src={close}
+              width={14}
+              height={14}
+              alt="close"
+              className="invert"
+            />
           </button>
         </div>
         <p className="text-xl font-bold tracking-wide text-center text-violet-500">
@@ -229,7 +267,11 @@ const MeetingsPage = () => {
             <input
               type="date"
               className="text-[14px] text-violet-500"
-              onChange={(e) => setMeetingInputDate(e.target.value.split("-").reverse().join("/"))}
+              onChange={(e) =>
+                setMeetingInputDate(
+                  e.target.value.split("-").reverse().join("/")
+                )
+              }
             />
           </div>
           <div className="flex mt-3 justify-between">
@@ -284,7 +326,7 @@ const MeetingsPage = () => {
                     {meeting.Subject}
                   </p>
                   <div className="flex gap-4">
-                    <button
+                    {/* <button
                       className="p-1 bg-violet-500 text-white rounded-md"
                       onClick={() => createReminder(meeting._id)}
                     >
@@ -294,17 +336,14 @@ const MeetingsPage = () => {
                         width={16}
                         height={16}
                       />
-                    </button>
+                    </button> */}
                     <button
                       className="p-1 bg-violet-500 text-white rounded-md"
-                      onClick={(e) => deleteMeetings(e, meeting._id)}
+                      onClick={()=>{
+                        deleteTheseMeetings(meeting._id);
+                      }}
                     >
-                      <Image
-                        src={trash}
-                        alt="delete"
-                        width={16}
-                        height={16}
-                      />
+                      <Image src={trash} alt="delete" width={16} height={16} />
                     </button>
                   </div>
                 </div>
@@ -315,7 +354,9 @@ const MeetingsPage = () => {
                   </p>
                 </div>
                 <div className="flex justify-between items-center mt-2">
-                  <p className="text-[14px] text-violet-400">Link: {meeting.Link}</p>
+                  <p className="text-[14px] text-violet-400">
+                    Link: {meeting.Link}
+                  </p>
                   <a
                     href={meeting.Link}
                     className="text-violet-500 underline"

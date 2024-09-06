@@ -164,6 +164,13 @@ export const adminSidebarLinks = [
     icon: inventory,
     link: "/inventory",
   },
+  {
+    id: 6,
+    label: "Rooms",
+    icon: classes,
+    link: "/admin/rooms",
+
+  }
 ];
 
 // STUDENT DATA MAPPINGS

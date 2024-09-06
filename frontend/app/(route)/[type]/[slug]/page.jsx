@@ -1,7 +1,7 @@
 "use client";
 
 import PerformaceAnalysisBody from "@/components/PerformaceAnalysis/PerformaceAnalysisBody";
-import AttendanceBody from "@/components/Attendance/attendanceBody";
+
 // import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBody";
 import LeaderBoardBody from "@/components/Leaderboard/leaderBoardBody";
 import { notFound } from "next/navigation";
@@ -19,7 +19,9 @@ import Edubot from "@/components/Pages/Edubot";
 import AdminAuth from "@/components/Administrator/adminAuth";
 import AssignmentMarksSubmission from "@/components/Pages/AssignmentMarksSubmission";
 import MeetingsPage from "@/components/Pages/MeetingsPage";
-
+import StudentMeetingsPage from "@/components/Pages/StudentMeetingPage";
+import RoomManagement from "@/components/Pages/RoomManagement";
+import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBody";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -37,8 +39,9 @@ const slugTitleMap = {
   edubot: "Edubot",
   adminAuth: "Admin Auth",
   assignmentMarks: "Assignments",
-  meeting: "Meeting"
-
+  meeting: "Meeting",
+  studentmeeting: "Meeting",
+  rooms: "Rooms"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -75,14 +78,18 @@ export default function Page({ params }) {
       return type === "admin" ? <StudentTeacherDetails /> : notFound();
     case "adminAuth":
       return type === "admin" ? <AdminAuth /> : notFound();
+    case "rooms":
+      return type === "admin" ? <RoomManagement /> : notFound();
     case "teacherQuiz":
       return type === "teacher" ? <TeacherQuizBody /> : notFound();
     case "teacherLogin":
-      return type === "teacher" ? <TeacherLogin /> : notFound();  
+      return type === "teacher" ? <TeacherLogin /> : notFound();
     case "assignmentMarks":
-      return type === "teacher"? <AssignmentMarksSubmission/> : notFound();      
+      return type === "teacher" ? <AssignmentMarksSubmission /> : notFound();
     case "meeting":
-      return type === "teacher"? <MeetingsPage/> : notFound(); 
+      return type === "teacher" ? <MeetingsPage /> : notFound();
+    case "studentmeeting":
+      return type === "student" ? <StudentMeetingsPage /> : notFound();
     default:
       return notFound();
   }

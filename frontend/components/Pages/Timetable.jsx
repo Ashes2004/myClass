@@ -76,7 +76,8 @@ const Timetable = () => {
         });
 
         if (!response.ok) {
-          throw new Error("Failed to fetch class routine data");
+          // throw new Error("Failed to fetch class routine data");
+          return <Text className = "text-3xl text-blue-500 font-semibold text-center">You have not  any Class Routine till now</Text>
         }
 
         const data = await response.json();

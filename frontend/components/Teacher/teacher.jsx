@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import TeacherLayout from "./teacherLayout";
 import Link from "next/link";
 import Image from "next/image";
+import { sampleProfile } from "@/public/Images";
 import {
   book_outline,
   calendar_outline,
   rightArrow,
 } from "@/public/Icons/index";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
-import { video_calling } from "@/public/Images";
+import { useRouter } from "next/navigation";
+import SearchBar from "../structComponents/SearchBar";
 
 const TeacherBody = () => {
   const [userTeacher, setUserTeacher] = useState({ name: "Dr. Subhamita" });
@@ -81,13 +83,85 @@ const TeacherBody = () => {
     "NBA Visit Notice",
     "CA2 Submission Date",
   ]);
+
+
+
+
+
+  const router = useRouter();
+  const [teacherData, setTeacherData] = useState(null);
+ 
+
+ 
+  useEffect(() => {
+    const token = sessionStorage.getItem("teacherToken");
+    if (!token) {
+      // Redirect to login if no token is present
+      router.push("/teacher/teacherLogin");
+    } else {
+      // Fetch student data if token is present
+      const fetchTeacherData = async () => {
+        try {
+          console.log("token: ", token);
+          const response = await fetch("http://localhost/api/teachers/get/teacher", {
+            method: "GET",
+            headers: {
+              Authorization: `Bearer ${token}`,
+              "Content-Type": "application/json",
+            },
+          });
+
+          if (!response.ok) {
+            router.push("/teacher/teacherLogin");
+            throw new Error("Failed to fetch student data");
+            
+          }
+
+          const data = await response.json();
+          setTeacherData(data);
+          sessionStorage.setItem("teacherID" , data._id);
+          sessionStorage.setItem("classteacher" , data?.ClassTeacher?.classId || null);
+       console.log("teacherData: " , teacherData );
+        } catch (error) {
+            
+          console.error("Error fetching student data:", error);
+        }
+      };
+
+      fetchTeacherData();
+    }
+  }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
+
+  if (!teacherData) {
+    return <p>Loading...</p>; // Display a loading state while fetching data
+  }
+
+
+
+
+
+
   return (
     <TeacherLayout>
       <div className="h-full border-transparent p-3 md:p-6 box-border text-black border-r-2 md:grid grid-cols-6 gap-3 ">
         <div className="col-span-4 rounded-md md:p-3">
-          <h1 className=" text-xl md:text-3xl md:h-12 pl-4 pt-3 font-bold md:font-bold md:tracking-wider">
-            Welcome back {userTeacher.name}👋
+        <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
+          <h1 className="text-xl md:text-3xl font-bold">
+            Welcome back, {teacherData?.name ||  "subhomita"} 👋
           </h1>
+          <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
+            <SearchBar />
+            <Link href="/teacherProfile" className="bg-white rounded-full">
+              <Image
+                src={teacherData?.profilePhoto || sampleProfile}
+                alt="profile"
+                width={42}
+                height={42}
+                className="object-cover cursor-pointer rounded-full"
+              />
+            </Link>
+          </div>
+        </div>
           <div className="pt-3 md:pl-4 md:pr-6 pb-2 md:mt-2 flex justify-between p-4">
             <h3 className="font-bold text-md  md:text-lg tracking-wide">
               Class Materials
@@ -111,12 +185,7 @@ const TeacherBody = () => {
                     <div
                       className={`rounded-full flex justify-center items-center p-4 ${course.bgColour}`}
                     >
-                      <Image
-                        src={book_outline}
-                        height={20}
-                        width={20}
-                        alt="image"
-                      ></Image>
+                      <Image src={book_outline} height={20} width={20}></Image>
                     </div>
                     <div className="flex flex-col">
                       <div className="md:font-semibold font-medium">
@@ -158,12 +227,7 @@ const TeacherBody = () => {
                       <div
                         className={`${lecture.bgColour} md:rounded-full rounded-tl-md rounded-tr-md md:mr-3 p-3 flex items-center justify-center`}
                       >
-                        <Image
-                          src={calendar_outline}
-                          width={20}
-                          height={20}
-                          alt="image"
-                        />
+                        <Image src={calendar_outline} width={20} height={20} />
                       </div>
                       <div className="md:flex flex-col mt-2 ml-2 mr-2">
                         <div className="md:font-semibold font-medium md:text-md text-sm tracking-wide">
@@ -186,12 +250,7 @@ const TeacherBody = () => {
                         href="#"
                         className="md:bg-slate-200 bg-slate-300 p-2 rounded-lg"
                       >
-                        <Image
-                          src={rightArrow}
-                          height={20}
-                          width={20}
-                          alt="image"
-                        ></Image>
+                        <Image src={rightArrow} height={20} width={20}></Image>
                       </Link>
                     </div>
                   </div>
@@ -235,3 +294,6 @@ const TeacherBody = () => {
 };
 
 export default TeacherBody;
+
+
+

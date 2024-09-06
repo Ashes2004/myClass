@@ -1,5 +1,6 @@
 "use client";
 
+
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
@@ -15,48 +16,55 @@ import { chatbot, rightArrow } from "@/public/Icons";
 import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
+import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
 const StudentBody = () => {
-  // const router = useRouter();
+  const router = useRouter();
   const [studentData, setStudentData] = useState(null);
 
-  // useEffect(() => {
-  //   const token = sessionStorage.getItem("studentToken");
-  //   if (!token) {
-  //     // Redirect to login if no token is present
-  //     router.push("/student/studentLogin");
-  //   } else {
-  //     // Fetch student data if token is present
-  //     const fetchStudentData = async () => {
-  //       try {
-  //         console.log("token: ", token);
-  //         const response = await fetch("http://localhost/api/students/get/student", {
-  //           method: "GET",
-  //           headers: {
-  //             Authorization: `Bearer ${token}`,
-  //             "Content-Type": "application/json",
-  //           },
-  //         });
+  useEffect(() => {
+    const token = sessionStorage.getItem("studentToken");
+    if (!token) {
+      // Redirect to login if no token is present
+      router.push("/student/studentLogin");
+    } else {
+      // Fetch student data if token is present
+      const fetchStudentData = async () => {
+        try {
+          console.log("token: ", token);
+          const response = await fetch(
+            "http://localhost/api/students/get/student",
+            {
+              method: "GET",
+              headers: {
+                Authorization: `Bearer ${token}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
 
-  //         if (!response.ok) {
-  //           throw new Error("Failed to fetch student data");
-  //         }
+          if (!response.ok) {
+            router.push("/student/studentLogin");
+            throw new Error("Failed to fetch student data");
+          }
 
-  //         const data = await response.json();
-  //         setStudentData(data);
-  //       } catch (error) {
-  //         console.error("Error fetching student data:", error);
-  //       }
-  //     };
+          const data = await response.json();
+          setStudentData(data);
+         sessionStorage.setItem("studentClassId" , data.classId._id);
+         sessionStorage.setItem("studentId" , data._id);
+        } catch (error) {
+          console.error("Error fetching student data:", error);
+        }
+      };
 
-  //     fetchStudentData();
-  //   }
-  // }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
+      fetchStudentData();
+    }
+  }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
 
-  // if (!studentData) {
-  //   return <p>Loading...</p>; // Display a loading state while fetching data
-  // }
+  if (!studentData) {
+    return <p>Loading...</p>; // Display a loading state while fetching data
+  }
 
   return (
     <StudentLayout>
@@ -64,17 +72,17 @@ const StudentBody = () => {
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
-            Welcome back, {studentData?.studentName || "user"} 👋
+            Welcome back, {studentData?.studentName} 👋
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
             <Link href="/studentProfile" className="bg-white rounded-full">
               <Image
-                src={sampleProfile}
+                src={studentData?.profilePhoto || sampleProfile}
                 alt="profile"
                 width={42}
                 height={42}
-                className="object-cover cursor-pointer"
+                className="object-cover cursor-pointer rounded-full"
               />
             </Link>
           </div>
@@ -182,10 +190,10 @@ const StudentBody = () => {
                     )
                 )}
               </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
+           <div>
+              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2"> */}
                 {/* Chatbot Section */}
-                <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
+                {/* <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
                   <div className="flex justify-between items-center mb-4">
                     <div className="bg-purple-300 rounded-full p-2">
                       <Image
@@ -227,7 +235,7 @@ const StudentBody = () => {
                       />
                     </Link>
                   </div>
-                </div>
+                </div> */}
 
                 {/* Notice Board Section */}
                 <div className="col-span-1 bg-white shadow-xl rounded-xl p-4">
@@ -316,7 +324,7 @@ const StudentBody = () => {
                   This is an Alarm System. Raise this alarm ONLY in case of FIRE
                   or any other EMERGENCY!!!
                 </h2>
-                <AlertSystem />
+                <AlertSystem name={studentData?.studentName}/>
               </div>
               <div className="flex justify-center items-center mt-4 drop-shadow-xl">
                 <CalendarDemo />
@@ -391,3 +399,4 @@ const StudentBody = () => {
 };
 
 export default StudentBody;
+ 

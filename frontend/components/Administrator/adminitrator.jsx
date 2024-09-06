@@ -12,15 +12,48 @@ import { inventory, rightArrow } from "@/public/Icons";
 import { sampleProfile } from "@/public/Images";
 import AlertSystem from "../structComponents/AlarmSystem";
 import { CalendarDemo } from "../structComponents/CalendarDemo";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const AdminBody = () => {
+  const [adminData, setAdminData] = useState();
+  const router = useRouter();
+  useEffect(() => {
+    const token = sessionStorage.getItem("adminToken");
+    if (!token) {
+      router.push("/admin/adminAuth");
+    }
+
+    const fetchAdmin = async () => {
+      const response = await fetch("http://localhost/api/admin/find", {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        router.push("/admin/adminAuth");
+      }else{
+        const data = await response.json();
+        setAdminData(data);
+      }
+
+     
+    };
+    fetchAdmin();
+  }, [router]);
+
+  if (!adminData) {
+    return <p>Loading...</p>; // Display a loading state while fetching data
+  }
   return (
     <AdminLayout>
       <div className="bg-lightGray text-black flex flex-col p-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
-            Welcome back, Admin 👋
+            Welcome back,  {adminData?.InstituteName || "Admin"}👋
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
