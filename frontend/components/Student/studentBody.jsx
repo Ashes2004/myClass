@@ -4,6 +4,8 @@
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
+import { genarateToken , messaging } from "@/app/Firebase";
+
 import {
   notices,
   studentAssignments,
@@ -19,17 +21,25 @@ import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
+
 const StudentBody = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(null);
+ 
+  // useEffect(()=>{
+  //   genarateToken();
+  //   onMessage(messaging, (payload) => {
+  //     console.log('Message received. ', payload);
+  //   });
+  //   },[]);
 
   useEffect(() => {
-    const token = sessionStorage.getItem("studentToken");
+  const token = sessionStorage.getItem("studentToken");
     if (!token) {
-      // Redirect to login if no token is present
+      
       router.push("/student/studentLogin");
     } else {
-      // Fetch student data if token is present
+    
       const fetchStudentData = async () => {
         try {
           console.log("token: ", token);
@@ -59,11 +69,15 @@ const StudentBody = () => {
       };
 
       fetchStudentData();
+      
     }
-  }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
+  }, [router]); 
+
+
+
 
   if (!studentData) {
-    return <p>Loading...</p>; // Display a loading state while fetching data
+    return <p>Loading...</p>; 
   }
 
   return (

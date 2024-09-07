@@ -255,7 +255,7 @@ const AdminBody = () => {
                   This is an Alarm System. Raise this alarm ONLY in case of FIRE
                   or any other EMERGENCY!!!
                 </h2>
-                <AlertSystem />
+                <AlertSystem  name = {adminData?.InstituteName}/>
               </div>
               <div className="flex justify-center items-center mt-4 drop-shadow-xl">
                 <CalendarDemo />

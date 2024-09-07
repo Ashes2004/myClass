@@ -14,15 +14,26 @@ import quizRoutes from './routes/QuizRoutes.js';
 import administrativeRoutes from './routes/AdminRoutes.js';
 // import authenticateToken from './middleware/authMiddleware.js';
 import errorHandler from "./middleware/errorHandler.js";
+import admin from 'firebase-admin';
 import onlineClassRoutes from "./routes/OnlineClassRoutes.js"
 import attendenceRoutes from './routes/AttendenceRoutes.js';
+import alertRoutes from './routes/AlertTokenRoutes.js';
+import serviceAccount from './myclass-6cf84-firebase-adminsdk-r71sl-388ebdf077.json' assert { type: "json" };
 dotenv.config();
+
+
+
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
 
 const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Database connection
+
+
 mongoose
   .connect(process.env.MONGODB_URI, {
     useNewUrlParser: true,
@@ -44,6 +55,7 @@ app.use('/api/rooms', roomRoutes);
 app.use('/api/student-enroll', studentEnrollRoutes);
 app.use('/api/admin',  administrativeRoutes);
 app.use('/api/online-class' ,onlineClassRoutes );
+app.use('/api/alert' , alertRoutes);
 // Error handling middleware
 app.use(errorHandler);
 

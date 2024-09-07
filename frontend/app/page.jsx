@@ -1,8 +1,20 @@
+ "use client"
 import Link from "next/link";
 import Navbar from "@/components/structComponents/Navbar";
-
+import { genarateToken , messaging } from "./Firebase";
+import { onMessage } from "firebase/messaging";
+import { useEffect } from "react";
 
 export default function Home() {
+ 
+  useEffect(()=>{
+    genarateToken();
+    onMessage(messaging, (payload) => {
+      console.log('Message received. ', payload);
+    });
+    },[]);
+
+  
   return (
     <>
  
