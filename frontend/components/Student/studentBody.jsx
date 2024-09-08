@@ -1,10 +1,9 @@
 "use client";
 
-
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
-import { genarateToken , messaging } from "@/app/Firebase";
+import { genarateToken, messaging } from "@/app/Firebase";
 
 import {
   notices,
@@ -21,11 +20,10 @@ import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-
 const StudentBody = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(null);
- 
+
   // useEffect(()=>{
   //   genarateToken();
   //   onMessage(messaging, (payload) => {
@@ -34,12 +32,10 @@ const StudentBody = () => {
   //   },[]);
 
   useEffect(() => {
-  const token = sessionStorage.getItem("studentToken");
+    const token = sessionStorage.getItem("studentToken");
     if (!token) {
-      
       router.push("/student/studentLogin");
     } else {
-    
       const fetchStudentData = async () => {
         try {
           console.log("token: ", token);
@@ -61,28 +57,24 @@ const StudentBody = () => {
 
           const data = await response.json();
           setStudentData(data);
-         sessionStorage.setItem("studentClassId" , data.classId._id);
-         sessionStorage.setItem("studentId" , data._id);
+          sessionStorage.setItem("studentClassId", data.classId._id);
+          sessionStorage.setItem("studentId", data._id);
         } catch (error) {
           console.error("Error fetching student data:", error);
         }
       };
 
       fetchStudentData();
-      
     }
-  }, [router]); 
-
-
-
+  }, [router]);
 
   if (!studentData) {
-    return <p>Loading...</p>; 
+    return <p>Loading...</p>;
   }
 
   return (
     <StudentLayout>
-      <div className="bg-cream text-black flex flex-col p-4">
+      <div className=" text-black flex flex-col p-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
@@ -204,8 +196,8 @@ const StudentBody = () => {
                     )
                 )}
               </div>
-           <div>
-              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2"> */}
+              <div>
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2"> */}
                 {/* Chatbot Section */}
                 {/* <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
                   <div className="flex justify-between items-center mb-4">
@@ -338,7 +330,7 @@ const StudentBody = () => {
                   This is an Alarm System. Raise this alarm ONLY in case of FIRE
                   or any other EMERGENCY!!!
                 </h2>
-                <AlertSystem name={studentData?.studentName}/>
+                <AlertSystem name={studentData?.studentName} />
               </div>
               <div className="flex justify-center items-center mt-4 drop-shadow-xl">
                 <CalendarDemo />
@@ -413,4 +405,3 @@ const StudentBody = () => {
 };
 
 export default StudentBody;
- 

@@ -88,9 +88,9 @@ export const studentSidebarLinks = [
   },
   {
     id: 7,
-    label: "Raise Alarm",
-    icon: alarm,
-    link: "/",
+    label: "Meetings",
+    icon: classes,
+    link: "/student/studentmeeting",
   },
 ];
 
@@ -169,8 +169,7 @@ export const adminSidebarLinks = [
     label: "Rooms",
     icon: classes,
     link: "/admin/rooms",
-
-  }
+  },
 ];
 
 // STUDENT DATA MAPPINGS
@@ -536,7 +535,7 @@ export const adminTasks = [
     task: "Register New Teachers",
     due: "02.09.24",
     time: "03:00 PM",
-    icon: approval, 
+    icon: approval,
     status: "pending",
     statusDesc: "pending approval",
     bg: "bg-green-300",

@@ -31,11 +31,11 @@ import InventoryOrderPage from "@/components/Pages/InventoryOrderPage";
 
 const pageTitleMap = {
   student: "Student",
-  
+
   teacher: "Teacher",
 
   administrator: "Admin",
- 
+
   library: "Digital Library",
   classroutineform: "Class Routine Form",
   studentRegistration: "Student Enrollment",
@@ -69,13 +69,13 @@ export default function Page({ params }) {
   switch (type) {
     case "student":
       return <StudentBody /> || notFound();
-   
+
     case "teacher":
       return <TeacherBody /> || notFound();
-   
+
     case "administrator":
       return <AdminitratorBody /> || notFound();
-   
+
     case "studentProfile":
       return <StudentProfilePage /> || notFound();
     case "subjectMaterial":

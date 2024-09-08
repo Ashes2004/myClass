@@ -6,7 +6,7 @@ export default function StudentLayout({ children }) {
   return (
     <>
       <CustomNavbar navbarList={studentSidebarLinks} />
-      <div className="flex sm:h-screen bg-cream p-4">
+      <div className="flex sm:h-screen bg-cream dark:bg-[#282C34] p-4">
         <Sidebar sidebarList={studentSidebarLinks} name={"student"} />
         <div className="w-full pb-4 pl-3">{children}</div>
       </div>
