@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import StudentLayout from '../Student/studentLayout';
+import ReactMarkdown from 'react-markdown';
 
 const TypingIndicator = () => (
   <div className="flex items-center space-x-2">
@@ -33,6 +34,7 @@ const Edubot = () => {
         body: JSON.stringify({ message: input }),
       });
       const data = await response.json();
+
       setMessages([...messages, { text: input, type: 'user' }, { text: data.response, type: 'EduBot' }]);
       setLoading(false);
       setTyping(false);
@@ -48,7 +50,7 @@ const Edubot = () => {
 
   return (
     <StudentLayout>
-      <div className="flex flex-col h-screen max-w-4xl mx-auto bg-gray-50">
+      <div className="flex flex-col sm:w-screen h-screen max-w-4xl mx-auto bg-gray-50">
         <header className="bg-blue-600 text-white p-4 text-center shadow-md">
           <h1 className="text-3xl font-semibold">Edubot</h1>
         </header>
@@ -64,7 +66,14 @@ const Edubot = () => {
                     <p className="text-gray-600 font-semibold">Edubot:</p>
                   </div>
                 )}
-                <p>{msg.text}</p>
+                {/* Render bot message with markdown */}
+                {msg.type === 'EduBot' ? (
+                  <ReactMarkdown className="prose">
+                    {msg.text}
+                  </ReactMarkdown>
+                ) : (
+                  <p>{msg.text}</p>
+                )}
               </div>
             ))}
             {typing && (
