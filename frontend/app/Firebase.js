@@ -25,7 +25,7 @@ export { storage, messaging, db };
 
 
 export const genarateToken = async()=>{
-
+  if (typeof window !== "undefined" && typeof navigator !== "undefined"){
   const permisson =   await Notification.requestPermission();
   console.log(permisson);
   if(permisson === "granted")
@@ -36,4 +36,5 @@ export const genarateToken = async()=>{
      return token ;
     
   }
+}
 }

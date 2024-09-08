@@ -20,7 +20,8 @@ export default function Home() {
         body: JSON.stringify({ token: token }),
       });
       if (!response.ok) {
-        throw new error("error something");
+        console.log("error");
+       
       }
 
       const data = await response.json();
@@ -32,6 +33,7 @@ export default function Home() {
     notify();
     onMessage(messaging, (payload) => {
       console.log("Message received. ", payload);
+      alert("message received!!");
     });
   }, []);
 
