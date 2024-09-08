@@ -31,7 +31,7 @@ export default function AlertSystem({ name }) {
      
     }
     const response = await fetch(
-      `http://localhost:500/api/alert/send-notification/${notifyToken}`,
+      `http://localhost:5000/api/alert/send-notification/${notifyToken}`,
       {
         method: "POST",
         headers: {

@@ -25,7 +25,7 @@ router.post('/save-token', async (req, res) => {
  
 // Send Notification Route
 router.post('/send-notification/:id', async (req, res) => {
-    const { title, body , image } = req.body;
+    const { title, body  } = req.body;
   
     try {
       const AlertTokens = await AlertToken.find();
@@ -35,6 +35,10 @@ router.post('/send-notification/:id', async (req, res) => {
         return res.status(400).json({ error: 'No registered AlertTokens' });
       }
       const selfToken = await AlertToken.findById(req.params.id);
+      if(selfToken.length == 0)
+      {
+        return res.status(400).json({ error: 'No registered AlertTokens' });
+      }
       const updatedAlertTokenArray = AlertTokenArray.filter(token => token !== selfToken.token );
   
       const message = {
