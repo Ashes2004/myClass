@@ -17,7 +17,7 @@ const TeacherStudentToggle = () => {
 
     const fetchTeachers = async () => {
         try {
-            const response = await fetch('http://localhost/api/teachers');
+            const response = await fetch('http://localhost:5000/api/teachers');
             const data = await response.json();
             setTeachers(data);
         } catch (error) {
@@ -27,7 +27,7 @@ const TeacherStudentToggle = () => {
 
     const fetchStudents = async () => {
         try {
-            const response = await fetch('http://localhost/api/students');
+            const response = await fetch('http://localhost:5000/api/students');
             const data = await response.json();
             setStudents(data);
         } catch (error) {

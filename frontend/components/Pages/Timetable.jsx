@@ -41,7 +41,7 @@ const Timetable = () => {
       }
 
       try {
-        const response = await fetch("http://localhost/api/students/get/student", {
+        const response = await fetch("http://localhost:5000/api/students/get/student", {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -68,7 +68,7 @@ const Timetable = () => {
     const fetchRoutineData = async (classid) => {
       try {
         if(classid){
-        const response = await fetch(`http://localhost/api/class-routine/${classid}`, {
+        const response = await fetch(`http://localhost:5000/api/class-routine/${classid}`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

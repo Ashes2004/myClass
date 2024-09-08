@@ -12,7 +12,7 @@ export default function Home() {
       const token = await genarateToken();
       console.log("token", token);
 
-      const response = await fetch("http://localhost/api/alert/save-token", {
+      const response = await fetch("http://localhost:5000/api/alert/save-token", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

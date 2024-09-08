@@ -8,7 +8,7 @@ const RoomManagement = () => {
 
   // Fetch all rooms
   useEffect(() => {
-    axios.get('http://localhost/api/rooms')
+    axios.get('http://localhost:5000/api/rooms')
       .then(response => setRooms(response.data))
       .catch(error => console.error('Error fetching rooms:', error));
   }, []);
@@ -16,7 +16,7 @@ const RoomManagement = () => {
   // Create a new room
   const createRoom = (e) => {
     e.preventDefault();
-    axios.post('http://localhost/api/rooms', newRoom)
+    axios.post('http://localhost:5000/api/rooms', newRoom)
       .then(response => {
         setRooms([...rooms, response.data]);
         setNewRoom({ roomNumber: '', capacity: '' });
@@ -27,7 +27,7 @@ const RoomManagement = () => {
   // Update a room
   const updateRoom = (e) => {
     e.preventDefault();
-    axios.put(`http://localhost/api/rooms/${editingRoom._id}`, editingRoom)
+    axios.put(`http://localhost:5000/api/rooms/${editingRoom._id}`, editingRoom)
       .then(response => {
         const updatedRooms = rooms.map(room => room._id === editingRoom._id ? response.data : room);
         setRooms(updatedRooms);
@@ -38,7 +38,7 @@ const RoomManagement = () => {
 
   // Delete a room
   const deleteRoom = (roomId) => {
-    axios.delete(`http://localhost/api/rooms/${roomId}`)
+    axios.delete(`http://localhost:5000/api/rooms/${roomId}`)
       .then(() => setRooms(rooms.filter(room => room._id !== roomId)))
       .catch(error => console.error('Error deleting room:', error));
   };

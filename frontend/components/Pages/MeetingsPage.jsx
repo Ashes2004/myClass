@@ -34,7 +34,7 @@ const MeetingsPage = () => {
 
     const fetchAllocatedClasses = async () => {
       try {
-        const res = await fetch(`http://localhost/api/teachers/${teacherId}`);
+        const res = await fetch(`http://localhost:5000/api/teachers/${teacherId}`);
         const data = await res.json();
         setAllocatedClasses(data.allocatedClasses);
         console.log("allocated classes: ", allocatedClasses);
@@ -46,7 +46,7 @@ const MeetingsPage = () => {
     const fetchMeetings = async () => {
       try {
         const res = await fetch(
-          `http://localhost/api/online-class/teacher/${teacherId}`
+          `http://localhost:5000/api/online-class/teacher/${teacherId}`
         );
         const data = await res.json();
         setMeetings(data);
@@ -99,7 +99,7 @@ const MeetingsPage = () => {
     };
     console.log("new meet: ", newMeeting);
     try {
-      const res = await fetch("http://localhost/api/online-class", {
+      const res = await fetch("http://localhost:5000/api/online-class", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -155,7 +155,7 @@ const MeetingsPage = () => {
     );
     
    try {
-    const res = await fetch(`http://localhost/api/online-class/${id}`, {
+    const res = await fetch(`http://localhost:5000/api/online-class/${id}`, {
       method: "DELETE"
     });
 

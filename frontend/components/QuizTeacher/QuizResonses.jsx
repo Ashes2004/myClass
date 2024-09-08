@@ -8,7 +8,7 @@ const QuizResponses = ({ quizId }) => {
   useEffect(() => {
     const fetchResponses = async () => {
       try {
-        const { data } = await axios.get(`http://localhost/api/quizzes/${quizId}/responses`);
+        const { data } = await axios.get(`http://localhost:5000/api/quizzes/${quizId}/responses`);
         const processedData = data.map(response => ({
           studentName: response.studentId.studentName,
           studentRoll: response.studentId.studentRoll,

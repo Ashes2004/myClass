@@ -14,7 +14,7 @@ const TeacherLogin = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost/api/teachers/login", {
+      const response = await fetch("http://localhost:5000/api/teachers/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

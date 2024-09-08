@@ -57,7 +57,7 @@ const QuizBody = () => {
       const studentId = sessionStorage.getItem("studentId");
       try {
         const response = await fetch(
-          `http://localhost/api/students/${studentId}`
+          `http://localhost:5000/api/students/${studentId}`
         );
         if (!response.ok) {
           throw new Error("Failed to fetch responses");
@@ -75,7 +75,7 @@ const QuizBody = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost/api/quizzes");
+        const response = await fetch("http://localhost:5000/api/quizzes");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

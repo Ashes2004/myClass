@@ -103,7 +103,7 @@ const TeacherBody = () => {
       const fetchTeacherData = async () => {
         try {
           console.log("token: ", token);
-          const response = await fetch("http://localhost/api/teachers/get/teacher", {
+          const response = await fetch("http://localhost:5000/api/teachers/get/teacher", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,

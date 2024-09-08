@@ -19,7 +19,7 @@ const AdminProfilePage = () => {
     } else {
       const fetchAdminData = async () => {
         try {
-          const response = await fetch("http://localhost/api/admin/find", {
+          const response = await fetch("http://localhost:5000/api/admin/find", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ const AdminProfilePage = () => {
 
       const token = sessionStorage.getItem("adminToken");
       console.log("id: ", adminData._id);
-      const response = await fetch(`http://localhost/api/admin/${adminData._id}`, {
+      const response = await fetch(`http://localhost:5000/api/admin/${adminData._id}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

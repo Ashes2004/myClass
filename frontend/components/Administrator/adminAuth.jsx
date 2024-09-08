@@ -27,7 +27,7 @@ const AdminAuth = () => {
 
       // Send login data to the API
       try {
-        const response = await fetch("http://localhost/api/admin/login", {
+        const response = await fetch("http://localhost:5000/api/admin/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const AdminAuth = () => {
 
       // Send registration data to the API
       try {
-        const response = await fetch("http://localhost/api/admin", {
+        const response = await fetch("http://localhost:5000/api/admin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

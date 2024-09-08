@@ -55,7 +55,7 @@ const router = useRouter();
     
   // })
 
-    await fetch(`http://localhost/api/classes/classid/${ID}`)
+    await fetch(`http://localhost:5000/api/classes/classid/${ID}`)
       .then((response) => {
         if (!response.ok) {
          
@@ -93,7 +93,7 @@ const router = useRouter();
   };
 
   const submitAttendence = () => {
-    fetch("http://localhost/api/attendence", {
+    fetch("http://localhost:5000/api/attendence", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const router = useRouter();
 
 
   const updateAttendence = () => {
-    fetch(`http://localhost/api/attendence/update/${Id}/${attendenceData.date}`, {
+    fetch(`http://localhost:5000/api/attendence/update/${Id}/${attendenceData.date}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

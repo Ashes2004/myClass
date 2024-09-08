@@ -44,7 +44,7 @@ const StudentBody = () => {
         try {
           console.log("token: ", token);
           const response = await fetch(
-            "http://localhost/api/students/get/student",
+            "http://localhost:5000/api/students/get/student",
             {
               method: "GET",
               headers: {

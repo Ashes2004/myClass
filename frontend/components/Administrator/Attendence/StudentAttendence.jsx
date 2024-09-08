@@ -9,7 +9,7 @@ const AttendanceBox = () => {
   useEffect(() => {
     const fetchClassNames = async () => {
       try {
-        const response = await axios.get("http://localhost/api/classes");
+        const response = await axios.get("http://localhost:5000/api/classes");
         const classes = response.data.reduce((acc, cls) => {
           acc[cls.classId] = cls.name;
           return acc;
@@ -51,7 +51,7 @@ const AttendanceBox = () => {
 
         const dataPromises = classIds.map(async (classId) => {
           try {
-            const response = await axios.get(`http://localhost/api/attendence/${classId}/${formattedStartDate}`);
+            const response = await axios.get(`http://localhost:5000/api/attendence/${classId}/${formattedStartDate}`);
             return {
               classId,
               className: classNames[classId] || classId,

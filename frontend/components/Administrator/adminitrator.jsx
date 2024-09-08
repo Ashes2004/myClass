@@ -25,7 +25,7 @@ const AdminBody = () => {
     }
 
     const fetchAdmin = async () => {
-      const response = await fetch("http://localhost/api/admin/find", {
+      const response = await fetch("http://localhost:5000/api/admin/find", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

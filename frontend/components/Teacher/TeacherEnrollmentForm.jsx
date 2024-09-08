@@ -48,7 +48,7 @@ const TeacherEnrollmentForm = () => {
 
     try {
       // Using fetch API
-      const response = await fetch("http://localhost/api/teachers", {
+      const response = await fetch("http://localhost:5000/api/teachers", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

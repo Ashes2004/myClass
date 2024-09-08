@@ -20,7 +20,7 @@ const SeeAllQuizzes = ({ teacherId }) => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await fetch('http://localhost/api/quizzes');
+        const response = await fetch('http://localhost:5000/api/quizzes');
         const data = await response.json();
         const filteredQuizzes = data.filter(quiz => quiz.teacherId._id === teacherId);
         setQuizzes(filteredQuizzes);
@@ -52,7 +52,7 @@ const SeeAllQuizzes = ({ teacherId }) => {
   };
   const DeleteQuiz = async()=>{
     try {
-      const response = await axios.delete(`http://localhost/api/quizzes/${editingQuizId}` );
+      const response = await axios.delete(`http://localhost:5000/api/quizzes/${editingQuizId}` );
       Swal.fire({
         title: 'Success!',
         text: 'Quiz deleted successfully',
@@ -72,7 +72,7 @@ const SeeAllQuizzes = ({ teacherId }) => {
 }
   const handleUpdateQuiz = async () => {
     try {
-      const response = await axios.patch(`http://localhost/api/quizzes/${editingQuizId}`, updatedQuiz);
+      const response = await axios.patch(`http://localhost:5000/api/quizzes/${editingQuizId}`, updatedQuiz);
       Swal.fire({
         title: 'Success!',
         text: 'Quiz updated successfully',

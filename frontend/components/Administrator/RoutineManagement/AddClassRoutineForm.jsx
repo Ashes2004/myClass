@@ -24,12 +24,12 @@ const AddWeeklyRoutineForm = () => {
 
   useEffect(() => {
     // Fetch all classes on component mount
-    axios.get('http://localhost/api/classes')
+    axios.get('http://localhost:5000/api/classes')
       .then(response => setClasses(response.data))
       .catch(error => console.error('Error fetching classes:', error));
 
     // Fetch all rooms on component mount
-    axios.get('http://localhost/api/rooms')
+    axios.get('http://localhost:5000/api/rooms')
       .then(response => setRooms(response.data))
       .catch(error => console.error('Error fetching rooms:', error));
   }, []);
@@ -39,7 +39,7 @@ const AddWeeklyRoutineForm = () => {
     setSelectedClassId(classId);
 
     // Fetch teachers for the selected class
-    axios.get(`http://localhost/api/classes/${classId}`)
+    axios.get(`http://localhost:5000/api/classes/${classId}`)
       .then(response => setTeachers(response.data.allocatedTeachers))
       .catch(error => console.error('Error fetching teachers:', error));
   };
@@ -81,7 +81,7 @@ const AddWeeklyRoutineForm = () => {
     }));
 
     try {
-      const response = await axios.post('http://localhost/api/class-routine', {
+      const response = await axios.post('http://localhost:5000/api/class-routine', {
         classId: selectedClassId,
         routine: routineData,
       });

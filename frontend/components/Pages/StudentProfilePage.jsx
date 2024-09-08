@@ -23,7 +23,7 @@ const StudentProfilePage = () => {
       const fetchStudentData = async () => {
         try {
           console.log("token: ", token);
-          const response = await fetch("http://localhost/api/students/get/student", {
+          const response = await fetch("http://localhost:5000/api/students/get/student", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -65,7 +65,7 @@ const StudentProfilePage = () => {
       setProfilePic(photoURL);
 
       const token = sessionStorage.getItem("studentToken");
-      const response = await fetch(`http://localhost/api/students/${studentData._id}`, {
+      const response = await fetch(`http://localhost:5000/api/students/${studentData._id}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

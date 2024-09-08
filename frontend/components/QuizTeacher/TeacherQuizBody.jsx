@@ -44,7 +44,7 @@ const TeacherQuizBody = () => {
         }
         setTeacherID(teacherID);
         const response = await fetch(
-          `http://localhost/api/teachers/${teacherID}`
+          `http://localhost:5000/api/teachers/${teacherID}`
         );
         if (!response.ok) {
           throw new Error("Something went wrong. Failed to fetch teacher");
@@ -142,7 +142,7 @@ const TeacherQuizBody = () => {
      
 
 
-      const response = await fetch("http://localhost/api/quizzes", {
+      const response = await fetch("http://localhost:5000/api/quizzes", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

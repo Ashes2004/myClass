@@ -12,7 +12,7 @@ const StudentEnrollRequest = () => {
 
   useEffect(() => {
     // Fetch the classes from the API
-    axios.get('http://localhost/api/classes')
+    axios.get('http://localhost:5000/api/classes')
       .then(response => {
         const data = response.data;
         // Extract main classes by filtering unique class IDs (main part before any letter)
@@ -35,7 +35,7 @@ const StudentEnrollRequest = () => {
     };
 
     // POST request to submit the enrollment data
-    axios.post('http://localhost/api/student-enroll', enrollmentData)
+    axios.post('http://localhost:5000/api/student-enroll', enrollmentData)
       .then(response => {
         setMessage('Enrollment request sent successfully!');
         Swal.fire({

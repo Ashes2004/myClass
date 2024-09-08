@@ -21,7 +21,7 @@ const TeacherProfilePage = () => {
       const fetchTeacherData = async () => {
         try {
           console.log("token: ", token);
-          const response = await fetch("http://localhost/api/teachers/get/teacher", {
+          const response = await fetch("http://localhost:5000/api/teachers/get/teacher", {
             method: "GET",
             headers: {
               Authorization: `Bearer ${token}`,
@@ -63,7 +63,7 @@ const TeacherProfilePage = () => {
       setProfilePic(photoURL);
 
       const token = sessionStorage.getItem("teacherToken");
-      const response = await fetch(`http://localhost/api/teachers/${teacherData._id}`, {
+      const response = await fetch(`http://localhost:5000/api/teachers/${teacherData._id}`, {
         method: "PATCH",
         headers: {
           Authorization: `Bearer ${token}`,

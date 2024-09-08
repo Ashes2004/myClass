@@ -14,7 +14,7 @@ const StudentEnrollmentManagement = () => {
 
   useEffect(() => {
     // Fetch classes from the API
-    axios.get('http://localhost/api/classes')
+    axios.get('http://localhost:5000/api/classes')
       .then(response => {
         setClasses(response.data);
       })
@@ -25,7 +25,7 @@ const StudentEnrollmentManagement = () => {
 
   useEffect(() => {
     // Fetch student enrollments from the API
-    axios.get('http://localhost/api/student-enroll')
+    axios.get('http://localhost:5000/api/student-enroll')
       .then(response => {
         setStudentEnrollments(response.data.studentenrollments || []);
       })
@@ -49,7 +49,7 @@ const StudentEnrollmentManagement = () => {
   useEffect(() => {
     if (selectedClass) {
       // Fetch students from the selected class
-      axios.get(`http://localhost/api/classes/ID/${selectedClass}`)
+      axios.get(`http://localhost:5000/api/classes/ID/${selectedClass}`)
         .then(response => {
           console.log(response);
           const existingStudents =  [];
@@ -71,7 +71,7 @@ const StudentEnrollmentManagement = () => {
   const handleAddStudent = () => {
     if (selectedStudent) {
       // Fetch student ID using the selected student name
-      axios.get(`http://localhost/api/students/find/${selectedStudent}`)
+      axios.get(`http://localhost:5000/api/students/find/${selectedStudent}`)
         .then(response => {
           const studentId = response.data._id; // Assuming the API returns an object with _id
           const studentNamedata = `${response.data.studentName} ${response.data.studentId}`;
@@ -96,7 +96,7 @@ const StudentEnrollmentManagement = () => {
 
   const updateClassStudents = () => {
     if (selectedClass && studentIds.length > 0) {
-      axios.patch(`http://localhost/api/classes/${selectedClass}`, { students: studentIds })
+      axios.patch(`http://localhost:5000/api/classes/${selectedClass}`, { students: studentIds })
         .then(response => {
           console.log('Class students updated successfully:', response.data);
           Swal.fire({
@@ -128,7 +128,7 @@ const StudentEnrollmentManagement = () => {
   const deleteRequest = async()=>{
     for (const studentID of studentIds) {
       try {
-          const response = await fetch(`http://localhost/api/student-enroll/${studentID}`, {
+          const response = await fetch(`http://localhost:5000/api/student-enroll/${studentID}`, {
               method: 'DELETE',
           });
 

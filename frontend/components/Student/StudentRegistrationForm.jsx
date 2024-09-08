@@ -30,7 +30,7 @@ const EnrollmentForm = () => {
 
     console.log(formData);
     try {
-      const response = await fetch("http://localhost/api/students", {
+      const response = await fetch("http://localhost:5000/api/students", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

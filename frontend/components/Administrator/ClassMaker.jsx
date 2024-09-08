@@ -21,7 +21,7 @@ const ClassForm = () => {
 
   useEffect(() => {
     // Fetch teachers, rooms, and classes
-    axios.get('http://localhost/api/teachers')
+    axios.get('http://localhost:5000/api/teachers')
       .then(response => {
         setTeachers(response.data);
       })
@@ -29,7 +29,7 @@ const ClassForm = () => {
         console.error('Error fetching teachers:', error);
       });
 
-    axios.get('http://localhost/api/rooms')
+    axios.get('http://localhost:5000/api/rooms')
       .then(response => {
         setRooms(response.data);
       })
@@ -37,7 +37,7 @@ const ClassForm = () => {
         console.error('Error fetching rooms:', error);
       });
 
-    axios.get('http://localhost/api/classes')
+    axios.get('http://localhost:5000/api/classes')
       .then(response => {
         setClasses(response.data);
       })
@@ -49,7 +49,7 @@ const ClassForm = () => {
   useEffect(() => {
     if (mode === 'update' && selectedClassId) {
       // Fetch class data for update
-      axios.get(`http://localhost/api/classes/${selectedClassId}`)
+      axios.get(`http://localhost:5000/api/classes/${selectedClassId}`)
         .then(response => {
           setFormData(response.data);
         })
@@ -115,7 +115,7 @@ const ClassForm = () => {
   const handleSubmit = (e) => {
     console.log("prevdata: ", formData);
     e.preventDefault();
-    const url = mode === 'create' ? 'http://localhost/api/classes' : `http://localhost/api/classes/${selectedClassId}`;
+    const url = mode === 'create' ? 'http://localhost:5000/api/classes' : `http://localhost:5000/api/classes/${selectedClassId}`;
     const method = mode === 'create' ? 'post' : 'patch';
     axios({
       method,

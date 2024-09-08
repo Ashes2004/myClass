@@ -29,7 +29,7 @@ const Edubot = () => {
     setTyping(true);
     setTimeout(async () => {
       // Simulate a delay for the bot's response
-      const response = await fetch('http://localhost/api/chat/edubot', {
+      const response = await fetch('http://localhost:5000/api/chat/edubot', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: input }),

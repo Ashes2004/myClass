@@ -30,7 +30,7 @@ const AttendanceBar = () => {
         let attendenceDate = `${new Date().getDate()}-${new Date().getMonth() + 1}-${new Date().getFullYear()}`;
         console.log(ID + " ***" + attendenceDate);
 
-        const response = await fetch(`http://localhost/api/attendence/${ID}/${attendenceDate}`);
+        const response = await fetch(`http://localhost:5000/api/attendence/${ID}/${attendenceDate}`);
         if (response.ok) {
           setAttendenceTaken(true); // Attendance has been taken for the day
         } else {

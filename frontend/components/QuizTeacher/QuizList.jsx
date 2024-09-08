@@ -9,7 +9,7 @@ const SeeAllQuizzes = ({ teacherId }) => {
   useEffect(() => {
     const fetchQuizzes = async () => {
       try {
-        const response = await fetch('http://localhost/api/quizzes');
+        const response = await fetch('http://localhost:5000/api/quizzes');
         const data = await response.json();
         const filteredQuizzes = data.filter(quiz => quiz.teacherId._id === teacherId);
         setQuizzes(filteredQuizzes);

@@ -40,7 +40,7 @@ const StudentMeetingsPage = () => {
 
     const fetchMeetings = async () => {
       try {
-        const res = await fetch(`http://localhost/api/online-class/class/${classId}`);
+        const res = await fetch(`http://localhost:5000/api/online-class/class/${classId}`);
         const data = await res.json();
         setMeetings(data);
         categorizeMeetings(data);
