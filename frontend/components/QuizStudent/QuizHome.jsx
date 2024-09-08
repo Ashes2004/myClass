@@ -350,33 +350,28 @@ const QuizHome = ({ Id }) => {
           </div>
         )}
 
-        {showModal && (
-          <div className="modal">
-            <div className="modal-content">
-              <h2 className="modal-title">Questions</h2>
-              <ul className="modal-body">
-                {quiz.questions.map((question, index) => (
-                  <li
-                    key={question.questionId}
-                    className="modal-question"
-                    onClick={() => {
-                      setCurrentQuestionIndex(index);
-                      setShowModal(false);
-                    }}
-                  >
-                    Question {index + 1}
-                  </li>
-                ))}
-              </ul>
-              <button
-                className="modal-close"
-                onClick={() => setShowModal(false)}
-              >
-                Close
-              </button>
+       
+      {showModal && (
+        <div className="modal-overlay" onClick={() => setShowModal(false)}>
+          <div className="modal-content" onClick={e => e.stopPropagation()}>
+            <h2 className="text-xl font-bold mb-4">All Questions</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+              {quiz.questions.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => {
+                    setCurrentQuestionIndex(index);
+                    setShowModal(false);
+                  }}
+                  className={`question-circle ${responses[quiz.questions[index].questionId] !== undefined ? 'bg-green-500 text-white' : 'bg-gray-200'} ${currentQuestionIndex === index ? 'border-2 border-blue-500' : ''}`}
+                >
+                  {index + 1}
+                </button>
+              ))}
             </div>
           </div>
-        )}
+        </div>
+      )}
       </div>
     </QuizLayout>
   );

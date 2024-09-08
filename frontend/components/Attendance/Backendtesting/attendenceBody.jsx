@@ -58,6 +58,7 @@ const router = useRouter();
     await fetch(`http://localhost/api/classes/classid/${ID}`)
       .then((response) => {
         if (!response.ok) {
+         
           throw new Error("Network response was not ok " + response.statusText);
         }
         return response.json();
@@ -82,7 +83,12 @@ const router = useRouter();
           "There has been a problem with your fetch operation:",
           error
         );
-        alert("URL is not correct");
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: " You are not allocated as class Teacher"
+         
+        });
       });
   };
 

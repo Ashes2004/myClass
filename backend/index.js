@@ -18,6 +18,8 @@ import admin from 'firebase-admin';
 import onlineClassRoutes from "./routes/OnlineClassRoutes.js"
 import attendenceRoutes from './routes/AttendenceRoutes.js';
 import alertRoutes from './routes/AlertTokenRoutes.js';
+import chatBotRoutes from './routes/ChatBot.js'
+import bodyParser from "body-parser";
 import serviceAccount from './myclass-6cf84-firebase-adminsdk-r71sl-388ebdf077.json' assert { type: "json" };
 dotenv.config();
 
@@ -56,6 +58,7 @@ app.use('/api/student-enroll', studentEnrollRoutes);
 app.use('/api/admin',  administrativeRoutes);
 app.use('/api/online-class' ,onlineClassRoutes );
 app.use('/api/alert' , alertRoutes);
+app.use('/api/chat' , chatBotRoutes);
 // Error handling middleware
 app.use(errorHandler);
 

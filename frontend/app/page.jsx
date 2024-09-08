@@ -1,23 +1,42 @@
- "use client"
+"use client";
 import Link from "next/link";
 import Navbar from "@/components/structComponents/Navbar";
-import { genarateToken , messaging } from "./Firebase";
+import { genarateToken, messaging } from "./Firebase";
 import { onMessage } from "firebase/messaging";
 import { useEffect } from "react";
 
 export default function Home() {
- 
-  useEffect(()=>{
-    genarateToken();
-    onMessage(messaging, (payload) => {
-      console.log('Message received. ', payload);
-    });
-    },[]);
+  useEffect(() => {
+    console.log("Home");
+    const notify = async () => {
+      const token = await genarateToken();
+      console.log("token", token);
 
-  
+      const response = await fetch("http://localhost/api/alert/save-token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ token: token }),
+      });
+      if (!response.ok) {
+        throw new error("error something");
+      }
+
+      const data = await response.json();
+      console.log("Response data:", data);
+      console.log("Token ID:", data.tokenId);
+      sessionStorage.setItem("notifyToken", data.tokenId);
+    };
+
+    notify();
+    onMessage(messaging, (payload) => {
+      console.log("Message received. ", payload);
+    });
+  }, []);
+
   return (
     <>
- 
       <div className="h-screen bg-cream">
         <Navbar />
         <div className="p-6">
@@ -49,7 +68,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-     
     </>
   );
 }

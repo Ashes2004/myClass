@@ -50,7 +50,26 @@ const SeeAllQuizzes = ({ teacherId }) => {
     });
     setCurrentIndex(index);
   };
+  const DeleteQuiz = async()=>{
+    try {
+      const response = await axios.delete(`http://localhost/api/quizzes/${editingQuizId}` );
+      Swal.fire({
+        title: 'Success!',
+        text: 'Quiz deleted successfully',
+        icon: 'success',
+      });
+  }catch(error)
+  {
+    console.error("Error delete quiz:", error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Failed to delete quiz',
+    });
+  }
 
+
+}
   const handleUpdateQuiz = async () => {
     try {
       const response = await axios.patch(`http://localhost/api/quizzes/${editingQuizId}`, updatedQuiz);
@@ -205,6 +224,12 @@ const SeeAllQuizzes = ({ teacherId }) => {
                     className="bg-gray-500 text-white py-2 px-4 rounded-lg shadow-sm hover:bg-gray-600"
                   >
                     Cancel
+                  </button>
+                  <button
+                    onClick={() => DeleteQuiz()}
+                    className="bg-red-500 text-white py-2 px-4 rounded-lg shadow-sm hover:bg-gray-600"
+                  >
+                    Delete Quiz
                   </button>
                 </div>
                 {/* <div className="flex gap-2">

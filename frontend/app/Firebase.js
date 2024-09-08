@@ -32,27 +32,8 @@ export const genarateToken = async()=>{
   {
     const token = await  getToken(messaging, { vapidKey: 'BL4VlbgV3uxI7oYGQUTfy_lJHnpSvtRa6bFp4CoZcdWsjlZAvB2pxFNYeAKeQQZcSpEveof8HIMatrwecLstdtc' });
     console.log("message token: ",token);
-
-  const response =   await fetch('http://localhost/api/alert/save-token' , {
-      method: "POST",
-      headers: {
-       
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({token})
-    },
-   )
-  if(!response.ok)
-  {
-    throw console.error("error something");
-    
-  }else{
-    const data = await response.json();
-    console.log(data);
-    console.log(data.tokenId);
-    sessionStorage.setItem('notifyToken' , data.tokenId);
-  }
-
+ 
+     return token ;
     
   }
 }

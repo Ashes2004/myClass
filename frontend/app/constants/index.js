@@ -60,7 +60,7 @@ export const studentSidebarLinks = [
     id: 4,
     label: "EduBot",
     icon: chatbot,
-    link: "/",
+    link: "/student/edubot",
   },
   {
     id: 5,

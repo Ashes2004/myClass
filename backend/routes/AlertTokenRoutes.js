@@ -8,15 +8,16 @@ router.post('/save-token', async (req, res) => {
     
   
     try {
-      const existingAlertToken = await AlertToken.findOne({ token : req.body.token });
-      if (!existingAlertToken) {
-        const newAlertToken = new AlertToken(req.body);
-        await newAlertToken.save();
-        res.status(200).json({ message: 'AlertToken saved successfully'  ,tokenId: newAlertToken._id });
+      const existingAlertToken = await AlertToken.findOne({ token : req?.body?.token || null });
+      if (existingAlertToken) {
+        return res.status(200).json({ message: 'AlertToken already saved' , tokenId: existingAlertToken._id  });
       }
-      res.status(200).json({ message: 'AlertToken already saved' , tokenId: existingAlertToken._id  });
+      const newAlertToken = new AlertToken(req.body);
+        await newAlertToken.save();
+       return  res.status(200).json({ message: 'AlertToken saved successfully'  ,tokenId: newAlertToken._id });
+     
     } catch (error) {
-      res.status(500).json({ error: 'Failed to save AlertToken' });
+     return res.status(500).json({ error: 'Failed to save AlertToken' });
     }
   });
   
@@ -76,10 +77,10 @@ router.post('/send-notification/:id', async (req, res) => {
     //     console.log('Removed invalid tokens:', failedTokens);
     //   }
   
-      res.status(200).json({ message: 'Notifications sent successfully', response });
+     return  res.status(200).json({ message: 'Notifications sent successfully', response });
     } catch (error) {
       console.error('Error sending notifications:', error);
-      res.status(500).json({ error: 'Error sending notifications', details: error.message });
+     return res.status(500).json({ error: 'Error sending notifications', details: error.message });
     }
   });
   
