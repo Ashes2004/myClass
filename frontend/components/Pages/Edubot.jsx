@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import StudentLayout from '../Student/studentLayout';
 import ReactMarkdown from 'react-markdown';
-
+import { chatbot } from '@/public/Icons';
+import Image from 'next/image';
 const TypingIndicator = () => (
   <div className="flex items-center space-x-2">
     <div className="w-3 h-3 bg-gray-500 rounded-full animate-bounce"></div>
@@ -50,18 +51,18 @@ const Edubot = () => {
 
   return (
     <StudentLayout>
-      <div className="flex flex-col sm:w-screen h-screen max-w-4xl mx-auto bg-gray-50">
+      <div className="flex flex-col  h-screen max-w-4xl mx-auto bg-gray-50">
         <header className="bg-blue-600 text-white p-4 text-center shadow-md">
           <h1 className="text-3xl font-semibold">Edubot</h1>
         </header>
         <main className="flex-1 p-4 overflow-auto">
           <div className="space-y-4">
             {messages.map((msg, index) => (
-              <div key={index} className={`p-3 rounded-lg max-w-xs ${msg.type === 'user' ? 'bg-blue-500 text-white self-end ml-auto' : 'bg-gray-300 text-gray-700 self-start mr-auto'}`}>
+              <div key={index} className={`p-3 rounded-lg overflow-x-auto max-w-xs ${msg.type === 'user' ? 'bg-blue-500 text-white self-end ml-auto' : 'bg-gray-300 text-gray-700 self-start mr-auto'}`}>
                 {msg.type !== 'user' && (
-                  <div className="flex items-center space-x-2 mb-2">
+                  <div className="flex items-center  space-x-2 mb-2">
                     <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-bold">
-                      EB
+                      <Image src = {chatbot}/>
                     </div>
                     <p className="text-gray-600 font-semibold">Edubot:</p>
                   </div>
