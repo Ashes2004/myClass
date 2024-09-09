@@ -34,12 +34,10 @@ const AdminBody = () => {
       });
       if (!response.ok) {
         router.push("/admin/adminAuth");
-      }else{
+      } else {
         const data = await response.json();
         setAdminData(data);
       }
-
-     
     };
     fetchAdmin();
   }, [router]);
@@ -49,11 +47,11 @@ const AdminBody = () => {
   }
   return (
     <AdminLayout>
-      <div className="bg-lightGray text-black flex flex-col p-4">
+      <div className="bg-lightGray text-black dark:text-light-gray flex flex-col p-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
-            Welcome back,  {adminData?.InstituteName || "Admin"}👋
+            Welcome back, {adminData?.InstituteName || "Admin"}👋
           </h1>
           <div className="flex sm:flex-row justify-start gap-3 md:justify-center items-center mt-3 mb-3 md:mb-0">
             <SearchBar />
@@ -89,7 +87,7 @@ const AdminBody = () => {
                     <Link
                       href={`${item.link}`}
                       key={item.id}
-                      className="bg-white p-4 rounded-lg shadow-xl hover:scale-105 duration-300"
+                      className="bg-white dark:bg-dark-gray p-4 rounded-lg shadow-xl hover:scale-105 duration-300"
                     >
                       <div className="flex items-center gap-4">
                         <div
@@ -112,7 +110,7 @@ const AdminBody = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Today's Schedule Section */}
-              <div className="bg-white shadow-xl rounded-lg p-4">
+              <div className="bg-white dark:bg-dark-gray shadow-xl rounded-lg p-4">
                 <h2 className="font-bold text-lg md:text-xl mb-4">
                   Today's Schedule
                 </h2>
@@ -135,10 +133,10 @@ const AdminBody = () => {
                           </div>
                           <div className="flex flex-col">
                             <h2 className="font-bold">{item.subject}</h2>
-                            <h2 className="font-semibold text-xs">
+                            <h2 className="font-semibold text-xs dark:text-dim-gray">
                               {item.organizer}
                             </h2>
-                            <h2 className="font-semibold">
+                            <h2 className="font-semibold dark:text-dim-gray">
                               {item.duration} mins
                             </h2>
                           </div>
@@ -159,17 +157,17 @@ const AdminBody = () => {
               </div>
 
               {/* Inventory Management Section */}
-              <div className="bg-white flex flex-col shadow-xl rounded-lg p-4">
+              <div className="bg-white dark:bg-dark-gray flex flex-col shadow-xl rounded-lg p-4">
                 <div className="flex justify-between items-center mb-4">
                   <div className="flex flex-col">
                     <h2 className="font-bold text-lg md:text-xl">
                       Inventory Management
                     </h2>
-                    <p className="font-semibold text-base">
+                    <p className="font-semibold text-base dark:text-dim-gray">
                       Manage school inventory
                     </p>
                   </div>
-                  <div className="bg-yellow-300 rounded-full p-3">
+                  <div className="bg-yellow-300 dark:bg-yellow-500 rounded-full p-3">
                     <Image
                       src={inventory}
                       alt="inventory"
@@ -180,13 +178,13 @@ const AdminBody = () => {
                   </div>
                 </div>
                 <div>
-                  <p className="text-gray-700 text-lg">
+                  <p className="text-gray-700 dark:text-light-gray text-lg">
                     Manage school inventory including textbooks, supplies, and
                     equipment efficiently.
                   </p>
                   <div className="pt-6">
                     <Link href="/inventory">
-                      <div className="inline-block bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-xl duration-200">
+                      <div className="inline-block bg-blue-500 hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-xl duration-200">
                         Go to Inventory
                       </div>
                     </Link>
@@ -212,7 +210,7 @@ const AdminBody = () => {
                   index < 3 && (
                     <div
                       key={item.id}
-                      className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
+                      className="bg-white dark:bg-dark-gray shadow-xl flex justify-between items-center p-3 rounded-lg"
                     >
                       <div className="flex gap-2 items-center">
                         <div className={`${item.bg} rounded-full p-3`}>
@@ -226,7 +224,7 @@ const AdminBody = () => {
                         </div>
                         <div className="flex flex-col">
                           <h2 className="font-bold">{item.sub}</h2>
-                          <h2 className="font-semibold">{item.type}</h2>
+                          <h2 className="font-semibold dark:text-dim-gray">{item.type}</h2>
                         </div>
                       </div>
                       <Link
@@ -250,12 +248,12 @@ const AdminBody = () => {
           {/* Right Section */}
           <div className="col-span-2 pt-3">
             <div className="flex flex-col gap-2">
-              <div className="flex flex-col justify-center items-center bg-white p-2 rounded-lg shadow-xl">
+              <div className="flex flex-col justify-center items-center bg-white dark:bg-dark-gray p-2 rounded-lg shadow-xl">
                 <h2 className="font-bold text-center md:text-xl lg:text-2xl">
                   This is an Alarm System. Raise this alarm ONLY in case of FIRE
                   or any other EMERGENCY!!!
                 </h2>
-                <AlertSystem  name = {adminData?.InstituteName}/>
+                <AlertSystem name={adminData?.InstituteName} />
               </div>
               <div className="flex justify-center items-center mt-4 drop-shadow-xl">
                 <CalendarDemo />
@@ -275,7 +273,7 @@ const AdminBody = () => {
                     index < 3 && (
                       <div
                         key={item.id}
-                        className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
+                        className="bg-white dark:bg-dark-gray shadow-xl flex justify-between items-center p-3 rounded-lg"
                       >
                         <div className="flex gap-2 items-center">
                           <div className={`${item.bg} rounded-full p-3`}>
