@@ -74,7 +74,7 @@ const StudentBody = () => {
 
   return (
     <StudentLayout>
-      <div className="text-black dark:text-light-gray flex flex-col p-4">
+      <div className="text-black dark:text-light-gray  flex flex-col p-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">

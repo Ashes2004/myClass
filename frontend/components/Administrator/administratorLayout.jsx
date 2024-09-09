@@ -6,7 +6,7 @@ export default function AdminLayout({ children }) {
   return (
     <>
       <CustomNavbar navbarList={adminSidebarLinks} />
-      <div className="flex sm:h-screen bg-cream dark:bg-dark-bg p-4">
+      <div className="flex  lg:h-full  sm:h-screen bg-cream dark:bg-dark-bg p-4">
         <Sidebar sidebarList={adminSidebarLinks} />
         <div className="w-full pb-4 pl-3">{children}</div>
       </div>
