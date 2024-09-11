@@ -19,7 +19,7 @@ import onlineClassRoutes from "./routes/OnlineClassRoutes.js"
 import attendenceRoutes from './routes/AttendenceRoutes.js';
 import alertRoutes from './routes/AlertTokenRoutes.js';
 import chatBotRoutes from './routes/ChatBot.js'
-import bodyParser from "body-parser";
+import pollRoutes from './routes/pollRoutes.js';
 import serviceAccount from './myclass-6cf84-firebase-adminsdk-r71sl-388ebdf077.json' assert { type: "json" };
 dotenv.config();
 
@@ -44,7 +44,6 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.error(err));
 
-// Use routes
 app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/class-routine", classRoutineRoutes);
@@ -59,9 +58,10 @@ app.use('/api/admin',  administrativeRoutes);
 app.use('/api/online-class' ,onlineClassRoutes );
 app.use('/api/alert' , alertRoutes);
 app.use('/api/chat' , chatBotRoutes);
-// Error handling middleware
+app.use('/api/poll' , pollRoutes);
+
 app.use(errorHandler);
 
-// Start server
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
