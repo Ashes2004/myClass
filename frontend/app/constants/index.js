@@ -69,12 +69,6 @@ export const studentSidebarLinks = [
     link: "/library",
   },
   {
-    id: 6,
-    label: "Progress",
-    icon: attendance,
-    link: "/",
-  },
-  {
     id: 8,
     label: "Leaderboard",
     icon: leaderboard,
