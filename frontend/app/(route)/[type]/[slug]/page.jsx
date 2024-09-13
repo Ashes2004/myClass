@@ -24,6 +24,7 @@ import RoomManagement from "@/components/Pages/RoomManagement";
 import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBody";
 import TeacherPoll from "@/components/Pages/TeacherPoll";
 import StudentPoll from "@/components/Pages/StudentPoll";
+import StudentResultList from "@/components/Pages/StudentResultList";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -46,6 +47,7 @@ const slugTitleMap = {
   rooms: "Rooms",
   teacherpoll: "Teacher Poll",
   studentpoll: "Student Poll",
+  studentresult: "Results"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -98,6 +100,8 @@ export default function Page({ params }) {
       return type === "student" ? <StudentPoll /> : notFound();
     case "studentmeeting":
       return type === "student" ? <StudentMeetingsPage /> : notFound();
+    case "studentresult":
+      return type === "student" ? <StudentResultList /> : notFound();  
     default:
       return notFound();
   }

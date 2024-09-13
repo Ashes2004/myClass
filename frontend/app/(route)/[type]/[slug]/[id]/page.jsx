@@ -7,6 +7,7 @@ import { notFound } from "next/navigation";
 import { useEffect } from "react";
 import QuizHome from "@/components/QuizStudent/QuizHome";
 import QuizResponses from "@/components/QuizTeacher/QuizResonses";
+import StudentGradeCard from "@/components/Pages/StudentGradeCard";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -14,6 +15,7 @@ const slugTitleMap = {
   performance: "Performance",
   studentQuiz: "Student Quiz",
   quizresonse: "Quiz Responses",
+  gradecard: "Grade Card",
 };
 
 export default function Page({ params }) {
@@ -38,6 +40,8 @@ export default function Page({ params }) {
       ) : (
         notFound()
       );
+    case "gradecard":
+      return type === "student" ? <StudentGradeCard id={id} /> : notFound();
     case "studentQuiz":
       return type === "student" ? <QuizHome Id={id} /> : notFound();
     case "quizresponse":

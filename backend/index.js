@@ -20,6 +20,7 @@ import attendenceRoutes from './routes/AttendenceRoutes.js';
 import alertRoutes from './routes/AlertTokenRoutes.js';
 import chatBotRoutes from './routes/ChatBot.js'
 import pollRoutes from './routes/pollRoutes.js';
+import resultRoutes from './routes/ResultRoutes.js'
 import serviceAccount from './myclass-6cf84-firebase-adminsdk-r71sl-388ebdf077.json' assert { type: "json" };
 dotenv.config();
 
@@ -59,6 +60,8 @@ app.use('/api/online-class' ,onlineClassRoutes );
 app.use('/api/alert' , alertRoutes);
 app.use('/api/chat' , chatBotRoutes);
 app.use('/api/poll' , pollRoutes);
+app.use('/api/result' , resultRoutes);
+
 
 app.use(errorHandler);
 
