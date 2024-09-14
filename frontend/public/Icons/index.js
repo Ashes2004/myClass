@@ -49,6 +49,8 @@ import feedback from "./feedback.svg";
 import send from "./send-sharp.svg";
 import time from "./time-outline.svg";
 import inventory from "./inventory.svg";
+import poll from "./poll.svg";
+import result from "./result.svg";
 
 export {
   home,
@@ -99,5 +101,9 @@ export {
   physics,
   computer,
   feedback,
-  send,time, inventory, 
+  send,
+  time,
+  inventory,
+  poll,
+  result,
 };

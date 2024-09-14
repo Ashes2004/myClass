@@ -29,6 +29,8 @@ import {
   bookfair,
   feedback,
   inventory,
+  poll,
+  result,
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -86,6 +88,18 @@ export const studentSidebarLinks = [
     icon: classes,
     link: "/student/studentmeeting",
   },
+  {
+    id: 8,
+    label: "Polls",
+    icon: poll,
+    link: "/student/studentpoll",
+  },
+  {
+    id: 9,
+    label: "Result",
+    icon: result,
+    link: "/student/studentresult",
+  },
 ];
 
 export const teacherSidebarLinks = [
@@ -118,6 +132,12 @@ export const teacherSidebarLinks = [
     label: "Meeting",
     icon: classes,
     link: "/teacher/meeting",
+  },
+  {
+    id: 5,
+    label: "Polls",
+    icon: poll,
+    link: "/teacher/teacherpoll",
   },
 ];
 
