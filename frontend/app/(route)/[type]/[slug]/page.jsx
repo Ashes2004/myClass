@@ -25,6 +25,8 @@ import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBod
 import TeacherPoll from "@/components/Pages/TeacherPoll";
 import StudentPoll from "@/components/Pages/StudentPoll";
 import StudentResultList from "@/components/Pages/StudentResultList";
+import TeacherMarksUpload from "@/components/Pages/TeacherMarksUpload";
+import AdminResultPublish from "@/components/Pages/AdminResultPublish";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -47,7 +49,9 @@ const slugTitleMap = {
   rooms: "Rooms",
   teacherpoll: "Teacher Poll",
   studentpoll: "Student Poll",
-  studentresult: "Results"
+  studentresult: "Results",
+  marksupload: "Marks Upload",
+  resultpublish: "Result Publish",
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -78,6 +82,8 @@ export default function Page({ params }) {
       return type === "admin" ? <AttendanceChart /> : notFound();
     case "classmaker":
       return type === "admin" ? <ClassForm /> : notFound();
+    case "resultpublish":
+      return type === "admin" ? <AdminResultPublish /> : notFound();
     case "studentEnrollment":
       return type === "admin" ? <StudentEnrollmentManagement /> : notFound();
     case "studentteacherdetails":
@@ -96,12 +102,14 @@ export default function Page({ params }) {
       return type === "teacher" ? <MeetingsPage /> : notFound();
     case "teacherpoll":
       return type === "teacher" ? <TeacherPoll /> : notFound();
+    case "marksupload":
+      return type === "teacher" ? <TeacherMarksUpload /> : notFound();
     case "studentpoll":
       return type === "student" ? <StudentPoll /> : notFound();
     case "studentmeeting":
       return type === "student" ? <StudentMeetingsPage /> : notFound();
     case "studentresult":
-      return type === "student" ? <StudentResultList /> : notFound();  
+      return type === "student" ? <StudentResultList /> : notFound();
     default:
       return notFound();
   }
