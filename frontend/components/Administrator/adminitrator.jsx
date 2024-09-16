@@ -17,7 +17,10 @@ import { useEffect, useState } from "react";
 
 const AdminBody = () => {
   const [adminData, setAdminData] = useState();
+  const [requests, setRequests] = useState([]);
+
   const router = useRouter();
+
   useEffect(() => {
     const token = sessionStorage.getItem("adminToken");
     if (!token) {
@@ -41,6 +44,22 @@ const AdminBody = () => {
     };
     fetchAdmin();
   }, [router]);
+
+  const handleApprove = (index) => {
+    const updatedRequests = [...requests];
+    updatedRequests[index].status = "Approved";
+
+    setRequests(updatedRequests);
+    //socket.emit('orderUpdate', updatedRequests[index]);
+  };
+
+  const handleReject = (index) => {
+    const updatedRequests = [...requests];
+    updatedRequests[index].status = "Rejected";
+
+    setRequests(updatedRequests);
+    //socket.emit('orderUpdate', updatedRequests[index]);
+  };
 
   if (!adminData) {
     return <p>Loading...</p>; // Display a loading state while fetching data
@@ -193,55 +212,108 @@ const AdminBody = () => {
               </div>
             </div>
 
-            <div className="flex justify-between items-center my-3 lg:pt-3">
-              <h3 className="font-bold text-lg md:text-xl">
-                Management Options
-              </h3>
-              <Link
-                href="/managementOptions"
-                className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
-              >
-                View All
-              </Link>
-            </div>
-            <div className="flex flex-col gap-3">
-              {adminSubjectManagement.map(
-                (item, index) =>
-                  index < 3 && (
-                    <div
-                      key={item.id}
-                      className="bg-white dark:bg-dark-gray shadow-xl flex justify-between items-center p-3 rounded-lg"
-                    >
-                      <div className="flex gap-2 items-center">
-                        <div className={`${item.bg} rounded-full p-3`}>
-                          <Image
-                            src={item.icon}
-                            alt={item.sub}
-                            width={24}
-                            height={24}
-                            className="object-cover"
-                          />
+            <div className="grid grid-cols-5 gap-3">
+              <div className="col-span-3">
+                <div className="flex justify-between items-center my-3 lg:pt-3">
+                  <h3 className="font-bold text-lg md:text-xl">
+                    Management Options
+                  </h3>
+                  <Link
+                    href="/managementOptions"
+                    className="hover:underline hover:text-blue-600 duration-200 decoration-solid underline-offset-4 cursor-pointer"
+                  >
+                    View All
+                  </Link>
+                </div>
+                <div className="flex flex-col gap-3">
+                  {adminSubjectManagement.map(
+                    (item, index) =>
+                      index < 3 && (
+                        <div
+                          key={item.id}
+                          className="bg-white dark:bg-dark-gray shadow-xl flex justify-between items-center p-3 rounded-lg"
+                        >
+                          <div className="flex gap-2 items-center">
+                            <div className={`${item.bg} rounded-full p-3`}>
+                              <Image
+                                src={item.icon}
+                                alt={item.sub}
+                                width={24}
+                                height={24}
+                                className="object-cover"
+                              />
+                            </div>
+                            <div className="flex flex-col">
+                              <h2 className="font-bold">{item.sub}</h2>
+                              <h2 className="font-semibold dark:text-dim-gray">
+                                {item.type}
+                              </h2>
+                            </div>
+                          </div>
+                          <Link
+                            href={`${item.link}`}
+                            className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                          >
+                            <Image
+                              src={rightArrow}
+                              alt="arrow"
+                              width={24}
+                              height={24}
+                              className="object-cover cursor-pointer"
+                            />
+                          </Link>
                         </div>
-                        <div className="flex flex-col">
-                          <h2 className="font-bold">{item.sub}</h2>
-                          <h2 className="font-semibold dark:text-dim-gray">{item.type}</h2>
-                        </div>
-                      </div>
-                      <Link
-                        href={`${item.link}`}
-                        className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
-                      >
-                        <Image
-                          src={rightArrow}
-                          alt="arrow"
-                          width={24}
-                          height={24}
-                          className="object-cover cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-                  )
-              )}
+                      )
+                  )}
+                </div>
+              </div>
+              <div className="col-span-2 my-3 lg:pt-3">
+                <div className="bg-white dark:bg-dark-gray shadow-xl rounded-lg p-4">
+                  <h2 className="font-bold text-lg md:text-xl mb-4">
+                    Inventory Order Requests
+                  </h2>
+                  <div>
+                    {requests.length === 0 ? (
+                      <p className="text-gray-500">No new requests.</p>
+                    ) : (
+                      <ul>
+                        {requests.map((request, index) => (
+                          <li
+                            key={index}
+                            className="mb-4 p-4 bg-gray-50 rounded-lg shadow-md"
+                          >
+                            <p>
+                              <strong>Item:</strong> {request.item}
+                            </p>
+                            <p>
+                              <strong>Quantity:</strong> {request.quantity}
+                            </p>
+                            <p>
+                              <strong>Status:</strong> {request.status}
+                            </p>
+                            {request.status === "Pending" && (
+                              <div className="flex space-x-2 mt-2">
+                                <button
+                                  onClick={() => handleApprove(index)}
+                                  className="bg-green-500 text-white p-2 rounded hover:bg-green-600"
+                                >
+                                  Approve
+                                </button>
+                                <button
+                                  onClick={() => handleReject(index)}
+                                  className="bg-red-500 text-white p-2 rounded hover:bg-red-600"
+                                >
+                                  Reject
+                                </button>
+                              </div>
+                            )}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
 

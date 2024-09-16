@@ -79,8 +79,21 @@ const TeacherBody = () => {
     },
   ]);
 
+  // List of available stationery items
+  const stationaryOptions = [
+    { label: "Textbook", value: "textbook" },
+    { label: "Markers", value: "markers" },
+    { label: "Pens", value: "pens" },
+    { label: "Pencils", value: "pencils" },
+    { label: "Duster", value: "duster" },
+    { label: "Ruler", value: "ruler" },
+    { label: "Chalks", value: "chalks" },
+  ];
+
   const router = useRouter();
   const [teacherData, setTeacherData] = useState(null);
+  const [selectedItem, setSelectedItem] = useState("");
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     const token = sessionStorage.getItem("teacherToken");
@@ -125,6 +138,19 @@ const TeacherBody = () => {
     }
   }, [router]); // Depend on `router` to avoid using `token` directly (to prevent race conditions)
 
+  const handleSubmit = () => {
+    if (item && quantity > 0) {
+      const order = { item: selectedItem, quantity, status: "Pending" };
+
+      // Emit the order request to the admin
+      //socket.emit('sendOrderRequest', order);
+
+      // Clear the fields
+      setSelectedItem("");
+      setQuantity(1);
+    }
+  };
+
   if (!teacherData) {
     return <p>Loading...</p>; // Display a loading state while fetching data
   }
@@ -133,6 +159,7 @@ const TeacherBody = () => {
     <TeacherLayout>
       <div className="h-full border-transparent p-3 md:p-6 box-border text-black dark:text-light-gray border-r-2 md:grid grid-cols-6 gap-3 ">
         <div className="col-span-4 rounded-md md:p-3">
+          {/* HEADER */}
           <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
             <h1 className="text-xl md:text-3xl font-bold">
               Welcome back, {teacherData?.name || "subhomita"} 👋
@@ -150,6 +177,8 @@ const TeacherBody = () => {
               </Link>
             </div>
           </div>
+
+          {/* Main Content */}
           <div className="pt-3 md:pl-4 md:pr-6 pb-2 md:mt-2 flex justify-between p-4">
             <h3 className="font-bold text-md  md:text-lg tracking-wide">
               Class Materials
@@ -161,6 +190,8 @@ const TeacherBody = () => {
               View All
             </Link>
           </div>
+
+          {/* Class Materials Section */}
           <div className="mt-1 md:grid grid-cols-3 gap-3 mx-3">
             {courses.map((course) => {
               return (
@@ -202,64 +233,119 @@ const TeacherBody = () => {
               );
             })}
           </div>
-          <div className="bg-white dark:bg-dark-gray mt-6 md:mt-3 md:ml-3 md:mr-3 rounded-lg p-3 shadow-xl">
-            <p className="font-semibold text-xl mb-3 ml-3 tracking-wider">
-              Daily Schedule
-            </p>
-            <div className="flex flex-col gap-3">
-              {dailySchedule.map((lecture) => {
-                return (
-                  <div
-                    className="md:flex justify-between grid grid-rows-2 grid-cols-2 items-center md:bg-transparent rounded-md bg-gray-50"
-                    key={lecture.lectureID}
-                  >
-                    <div className="md:flex items-center row-span-1 col-span-2 p-3 md:w-1/2">
+          <div className="grid grid-cols-5">
+            <div className="col-span-3">
+              {/* Daily Schedule Section */}
+              <div className="bg-white dark:bg-dark-gray md:ml-3 md:mr-3 rounded-lg p-3 shadow-xl">
+                <p className="font-semibold text-xl mb-3 ml-3 tracking-wider">
+                  Daily Schedule
+                </p>
+                <div className="flex flex-col gap-3">
+                  {dailySchedule.map((lecture) => {
+                    return (
                       <div
-                        className={`${lecture.bgColour} md:rounded-full rounded-tl-md rounded-tr-md md:mr-3 p-3 flex items-center justify-center`}
+                        className="md:flex justify-between grid grid-rows-2 grid-cols-2 items-center md:bg-transparent rounded-md bg-gray-50"
+                        key={lecture.lectureID}
                       >
-                        <Image
-                          src={calendar_outline}
-                          alt="calender"
-                          width={20}
-                          height={20}
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="md:flex flex-col mt-2 ml-2 mr-2">
-                        <div className="md:font-semibold font-medium md:text-md text-sm tracking-wide">
-                          {lecture.subjectCode} {lecture.subjectName}
+                        <div className="md:flex items-center row-span-1 col-span-2 p-3 md:w-1/2">
+                          <div
+                            className={`${lecture.bgColour} md:rounded-full rounded-tl-md rounded-tr-md md:mr-3 p-3 flex items-center justify-center`}
+                          >
+                            <Image
+                              src={calendar_outline}
+                              alt="calender"
+                              width={20}
+                              height={20}
+                              className="object-cover"
+                            />
+                          </div>
+                          <div className="md:flex flex-col mt-2 ml-2 mr-2">
+                            <div className="md:font-semibold font-medium md:text-md text-sm tracking-wide">
+                              {lecture.subjectCode} {lecture.subjectName}
+                            </div>
+                            <div className="text-sm tracking-wider dark:text-dim-gray">
+                              {lecture.classType} {lecture.department}
+                              {lecture.section} {lecture.sem} Sem
+                            </div>
+                          </div>
                         </div>
-                        <div className="text-sm tracking-wider dark:text-dim-gray">
-                          {lecture.classType} {lecture.department}
-                          {lecture.section} {lecture.sem} Sem
+                        <div className="md:w-1/4 md:mr-3 md:ml-3 mr-5 ml-5 flex flex-col col-span-1">
+                          <div className="text-sm font-medium md:text-md md:font-semibold ">
+                            Time
+                          </div>
+                          <div className="text-sm dark:text-dim-gray">
+                            {lecture.time}
+                          </div>
+                        </div>
+                        <div className="md:w-1/4 flex justify-end mr-3 ml-3">
+                          <Link
+                            href="#"
+                            className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
+                          >
+                            <Image
+                              src={rightArrow}
+                              alt="arrow"
+                              height={24}
+                              width={24}
+                              className="object-cover cursor-pointer"
+                            />
+                          </Link>
                         </div>
                       </div>
-                    </div>
-                    <div className="md:w-1/4 md:mr-3 md:ml-3 mr-5 ml-5 flex flex-col col-span-1">
-                      <div className="text-sm font-medium md:text-md md:font-semibold ">
-                        Time
-                      </div>
-                      <div className="text-sm dark:text-dim-gray">
-                        {lecture.time}
-                      </div>
-                    </div>
-                    <div className="md:w-1/4 flex justify-end mr-3 ml-3">
-                      <Link
-                        href="#"
-                        className="bg-gray-300 hover:bg-gray-600 duration-300 rounded-2xl p-3"
-                      >
-                        <Image
-                          src={rightArrow}
-                          alt="arrow"
-                          height={24}
-                          width={24}
-                          className="object-cover cursor-pointer"
-                        />
-                      </Link>
-                    </div>
-                  </div>
-                );
-              })}
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+
+            {/* Order Request Section */}
+            <div className="col-span-2">
+              <div className="bg-white dark:bg-dark-gray shadow-xl rounded-lg p-3">
+                <div className="flex flex-col mb-4 pb-2 gap-2">
+                  <p className="font-semibold text-xl tracking-wider">
+                    Send Order Request
+                  </p>
+                  <span className="text-sm">
+                    Place an order request for any materials to the management
+                  </span>
+                </div>
+
+                <div className="mb-4">
+                  <label className="block text-sm font-bold mb-2">
+                    Select Item
+                  </label>
+                  <select
+                    className="w-full border p-2 rounded"
+                    value={selectedItem}
+                    onChange={(e) => setSelectedItem(e.target.value)}
+                  >
+                    <option value="">--Select an item--</option>
+                    {stationaryOptions.map((option) => (
+                      <option key={option.value} value={option.label}>
+                        {option.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <div className="mb-4">
+                  <label className="block text-sm font-bold mb-2">
+                    Quantity
+                  </label>
+                  <input
+                    type="number"
+                    className="w-full border p-2 rounded"
+                    value={quantity}
+                    onChange={(e) => setQuantity(e.target.value)}
+                    min="1"
+                  />
+                </div>
+                <button
+                  onClick={handleSubmit}
+                  className="bg-blue-500 text-white p-2 rounded w-full hover:bg-blue-600"
+                >
+                  Send Request
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -287,6 +373,8 @@ const TeacherBody = () => {
               )}
             </div>
           </div>
+
+          {/* Calendar Section */}
           <div className="flex justify-center items-center mt-4 drop-shadow-xl">
             <CalendarDemo />
           </div>
