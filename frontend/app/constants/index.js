@@ -139,6 +139,12 @@ export const teacherSidebarLinks = [
     icon: poll,
     link: "/teacher/teacherpoll",
   },
+  {
+    id: 6,
+    label: "Marks Upload",
+    icon: result,
+    link: "/teacher/marksupload",
+  },
 ];
 
 export const adminSidebarLinks = [
@@ -184,9 +190,15 @@ export const adminSidebarLinks = [
     icon: classes,
     link: "/admin/rooms",
   },
+  {
+    id: 7,
+    label: "Result Publish",
+    icon: result,
+    link: "/admin/resultpublish",
+  },
 ];
 
-// STUDENT DATA MAPPINGS
+
 export const studentSubject = [
   {
     id: 0,

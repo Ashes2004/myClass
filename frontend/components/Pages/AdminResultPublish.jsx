@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AdminLayout from "../Administrator/administratorLayout";
-
+import Swal from "sweetalert2";
 const AdminResultPublish = () => {
   const [results, setResults] = useState([]);
   const [selectedResultId, setSelectedResultId] = useState(null);
@@ -12,6 +12,9 @@ const AdminResultPublish = () => {
   const [studentResults, setStudentResults] = useState(null);
   const [showClassStudentModal, setShowClassStudentModal] = useState(false);
   const [showStudentResultModal, setShowStudentResultModal] = useState(false);
+  const [showCreateResultModal, setShowCreateResultModal] = useState(false);
+  const [examName, setExamName] = useState("");
+  const [year, setYear] = useState("");
 
   useEffect(() => {
     const fetchResults = async () => {
@@ -24,6 +27,42 @@ const AdminResultPublish = () => {
     };
     fetchResults();
   }, []);
+
+
+  const handleCreateResult = async () => {
+    try {
+      const response = await axios.post("http://localhost:5000/api/result", {
+        examName,
+        year,
+      });
+      setResults([...results, response.data]);
+      setShowCreateResultModal(false);
+      Swal.fire({
+        title: "Good job!",
+        text: "Exam created successfully .",
+        icon: "success",
+      });
+    } catch (error) {
+      console.error("Error creating result", error);
+      alert("Failed to create result");
+    }
+  };
+
+  const handleDeleteResult = async (ResultID) => {
+    try {
+      const response = await axios.delete(`http://localhost:5000/api/result/${ResultID}`);
+  
+    Swal.fire({
+      title: "Good job!",
+      text: "Exam deleted successfully .",
+      icon: "success",
+    });
+    window.location.reload();
+    } catch (error) {
+      console.error("Error creating result", error);
+      alert("Failed to create result");
+    }
+  };
 
   useEffect(() => {
     if (selectedResultId) {
@@ -66,7 +105,11 @@ const AdminResultPublish = () => {
           .visibility,
         publishDate,
       });
-      alert("Result updated successfully");
+      Swal.fire({
+        title: "Good job!",
+        text: "Result Updated successfully .",
+        icon: "success",
+      });
     } catch (error) {
       console.error("Error updating result", error);
       alert("Failed to update result");
@@ -106,8 +149,8 @@ const AdminResultPublish = () => {
     setShowStudentResultModal(false);
   };
 
-  const publishedResults = results.filter((result) => result.visibility);
-  const unpublishedResults = results.filter((result) => !result.visibility);
+  const publishedResults = results.filter((result) => result.publishDate);
+  const unpublishedResults = results.filter((result) => !result.publishDate);
 
   return (
     <AdminLayout>
@@ -115,6 +158,13 @@ const AdminResultPublish = () => {
         <h2 className="text-3xl font-bold text-center text-indigo-600 mb-6">
           Results List
         </h2>
+
+        <button
+          onClick={() => setShowCreateResultModal(true)}
+          className="bg-blue-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-blue-700 transition duration-300 mb-6"
+        >
+          Create Result
+        </button>
 
         {results.length === 0 ? (
           <p className="text-center text-gray-500">No results available.</p>
@@ -154,6 +204,12 @@ const AdminResultPublish = () => {
                         Publish
                       </button>
                       <button
+                        onClick={() => handleDeleteResult(result._id)}
+                        className="bg-red-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-700 transition duration-300 mt-2"
+                      >
+                        delete
+                      </button>
+                      <button
                         onClick={() => {
                           setSelectedResultId(result._id);
                           setShowClassStudentModal(true);
@@ -183,12 +239,14 @@ const AdminResultPublish = () => {
                     className="border-b border-gray-200 py-4"
                   >
                     <div className="flex items-center justify-between mb-4">
+                    <div className="flex flex-col">
                       <h4 className="text-xl font-semibold text-gray-700">
                         {result.examName} ({result.year})
                       </h4>
                       <h4 className="text-xl font-semibold text-gray-700">
                         Published On {result.publishDate}
                       </h4>
+                    </div>
                       <div className="flex items-center">
                         <label className="mr-3 text-gray-700">Visibility</label>
                         <input
@@ -203,6 +261,12 @@ const AdminResultPublish = () => {
                         className="bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-indigo-700 transition duration-300 mt-2"
                       >
                         Update Publish
+                      </button>
+                      <button
+                        onClick={() => handleDeleteResult(result._id)}
+                        className="bg-red-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-700 transition duration-300 mt-2"
+                      >
+                        delete
                       </button>
                       <button
                         onClick={() => {
@@ -338,6 +402,46 @@ const AdminResultPublish = () => {
             <button
               onClick={handleCloseStudentResultModal}
               className="bg-red-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-red-700 transition duration-300 mt-4"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
+
+
+
+{showCreateResultModal && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-50 backdrop-blur-md">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-80">
+            <h3 className="text-2xl font-bold mb-4">Create New Result</h3>
+            <div className="mb-4">
+              <label className="block mb-2 text-gray-700">Exam Name</label>
+              <input
+                type="text"
+                value={examName}
+                onChange={(e) => setExamName(e.target.value)}
+                className="form-input block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </div>
+            <div className="mb-4">
+              <label className="block mb-2 text-gray-700">Year</label>
+              <input
+                type="number"
+                value={year}
+                onChange={(e) => setYear(e.target.value)}
+                className="form-input block w-full border border-gray-300 rounded-md shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
+              />
+            </div>
+            <button
+              onClick={handleCreateResult}
+              className="bg-indigo-600 text-white py-2 px-4 rounded-md font-semibold hover:bg-indigo-700 transition duration-300"
+            >
+              Submit
+            </button>
+            <button
+              onClick={() => setShowCreateResultModal(false)}
+              className="bg-red-600 text-white py-2 ml-4 px-4 rounded-md font-semibold hover:bg-red-700 transition duration-300"
             >
               Close
             </button>

@@ -75,7 +75,7 @@ const StudentPoll = () => {
       </div>
 
       <ul className="poll-list max-w-4xl mx-auto space-y-6">
-        {polls?.map((poll) => (
+        {polls.length > 0 && polls?.map((poll) => (
           <li key={poll._id} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-2xl transition-shadow">
             <div className="flex justify-between items-center">
               <p className="text-xl font-semibold text-gray-700">Poll by {poll.teacher.name}</p> 
@@ -91,6 +91,7 @@ const StudentPoll = () => {
             </div>
           </li>
         ))}
+        {polls.length == 0 && <p className="p-10 text-center text-blue-600">No active polls for now</p>}
       </ul>
 
       {showPollModal && selectedPoll && (

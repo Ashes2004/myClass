@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import AdminLayout from '../Administrator/administratorLayout';
 
 const RoomManagement = () => {
   const [rooms, setRooms] = useState([]);
@@ -44,11 +45,12 @@ const RoomManagement = () => {
   };
 
   return (
+    <AdminLayout>
     <div className="p-6 bg-gray-100 min-h-screen">
       <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-lg p-8">
         <h1 className="text-2xl font-bold text-center mb-6">Room Management</h1>
         
-        {/* Form for adding or editing room */}
+       
         <form onSubmit={editingRoom ? updateRoom : createRoom} className="mb-6">
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2">Room Number</label>
@@ -114,6 +116,7 @@ const RoomManagement = () => {
         </div>
       </div>
     </div>
+    </AdminLayout>
   );
 };
 
