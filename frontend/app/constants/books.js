@@ -59,41 +59,31 @@ export const subjectBooks = [
   },
 ];
 
-export const featuredBooks = [
+export const videoLessons = [
   {
     id: 0,
-    title: "Encyclopedia",
-    author: "Name",
-    img: "https://c8.alamy.com/comp/2C5PMFJ/collection-of-ancient-encyclopedias-2C5PMFJ.jpg",
-    link: "/",
+    title: "Physics Chapter 1",
+    link: "https://www.youtube.com/embed/IfWAhHZl1FY?si=MMFCKtCoSG0QTNH8",
   },
   {
     id: 1,
-    title: "Oxford Dictionary",
-    author: "Name",
-    img: "https://c8.alamy.com/comp/2D6TBEH/oxford-english-dictionary-book-in-home-interior-2D6TBEH.jpg",
-    link: "/",
+    title: "Chemistry",
+    link: "https://www.youtube.com/embed/ADRBxMdu4pk?si=IDlWO7PLkqGS9l4e",
   },
   {
     id: 2,
-    title: "Wren & Martin",
-    author: "Name",
-    img: "https://c8.alamy.com/comp/2C5PMFJ/collection-of-ancient-encyclopedias-2C5PMFJ.jpg",
-    link: "/",
+    title: "Mathamatics",
+    link: "https://www.youtube.com/embed/CobQvtjL5gc?si=whvjaTqUPCWlRXZi",
   },
   {
     id: 3,
-    title: "10 years PYQs",
-    author: "Name",
-    img: "https://c8.alamy.com/comp/2D6TBEH/oxford-english-dictionary-book-in-home-interior-2D6TBEH.jpg",
-    link: "/",
+    title: "Biology",
+    link: "https://www.youtube.com/embed/T9DgvXpCnwo?si=eMXDJRVLCEiENNRP",
   },
   {
     id: 4,
-    title: "Guide Book",
-    author: "Name",
-    img: "https://c8.alamy.com/comp/2C5PMFJ/collection-of-ancient-encyclopedias-2C5PMFJ.jpg",
-    link: "/",
+    title: "Computer Applications",
+    link: "https://www.youtube.com/embed/ELVCIimMQrQ?si=jBsNLyWUubMfa_9o",
   },
 ];
 
@@ -121,29 +111,53 @@ export const savedBooks = [
   },
 ];
 
+export const assignedBooks = [
+  {
+    id: 0,
+    title: "Physics",
+    author: "Name",
+    img: "https://c8.alamy.com/comp/2C5PM1F/physics-book-on-a-wooden-table-2C5PM1F.jpg",
+    link: "/",
+  },
+  {
+    id: 1,
+    title: "Computer Applications",
+    author: "Name",
+    img: "https://c8.alamy.com/comp/2D6T9FH/mathematics-book-on-study-table-2D6T9FH.jpg",
+    link: "/",
+  },
+  {
+    id: 2,
+    title: "Mathematics",
+    author: "Name",
+    img: "https://c8.alamy.com/comp/2C6PFE3/computer-science-textbook-cover-2C6PFE3.jpg",
+    link: "/",
+  },
+];
+
 export const events = [
-    {
-        id: 0,
-        event: "Book Fair",
-        date: "Coming Soon",
-        icon: bookfair,
-        bg: "bg-purple-300",
-        link: "/",
-    },
-    {
-        id: 1,
-        event: "Author Visits",
-        date: "29.2.29",
-        icon: author,
-        bg: "bg-orange-300",
-        link: "/",
-    },
-    {
-        id: 2,
-        event: "Fun Challenges",
-        date: "Coming Soon",
-        icon: challenge,
-        bg: "bg-green-300",
-        link: "/",
-    },
-]
+  {
+    id: 0,
+    event: "Book Fair",
+    date: "Coming Soon",
+    icon: bookfair,
+    bg: "bg-purple-300",
+    link: "/",
+  },
+  {
+    id: 1,
+    event: "Author Visits",
+    date: "29.2.29",
+    icon: author,
+    bg: "bg-orange-300",
+    link: "/",
+  },
+  {
+    id: 2,
+    event: "Fun Challenges",
+    date: "Coming Soon",
+    icon: challenge,
+    bg: "bg-green-300",
+    link: "/",
+  },
+];

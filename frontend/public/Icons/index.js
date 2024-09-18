@@ -53,6 +53,9 @@ import chatBubble from "./chatbubble-ellipses-outline.svg"
 import peopleOutline from "./people-outline.svg"
 import broadcast from "./megaphone-outline.svg"
 import pdf_fiile_icon from "./PDF_file_icon.svg"
+import poll from "./poll.svg";
+import result from "./result.svg";
+
 export {
   home,
   logo,
@@ -104,5 +107,10 @@ export {
   feedback,
   send,time, inventory, 
   chatBubble, peopleOutline, broadcast,
-  pdf_fiile_icon
+  pdf_fiile_icon,
+  send,
+  time,
+  inventory,
+  poll,
+  result,
 };

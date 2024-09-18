@@ -42,7 +42,7 @@ export const createStudent = async (req, res) => {
 
 export const getStudentById = async (req, res) => {
   try {
-    const student = await Student.findById(req.params.id).populate('quizResponses');
+    const student = await Student.findById(req.params.id).populate('quizResponses').populate("classId");
     if (!student) return res.status(404).json({ message: "Student not found" });
     res.json(student);
   } catch (error) {

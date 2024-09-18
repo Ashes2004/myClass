@@ -23,6 +23,11 @@ import StudentMeetingsPage from "@/components/Pages/StudentMeetingPage";
 import RoomManagement from "@/components/Pages/RoomManagement";
 import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBody";
 import ChatListBody from "@/components/Chat/sender-reciever section/ChatListBody";
+import TeacherPoll from "@/components/Pages/TeacherPoll";
+import StudentPoll from "@/components/Pages/StudentPoll";
+import StudentResultList from "@/components/Pages/StudentResultList";
+import TeacherMarksUpload from "@/components/Pages/TeacherMarksUpload";
+import AdminResultPublish from "@/components/Pages/AdminResultPublish";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -43,7 +48,12 @@ const slugTitleMap = {
   meeting: "Meeting",
   studentmeeting: "Meeting",
   rooms: "Rooms",
-  doubtDesk:"Doubt Desk"
+  doubtDesk:"Doubt Desk",
+  teacherpoll: "Teacher Poll",
+  studentpoll: "Student Poll",
+  studentresult: "Results",
+  marksupload: "Marks Upload",
+  resultpublish: "Result Publish",
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -74,6 +84,8 @@ export default function Page({ params }) {
       return type === "admin" ? <AttendanceChart /> : notFound();
     case "classmaker":
       return type === "admin" ? <ClassForm /> : notFound();
+    case "resultpublish":
+      return type === "admin" ? <AdminResultPublish /> : notFound();
     case "studentEnrollment":
       return type === "admin" ? <StudentEnrollmentManagement /> : notFound();
     case "studentteacherdetails":
@@ -90,10 +102,18 @@ export default function Page({ params }) {
       return type === "teacher" ? <AssignmentMarksSubmission /> : notFound();
     case "meeting":
       return type === "teacher" ? <MeetingsPage /> : notFound();
+    case "teacherpoll":
+      return type === "teacher" ? <TeacherPoll /> : notFound();
+    case "marksupload":
+      return type === "teacher" ? <TeacherMarksUpload /> : notFound();
+    case "studentpoll":
+      return type === "student" ? <StudentPoll /> : notFound();
     case "studentmeeting":
       return type === "student" ? <StudentMeetingsPage /> : notFound();
     case "doubtDesk":
       return (type === "student" || type=== "teacher") ? <ChatListBody/> : notFound();
+    case "studentresult":
+      return type === "student" ? <StudentResultList /> : notFound();
     default:
       return notFound();
   }

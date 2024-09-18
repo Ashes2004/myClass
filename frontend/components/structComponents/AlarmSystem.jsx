@@ -85,7 +85,7 @@ export default function AlertSystem({ name }) {
         </button>
         <button
           onClick={() => triggerAlert("emergency")}
-          className="bg-yellow-300 hover:bg-yellow-600 duration-200 text-black px-4 py-2 rounded-md"
+          className="bg-yellow-300 dark:bg-[#eee169] hover:bg-yellow-600 dark:hover:bg-yellow-400 duration-200 text-black px-4 py-2 rounded-md"
         >
           Trigger Emergency Alert
         </button>

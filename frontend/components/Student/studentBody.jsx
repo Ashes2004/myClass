@@ -1,10 +1,9 @@
 "use client";
 
-
 import Link from "next/link";
 import StudentLayout from "./studentLayout";
 import SearchBar from "../structComponents/SearchBar";
-import { genarateToken , messaging } from "@/app/Firebase";
+import { genarateToken, messaging } from "@/app/Firebase";
 
 import {
   notices,
@@ -21,11 +20,10 @@ import { CalendarDemo } from "../structComponents/CalendarDemo";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 
-
 const StudentBody = () => {
   const router = useRouter();
   const [studentData, setStudentData] = useState(null);
- 
+
   // useEffect(()=>{
   //   genarateToken();
   //   onMessage(messaging, (payload) => {
@@ -34,12 +32,10 @@ const StudentBody = () => {
   //   },[]);
 
   useEffect(() => {
-  const token = sessionStorage.getItem("studentToken");
+    const token = sessionStorage.getItem("studentToken");
     if (!token) {
-      
       router.push("/student/studentLogin");
     } else {
-    
       const fetchStudentData = async () => {
         try {
           console.log("token: ", token);
@@ -61,28 +57,24 @@ const StudentBody = () => {
 
           const data = await response.json();
           setStudentData(data);
-         sessionStorage.setItem("studentClassId" , data.classId._id);
-         sessionStorage.setItem("studentId" , data._id);
+          sessionStorage.setItem("studentClassId", data.classId._id);
+          sessionStorage.setItem("studentId", data._id);
         } catch (error) {
           console.error("Error fetching student data:", error);
         }
       };
 
       fetchStudentData();
-      
     }
-  }, [router]); 
-
-
-
+  }, [router]);
 
   if (!studentData) {
-    return <p>Loading...</p>; 
+    return <p>Loading...</p>;
   }
 
   return (
     <StudentLayout>
-      <div className="bg-cream text-black flex flex-col p-4">
+      <div className="text-black dark:text-light-gray  flex flex-col p-4">
         {/* Header Section */}
         <div className="flex flex-col md:flex-row justify-between md:items-center rounded-md">
           <h1 className="text-xl md:text-3xl font-bold">
@@ -124,7 +116,7 @@ const StudentBody = () => {
                     <Link
                       href={`${item.link}`}
                       key={item.id}
-                      className="bg-white p-4 rounded-lg shadow-xl hover:scale-105 duration-300"
+                      className="bg-white dark:bg-dark-gray p-4 rounded-lg shadow-xl hover:scale-105 duration-300"
                     >
                       <div>
                         <div
@@ -139,7 +131,9 @@ const StudentBody = () => {
                           />
                         </div>
                         <div className="font-bold">{item.sub}</div>
-                        <div className="font-semibold">{item.type}</div>
+                        <div className="font-semibold dark:text-dim-gray">
+                          {item.type}
+                        </div>
                       </div>
                     </Link>
                   )
@@ -148,7 +142,7 @@ const StudentBody = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Today's Schedule Section */}
-              <div className="bg-white shadow-xl rounded-lg p-4">
+              <div className="bg-white dark:bg-dark-gray shadow-xl rounded-lg p-4">
                 <div className="flex justify-between items-center mb-3">
                   <h3 className="font-bold text-lg md:text-xl">
                     Today's Schedule
@@ -179,10 +173,10 @@ const StudentBody = () => {
                           </div>
                           <div className="flex flex-col">
                             <h2 className="font-bold">{item.subject}</h2>
-                            <h2 className="font-semibold text-xs">
+                            <h2 className="font-semibold text-xs dark:text-dim-gray">
                               {item.duration} min
                             </h2>
-                            <h2 className="font-semibold">
+                            <h2 className="font-semibold dark:text-dim-gray">
                               Teacher: {item.teacher}
                             </h2>
                           </div>
@@ -204,8 +198,8 @@ const StudentBody = () => {
                     )
                 )}
               </div>
-           <div>
-              {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2"> */}
+              <div>
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-2"> */}
                 {/* Chatbot Section */}
                 {/* <div className="col-span-1 bg-white flex flex-col shadow-xl rounded-lg p-4">
                   <div className="flex justify-between items-center mb-4">
@@ -252,7 +246,7 @@ const StudentBody = () => {
                 </div> */}
 
                 {/* Notice Board Section */}
-                <div className="col-span-1 bg-white shadow-xl rounded-xl p-4">
+                <div className="col-span-1 bg-white dark:bg-dark-gray shadow-xl rounded-xl p-4">
                   <h2 className="font-bold text-lg text-center">
                     Notice Board
                   </h2>
@@ -265,8 +259,8 @@ const StudentBody = () => {
                             key={item.id}
                             className={`flex justify-between items-center mb-1 ${
                               index % 2 == 0
-                                ? "bg-slate-300 hover:bg-slate-400"
-                                : "bg-slate-400 hover:bg-slate-500"
+                                ? "bg-slate-300 hover:bg-slate-400 dark:bg-[#18A0FB] dark:hover:bg-[#5582e2]"
+                                : "bg-slate-400 hover:bg-slate-500 dark:bg-[#1976D2] dark:hover:bg-[#6597f3]"
                             } rounded-lg px-2 py-3 duration-200`}
                           >
                             <h2 className="font-bold">{item.title}</h2>
@@ -296,7 +290,7 @@ const StudentBody = () => {
                   index < 2 && (
                     <div
                       key={item.id}
-                      className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
+                      className="bg-white dark:bg-dark-gray shadow-xl flex justify-between items-center p-3 rounded-lg"
                     >
                       <div className="flex gap-2 items-center">
                         <div className={`${item.bg} rounded-full p-3`}>
@@ -333,12 +327,12 @@ const StudentBody = () => {
           {/* Right Section */}
           <div className="col-span-2 pt-3">
             <div className="flex flex-col gap-2">
-              <div className="flex flex-col justify-center items-center bg-white p-2 rounded-lg shadow-xl">
+              <div className="flex flex-col justify-center items-center bg-white dark:bg-dark-gray p-2 rounded-lg shadow-xl">
                 <h2 className="font-bold text-center md:text-xl lg:text-2xl">
                   This is an Alarm System. Raise this alarm ONLY in case of FIRE
                   or any other EMERGENCY!!!
                 </h2>
-                <AlertSystem name={studentData?.studentName}/>
+                <AlertSystem name={studentData?.studentName} />
               </div>
               <div className="flex justify-center items-center mt-4 drop-shadow-xl">
                 <CalendarDemo />
@@ -358,7 +352,7 @@ const StudentBody = () => {
                     index < 3 && (
                       <div
                         key={item.id}
-                        className="bg-white shadow-xl flex justify-between items-center p-3 rounded-lg"
+                        className="bg-white dark:bg-dark-gray shadow-xl flex justify-between items-center p-3 rounded-lg"
                       >
                         <div className="flex gap-2 items-center">
                           <div className={`${item.bg} rounded-full p-3`}>
@@ -372,7 +366,7 @@ const StudentBody = () => {
                           </div>
                           <div className="flex flex-col">
                             <h2 className="font-bold">{item.task}</h2>
-                            <h2>
+                            <h2 className="dark:text-dim-gray">
                               Due Date: {item.due} {item.time}
                             </h2>
                           </div>
@@ -380,10 +374,10 @@ const StudentBody = () => {
                         <div
                           className={`p-2 px-3 rounded-full ${
                             item.status === "done"
-                              ? "bg-green-400"
+                              ? "bg-green-400 dark:bg-green-500"
                               : item.status === "progress"
-                              ? "bg-purple-400"
-                              : "bg-red-400"
+                              ? "bg-purple-400 dark:bg-purple-500"
+                              : "bg-red-400 dark:bg-red-500"
                           }`}
                         >
                           <h2 className="text-xs">{item.statusDesc}</h2>
@@ -413,4 +407,3 @@ const StudentBody = () => {
 };
 
 export default StudentBody;
- 

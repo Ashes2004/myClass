@@ -22,7 +22,7 @@ const Navbar = () => {
     }
   }, [darkMode]);
   return (
-    <header className="flex justify-between md:justify-evenly items-center bg-gray-900 text-white p-4">
+    <header className="flex justify-between md:justify-evenly items-center bg-gray-900 dark:bg-[#252734] text-white p-4">
       <div>
         <Link href="/" className="flex gap-2 items-center">
           <Image

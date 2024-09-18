@@ -29,6 +29,8 @@ import {
   bookfair,
   feedback,
   inventory,
+  poll,
+  result,
 } from "@/public/Icons";
 
 export const studentSidebarLinks = [
@@ -69,12 +71,6 @@ export const studentSidebarLinks = [
     link: "/library",
   },
   {
-    id: 6,
-    label: "Progress",
-    icon: attendance,
-    link: "/",
-  },
-  {
     id: 8,
     label: "Leaderboard",
     icon: leaderboard,
@@ -88,9 +84,21 @@ export const studentSidebarLinks = [
   },
   {
     id: 7,
-    label: "Raise Alarm",
-    icon: alarm,
-    link: "/",
+    label: "Meetings",
+    icon: classes,
+    link: "/student/studentmeeting",
+  },
+  {
+    id: 8,
+    label: "Polls",
+    icon: poll,
+    link: "/student/studentpoll",
+  },
+  {
+    id: 9,
+    label: "Result",
+    icon: result,
+    link: "/student/studentresult",
   },
 ];
 
@@ -124,7 +132,19 @@ export const teacherSidebarLinks = [
     label: "Meeting",
     icon: classes,
     link: "/teacher/meeting",
-  }
+  },
+  {
+    id: 5,
+    label: "Polls",
+    icon: poll,
+    link: "/teacher/teacherpoll",
+  },
+  {
+    id: 6,
+    label: "Marks Upload",
+    icon: result,
+    link: "/teacher/marksupload",
+  },
 ];
 
 export const adminSidebarLinks = [
@@ -169,11 +189,16 @@ export const adminSidebarLinks = [
     label: "Rooms",
     icon: classes,
     link: "/admin/rooms",
-
-  }
+  },
+  {
+    id: 7,
+    label: "Result Publish",
+    icon: result,
+    link: "/admin/resultpublish",
+  },
 ];
 
-// STUDENT DATA MAPPINGS
+
 export const studentSubject = [
   {
     id: 0,
@@ -181,7 +206,7 @@ export const studentSubject = [
     sub: "English",
     type: "Language",
     link: "/",
-    bg: "bg-orange-400",
+    bg: "bg-orange-400 dark:bg-orange-500",
   },
   {
     id: 1,
@@ -189,7 +214,7 @@ export const studentSubject = [
     sub: "Mathametics",
     type: "Practical",
     link: "/",
-    bg: "bg-green-400",
+    bg: "bg-green-400 dark:bg-green-500",
   },
   {
     id: 2,
@@ -197,7 +222,7 @@ export const studentSubject = [
     sub: "Physics",
     type: "Science",
     link: "/",
-    bg: "bg-purple-400",
+    bg: "bg-purple-400 dark:bg-purple-500",
   },
   {
     id: 3,
@@ -205,7 +230,7 @@ export const studentSubject = [
     sub: "Chemistry",
     type: "Science",
     link: "/",
-    bg: "bg-blue-400",
+    bg: "bg-blue-400 dark:bg-blue-500",
   },
   {
     id: 4,
@@ -213,7 +238,7 @@ export const studentSubject = [
     sub: "Computer",
     type: "Practical",
     link: "/",
-    bg: "bg-red-400",
+    bg: "bg-red-400 dark:bg-red-500",
   },
 ];
 
@@ -224,7 +249,7 @@ export const studentSchedule = [
     teacher: "Name1",
     duration: 40,
     icon: book,
-    bg: "bg-green-400",
+    bg: "bg-green-400 dark:bg-green-500",
     link: "/timetable",
   },
   {
@@ -233,7 +258,7 @@ export const studentSchedule = [
     teacher: "Name2",
     duration: 40,
     icon: book,
-    bg: "bg-blue-400",
+    bg: "bg-blue-400 dark:bg-blue-500",
     link: "/timetable",
   },
   {
@@ -242,7 +267,7 @@ export const studentSchedule = [
     teacher: "Name3",
     duration: 40,
     icon: book,
-    bg: "bg-orange-400",
+    bg: "bg-orange-400 dark:bg-orange-500",
     link: "/timetable",
   },
   {
@@ -251,7 +276,7 @@ export const studentSchedule = [
     teacher: "Name4",
     duration: 40,
     icon: book,
-    bg: "bg-purple-400",
+    bg: "bg-purple-400 dark:bg-purple-500",
     link: "/timetable",
   },
   {
@@ -260,7 +285,7 @@ export const studentSchedule = [
     teacher: "Name5",
     duration: 40,
     icon: book,
-    bg: "bg-green-400",
+    bg: "bg-green-400 dark:bg-green-500",
     link: "/timetable",
   },
 ];
@@ -271,21 +296,21 @@ export const studentProgress = [
     progress: "Attendance",
     icon: attendance,
     link: "/",
-    bg: "bg-purple-300",
+    bg: "bg-purple-300 dark:bg-purple-500",
   },
   {
     id: 1,
     progress: "Marks",
     icon: marks,
     link: "/",
-    bg: "bg-green-300",
+    bg: "bg-green-300 dark:bg-green-500",
   },
   {
     id: 2,
     progress: "Marks",
     icon: marks,
     link: "/",
-    bg: "bg-orange-300",
+    bg: "bg-orange-300 dark:bg-orange-500",
   },
 ];
 
@@ -298,7 +323,7 @@ export const studentAssignments = [
     icon: eng,
     status: "done",
     statusDesc: "completed",
-    bg: "bg-orange-300",
+    bg: "bg-orange-300 dark:bg-orange-500",
     link: "/",
   },
   {
@@ -309,7 +334,7 @@ export const studentAssignments = [
     icon: chem,
     status: "progress",
     statusDesc: "in progress",
-    bg: "bg-blue-300",
+    bg: "bg-blue-300 dark:bg-blue-500",
     link: "/",
   },
   {
@@ -320,7 +345,7 @@ export const studentAssignments = [
     icon: maths,
     status: "not done",
     statusDesc: "not done",
-    bg: "bg-purple-300",
+    bg: "bg-purple-300 dark:bg-purple-500",
     link: "/",
   },
   {
@@ -331,7 +356,7 @@ export const studentAssignments = [
     icon: physics,
     status: "progress",
     statusDesc: "In Progress",
-    bg: "bg-green-300",
+    bg: "bg-green-300 dark:bg-green-500",
     link: "/",
   },
   {
@@ -342,7 +367,7 @@ export const studentAssignments = [
     icon: chem,
     status: "not done",
     statusDesc: "Not Done",
-    bg: "bg-pink-300",
+    bg: "bg-pink-300 dark:bg-pink-500",
     link: "/",
   },
   {
@@ -353,7 +378,7 @@ export const studentAssignments = [
     icon: computer,
     status: "done",
     statusDesc: "Completed",
-    bg: "bg-red-300",
+    bg: "bg-red-300 dark:bg-red-500",
     link: "/",
   },
 ];
@@ -424,7 +449,7 @@ export const notices = [
   },
 ];
 
-// TEACHER DATA MAPPINGS
+// ADMIN DATA MAPPINGS
 export const adminSubjectManagement = [
   {
     id: 0,
@@ -432,7 +457,7 @@ export const adminSubjectManagement = [
     sub: "Add New Course",
     type: "Administrative",
     link: "/admin/classmaker",
-    bg: "bg-blue-400",
+    bg: "bg-blue-400 dark:bg-blue-500",
   },
   {
     id: 1,
@@ -440,7 +465,7 @@ export const adminSubjectManagement = [
     sub: "Manage Teachers",
     type: "Administrative",
     link: "/",
-    bg: "bg-green-400",
+    bg: "bg-green-400 dark:bg-green-500",
   },
   {
     id: 2,
@@ -448,7 +473,7 @@ export const adminSubjectManagement = [
     sub: "Enroll Students into course",
     type: "Administrative",
     link: "/admin/studentEnrollment",
-    bg: "bg-orange-400",
+    bg: "bg-orange-400 dark:bg-orange-500",
   },
   {
     id: 3,
@@ -456,7 +481,7 @@ export const adminSubjectManagement = [
     sub: "Review Curriculum",
     type: "Administrative",
     link: "/",
-    bg: "bg-purple-400",
+    bg: "bg-purple-400 dark:bg-purple-500",
   },
   {
     id: 4,
@@ -464,7 +489,7 @@ export const adminSubjectManagement = [
     sub: "Schedule Exams",
     type: "Administrative",
     link: "/",
-    bg: "bg-red-400",
+    bg: "bg-red-400 dark:bg-red-500",
   },
   {
     id: 5,
@@ -472,7 +497,7 @@ export const adminSubjectManagement = [
     sub: "Notices",
     type: "Administrative",
     link: "/",
-    bg: "bg-yellow-400",
+    bg: "bg-yellow-400 dark:bg-yellow-500",
   },
 ];
 
@@ -483,7 +508,7 @@ export const adminSchedule = [
     organizer: "Principal",
     duration: 60,
     icon: staff, // Placeholder for a calendar or meeting icon
-    bg: "bg-green-400",
+    bg: "bg-green-400 dark:bg-green-500",
   },
   {
     id: 1,
@@ -491,7 +516,7 @@ export const adminSchedule = [
     organizer: "Admin Team",
     duration: 90,
     icon: parent_teacher, // Placeholder for a calendar or meeting icon
-    bg: "bg-blue-400",
+    bg: "bg-blue-400 dark:bg-blue-500",
   },
   {
     id: 2,
@@ -499,7 +524,7 @@ export const adminSchedule = [
     organizer: "Head of Departments",
     duration: 120,
     icon: notes, // Placeholder for a calendar or review icon
-    bg: "bg-orange-400",
+    bg: "bg-orange-400 dark:bg-orange-500",
   },
   {
     id: 3,
@@ -507,7 +532,7 @@ export const adminSchedule = [
     organizer: "Exams Committee",
     duration: 180,
     icon: exam, // Placeholder for a planning icon
-    bg: "bg-purple-400",
+    bg: "bg-purple-400 dark:bg-purple-500",
   },
   {
     id: 4,
@@ -515,7 +540,7 @@ export const adminSchedule = [
     organizer: "Finance Team",
     duration: 60,
     icon: budget, // Placeholder for a finance icon
-    bg: "bg-red-400",
+    bg: "bg-red-400 dark:bg-red-500",
   },
 ];
 
@@ -528,7 +553,7 @@ export const adminTasks = [
     icon: document, // Placeholder for a document or report icon
     status: "in progress",
     statusDesc: "in progress",
-    bg: "bg-blue-300",
+    bg: "bg-blue-300 dark:bg-blue-500",
     link: "/",
   },
   {
@@ -536,10 +561,10 @@ export const adminTasks = [
     task: "Register New Teachers",
     due: "02.09.24",
     time: "03:00 PM",
-    icon: approval, 
+    icon: approval,
     status: "pending",
     statusDesc: "pending approval",
-    bg: "bg-green-300",
+    bg: "bg-green-300 dark:bg-green-500",
     link: "/teacherEnrollment",
   },
   {
@@ -550,7 +575,7 @@ export const adminTasks = [
     icon: teachers,
     status: "pending",
     statusDesc: "pending approval",
-    bg: "bg-yellow-300",
+    bg: "bg-yellow-300 dark:bg-yellow-500",
     link: "/studentRegistration",
   },
   // {
@@ -571,49 +596,49 @@ export const adminDataReview = [
     id: 0,
     data: "Student Attendance",
     icon: student,
-    bg: "bg-green-300",
+    bg: "bg-green-300 dark:bg-green-500",
     link: "/admin/studentattendance",
   },
   {
     id: 1,
     data: "Teacher Attendance",
     icon: teachers,
-    bg: "bg-blue-300",
+    bg: "bg-blue-300 dark:bg-blue-500",
     link: "/",
   },
   {
     id: 2,
     data: "Student Performance",
     icon: attendance,
-    bg: "bg-purple-300",
+    bg: "bg-purple-300 dark:bg-purple-500",
     link: "/",
   },
   {
     id: 3,
     data: "Classroom Management",
     icon: classes,
-    bg: "bg-yellow-300",
+    bg: "bg-yellow-300 dark:bg-yellow-500",
     link: "/",
   },
   {
     id: 4,
     data: "School Events",
     icon: bookfair,
-    bg: "bg-red-300",
+    bg: "bg-red-300 dark:bg-red-500",
     link: "/",
   },
   {
     id: 5,
     data: "Finance Reports",
     icon: budget,
-    bg: "bg-orange-300",
+    bg: "bg-orange-300 dark:bg-orange-500",
     link: "/",
   },
   {
     id: 6,
     data: "Parent Feedback",
     icon: feedback,
-    bg: "bg-pink-300",
+    bg: "bg-pink-300 dark:bg-pink-500",
     link: "/",
   },
 
@@ -621,7 +646,7 @@ export const adminDataReview = [
     id: 7,
     data: "Student & Teacher Details",
     icon: parent_teacher,
-    bg: "bg-purple-300",
+    bg: "bg-purple-300 dark:bg-purple-500",
     link: "/admin/studentteacherdetails",
   },
 ];

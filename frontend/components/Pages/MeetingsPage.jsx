@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -34,7 +35,9 @@ const MeetingsPage = () => {
 
     const fetchAllocatedClasses = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/teachers/${teacherId}`);
+        const res = await fetch(
+          `http://localhost:5000/api/teachers/${teacherId}`
+        );
         const data = await res.json();
         setAllocatedClasses(data.allocatedClasses);
         console.log("allocated classes: ", allocatedClasses);
@@ -79,8 +82,6 @@ const MeetingsPage = () => {
     setOverallMargin({ left: marginArray[0], top: marginArray[1] });
   }, [teacherId]);
 
-
-
   const createMeeting = async () => {
     let [hours, minutes] = meetingInputTime.split(":").map(Number);
     let period = hours >= 12 ? " PM" : " AM";
@@ -118,7 +119,7 @@ const MeetingsPage = () => {
       if (data && typeof data === "object") {
         if (meetings.length > 0) {
           meetings.push(data);
-        }else{
+        } else {
           window.location.reload();
         }
         Swal.fire({
@@ -147,36 +148,31 @@ const MeetingsPage = () => {
     setCreateMeetingWindowVisible(false);
   };
 
- 
-
   const deleteTheseMeetings = async (id) => {
     const updatedMeetings = meetings.filter(
-      (meeting) => (meeting._id != id) // Use _id if that's the key
+      (meeting) => meeting._id != id // Use _id if that's the key
     );
-    
-   try {
-    const res = await fetch(`http://localhost:5000/api/online-class/${id}`, {
-      method: "DELETE"
-    });
 
-    if (!res.ok) {
-      throw new Error("Network response was not ok");
+    try {
+      const res = await fetch(`http://localhost:5000/api/online-class/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!res.ok) {
+        throw new Error("Network response was not ok");
+      }
+      console.log("succesfully deleted!!");
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: error.message || "Something went wrong",
+      });
     }
-    console.log("succesfully deleted!!");
-    
-   } catch (error) {
-    
-    Swal.fire({
-      icon: "error",
-      title: "Oops...",
-      text: error.message || "Something went wrong",
-    });
-
-   }
     console.log(updatedMeetings);
-    
+
     setMeetings(updatedMeetings);
-  
+
     setDeleteClicked(false);
   };
 
@@ -339,7 +335,7 @@ const MeetingsPage = () => {
                     </button> */}
                     <button
                       className="p-1 bg-violet-500 text-white rounded-md"
-                      onClick={()=>{
+                      onClick={() => {
                         deleteTheseMeetings(meeting._id);
                       }}
                     >

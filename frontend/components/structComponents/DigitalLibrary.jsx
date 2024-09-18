@@ -4,10 +4,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { sampleProfile } from "@/public/Images";
 import {
+  assignedBooks,
   events,
-  featuredBooks,
   savedBooks,
   subjectBooks,
+  videoLessons,
 } from "@/app/constants/books";
 import { book, budget, rightArrow } from "@/public/Icons";
 
@@ -74,67 +75,109 @@ const DigitalLibrary = () => {
               })}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Assigned Books Section */}
+              <div className="bg-white shadow-xl rounded-xl p-4">
+                <div className="flex justify-between items-center mb-3">
+                  <h3 className="font-bold text-lg md:text-xl">
+                    Books Assigned to You
+                  </h3>
+                  <Link
+                    href="#"
+                    className="hover:underline decoration-solid underline-offset-4 cursor-pointer hover:text-green-custom duration-200"
+                  >
+                    View All
+                  </Link>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+                  {assignedBooks.map((item, index) => {
+                    if (index < 3) {
+                      const backgroundImageStyle = {
+                        backgroundImage: `url(${item.img})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                      };
+                      return (
+                        <Link
+                          href={`${item.link}`}
+                          key={item.id}
+                          className="relative bg-white text-white p-4 shadow-xl rounded-xl hover:scale-105 duration-300"
+                          style={backgroundImageStyle}
+                        >
+                          <div className="absolute inset-0 bg-gradient-to-t from-black via-slate-600/40 to-black rounded-xl"></div>
+                          <div className="relative p-4 h-full">
+                            <h2 className="text-lg font-bold">{item.title}</h2>
+                            <p className="text-sm">Author: {item.author}</p>
+                          </div>
+                        </Link>
+                      );
+                    } else null;
+                  })}
+                </div>
+              </div>
+
+              {/* Top-Rated Books Section */}
               <div className="bg-white shadow-xl rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="bg-green-300 rounded-full p-3">
+                <div className="flex items-center gap-3">
+                  <div className="bg-yellow-300 rounded-full p-3">
                     <Image
-                      src={book}
-                      alt="book"
+                      src={book} // You can replace 'topRatedIcon' with the actual icon you use
+                      alt="top-rated"
                       width={24}
                       height={24}
                       className="object-cover"
                     />
                   </div>
                   <h2 className="font-bold text-lg md:text-xl">
-                    Request a Book
+                    Top Rated Books
                   </h2>
                 </div>
-                <p className="font-semibold text-sm md:text-base mb-1">
-                  Looking for a particular book? We got you!!
-                </p>
-                <div className="flex justify-between items-center">
-                  <p>Request the school's librarian for the book!</p>
-                  <Link
-                    href="/"
-                    className="bg-green-300 hover:bg-green-600 duration-200 p-4 rounded-xl"
-                  >
-                    <h2 className="font-semibold text-center">
-                      Send a Request
-                    </h2>
-                  </Link>
-                </div>
-              </div>
 
-              <div className="bg-white shadow-xl rounded-lg p-4">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="bg-blue-300 rounded-full p-3">
-                    <Image
-                      src={budget}
-                      alt="price"
-                      width={24}
-                      height={24}
-                      className="object-cover"
-                    />
-                  </div>
-                  <h2 className="font-bold text-lg md:text-xl">Buy a Book</h2>
-                </div>
                 <p className="font-semibold text-sm md:text-base mb-1">
-                  Want to Buy a Book? We got you!!
+                  Check out the most viewed or top-rated books by students!
                 </p>
-                <div className="flex justify-between items-center">
-                  <p>Place your order for the book here!</p>
-                  <Link
-                    href="/"
-                    className="bg-blue-300 hover:bg-blue-600 duration-200 p-4 rounded-xl"
-                  >
-                    <h2 className="font-semibold text-center">Place Order</h2>
-                  </Link>
+
+                <div className="flex flex-col gap-2">
+                  {/* Book 1 */}
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="font-bold">
+                        Book Title 1{" "}
+                        <span className="font-semibold">(Rating: 4.8)</span>
+                      </h3>
+                      <p className="text-sm">Author: Author Name</p>
+                    </div>
+                    <Link
+                      href="/"
+                      className="bg-yellow-300 hover:bg-yellow-600 duration-200 p-2 rounded-lg"
+                    >
+                      <h2 className="font-semibold text-center">View</h2>
+                    </Link>
+                  </div>
+                  {/* Book 2 */}
+                  <div className="flex justify-between items-center">
+                    <div>
+                      <h3 className="font-bold">
+                        Book Title 2{" "}
+                        <span className="font-semibold">(Rating: 4.5)</span>
+                      </h3>
+                      <p className="text-sm">Author: Author Name</p>
+                    </div>
+                    <Link
+                      href="/"
+                      className="bg-yellow-300 hover:bg-yellow-600 duration-200 p-2 rounded-lg"
+                    >
+                      <h2 className="font-semibold text-center">View</h2>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
 
+            {/* Video Lessons Section */}
             <div className="flex justify-between items-center my-3">
-              <h3 className="font-bold text-lg md:text-xl">Featured Books</h3>
+              <h3 className="font-bold text-lg md:text-xl">
+                Video Lessons for You
+              </h3>
               <Link
                 href="#"
                 className="hover:underline hover:text-green-custom duration-200 decoration-solid underline-offset-4 cursor-pointer"
@@ -142,29 +185,31 @@ const DigitalLibrary = () => {
                 View All
               </Link>
             </div>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {featuredBooks.map((item, index) => {
-                if (index < 5) {
-                  const backgroundImageStyle = {
-                    backgroundImage: `url(${item.img})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                  };
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 bg-white shadow-xl rounded-xl p-3">
+              {videoLessons.map((item, index) => {
+                if (index < 4) {
                   return (
-                    <Link
-                      href={`${item.link}`}
+                    <div
                       key={item.id}
-                      className="relative bg-white text-white p-4 shadow-xl rounded-xl hover:scale-105 duration-300"
-                      style={backgroundImageStyle}
+                      className="relative hover:scale-105 duration-300"
                     >
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-slate-600/40 to-black rounded-xl"></div>
-                      <div className="relative p-4 h-full">
-                        <h2 className="text-lg font-bold">{item.title}</h2>
-                        <p className="text-sm">Author: {item.author}</p>
+                      <h2 className="text-lg font-bold mb-2">{item.title}</h2>
+                      <div className="relative h-full">
+                        {/* YouTube iframe */}
+                        <div className="aspect-w-16 aspect-h-9">
+                          <iframe
+                            src={item.link}
+                            title={item.title}
+                            className="w-full h-full rounded-xl"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                          ></iframe>
+                        </div>
                       </div>
-                    </Link>
+                    </div>
                   );
-                } else null;
+                } else return null;
               })}
             </div>
           </div>
