@@ -1,6 +1,10 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import http from "http"
+import { Server } from "socket.io";
+import Message from "./models/ChatDM/MessageModel.js";
+import Conversation from "./models/ChatDM/ConversationModel.js";
 import studentRoutes from "./routes/StudentRoutes.js";
 import teacherRoutes from "./routes/TeacherRoutes.js";
 import classRoutineRoutes from "./routes/classRoutineRoutes.js";
@@ -33,8 +37,78 @@ admin.initializeApp({
 const app = express();
 app.use(cors());
 app.use(express.json());
+/*const server = http.createServer(app);
+const io = new Server(server, {
+  cors:{
+    origin:"http://localhost:3000",
+    methods:["GET","POST"],
+    credentials:"true"
+  },
+});
 
+const userConnections = {}; // Store userID -> socket.id mapping
 
+io.on('connection', (socket) => {
+    console.log('A new user connected:', socket.id);
+
+    // Handle user joining with a persistent user ID
+    socket.on('join', async({userID,userType}) => {
+        // Map the user ID to the current socket ID
+        userConnections[userID] = socket.id;
+
+        console.log(`User ${userID} joined with socket ID ${socket.id}`);
+
+        // Check for undelivered messages
+        const undeliveredMessages = await Message.find({ receiverId: userID, delivered: false })
+        if(undeliveredMessages) {
+          undeliveredMessages.forEach(async (msg) => {
+              socket.emit('message', msg); // Send undelivered messages
+              msg.delivered = true;
+              await msg.save(); // Mark them as delivered
+          });
+        }  ;
+    });
+
+    // Handle message sending
+    socket.on('sendMessage', async ({ sender, receiver, content, conversationId }) => {
+      const conversation = await Conversation.findById(conversationId);
+      const message = new Message({
+          senderId:sender,
+          senderModel,
+          receiverId:receiver,
+          receiverModel,
+          message:content,
+          delivered: false,
+      });
+      conversation.messages.push(message._id);
+      await conversation.save();
+      try {
+          await message.save();
+          // Look up the socket ID of the receiver from our connections
+          const receiverSocketID = userConnections[receiver];
+          
+          // Attempt to send the message if the receiver is online
+          if (receiverSocketID) {
+            io.to(receiverSocketID).emit('message', message);
+            
+            // Mark the message as delivered if the receiver is online
+            message.delivered = true;
+            await message.save();
+          }
+      } catch (error) {
+          console.error('Message save error:', error);
+      }
+    });
+
+    // Handle user disconnection
+    socket.on('disconnect', () => {
+        console.log(`User with socket ID ${socket.id} disconnected`);
+
+        // Optionally, you can remove the user's socket ID from the mapping if needed
+        // For example, if you have a way to track user disconnections by userID
+    });
+});
+*/
 
 mongoose
   .connect(process.env.MONGODB_URI, {

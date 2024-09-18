@@ -26,6 +26,10 @@ const messageSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    delivered: {
+      type: Boolean,
+      required: true
+    }
     // createdAt, updatedAt are automatically added by timestamps
   },
   { timestamps: true }

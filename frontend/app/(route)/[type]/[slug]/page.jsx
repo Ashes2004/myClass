@@ -22,6 +22,7 @@ import MeetingsPage from "@/components/Pages/MeetingsPage";
 import StudentMeetingsPage from "@/components/Pages/StudentMeetingPage";
 import RoomManagement from "@/components/Pages/RoomManagement";
 import AttendanceBody from "@/components/Attendance/Backendtesting/attendenceBody";
+import ChatListBody from "@/components/Chat/sender-reciever section/ChatListBody";
 
 const slugTitleMap = {
   attendance: "Attendance",
@@ -41,7 +42,8 @@ const slugTitleMap = {
   assignmentMarks: "Assignments",
   meeting: "Meeting",
   studentmeeting: "Meeting",
-  rooms: "Rooms"
+  rooms: "Rooms",
+  doubtDesk:"Doubt Desk"
 };
 export default function Page({ params }) {
   const { type, slug } = params;
@@ -90,6 +92,8 @@ export default function Page({ params }) {
       return type === "teacher" ? <MeetingsPage /> : notFound();
     case "studentmeeting":
       return type === "student" ? <StudentMeetingsPage /> : notFound();
+    case "doubtDesk":
+      return (type === "student" || type=== "teacher") ? <ChatListBody/> : notFound();
     default:
       return notFound();
   }

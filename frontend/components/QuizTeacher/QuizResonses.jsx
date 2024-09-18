@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import QuizLayout from '../QuizStudent/QuizLayout';
+import TeacherQuizLayout from '../QuizTeacher/TeacherQuizLayout';
 
 const QuizResponses = ({ quizId }) => {
   const [responses, setResponses] = useState([]);
@@ -27,7 +27,7 @@ const QuizResponses = ({ quizId }) => {
   }, [quizId]);
 
   return (
-    <QuizLayout>
+    <TeacherQuizLayout>
     <div className="max-w-4xl mx-auto p-4">
       <h1 className="text-2xl font-bold text-center mb-4">Quiz Responses</h1>
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
@@ -53,7 +53,7 @@ const QuizResponses = ({ quizId }) => {
         </table>
       </div>
     </div>
-    </QuizLayout>
+    </TeacherQuizLayout>
   );
 };
 

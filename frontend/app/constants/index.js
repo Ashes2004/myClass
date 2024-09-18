@@ -124,7 +124,7 @@ export const teacherSidebarLinks = [
     label: "Meeting",
     icon: classes,
     link: "/teacher/meeting",
-  },
+  }
 ];
 
 export const adminSidebarLinks = [

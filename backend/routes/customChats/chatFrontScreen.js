@@ -1,7 +1,7 @@
 import express from "express";
 import {
   getMyChatsList,
-  getPersonalChat,
+  getOrCreateConversation
 } from "../../controllars/chatControllers/getDetails.js";
 const router = express.Router();
 
@@ -9,6 +9,6 @@ const router = express.Router();
 router.get("/getMyChatsList/:userType/:userID", getMyChatsList);
 
 //Get a Personal Chat by ID (DM)
-router.get("/getPersonalChat/:recieverID/:senderID", getPersonalChat);
+router.get("/getPersonalChat/:recieverID/:senderID", getOrCreateConversation);
 
 export default router;

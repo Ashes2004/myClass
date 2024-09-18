@@ -49,7 +49,10 @@ import feedback from "./feedback.svg";
 import send from "./send-sharp.svg";
 import time from "./time-outline.svg";
 import inventory from "./inventory.svg";
-
+import chatBubble from "./chatbubble-ellipses-outline.svg"
+import peopleOutline from "./people-outline.svg"
+import broadcast from "./megaphone-outline.svg"
+import pdf_fiile_icon from "./PDF_file_icon.svg"
 export {
   home,
   logo,
@@ -100,4 +103,6 @@ export {
   computer,
   feedback,
   send,time, inventory, 
+  chatBubble, peopleOutline, broadcast,
+  pdf_fiile_icon
 };

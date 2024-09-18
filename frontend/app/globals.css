@@ -11,12 +11,21 @@
 
 
 
-.custom-scrollbar {
-    overflow: -moz-scrollbars-none; 
-    scrollbar-width: none; 
+/* width */
+::-webkit-scrollbar {
+    width: 0px;
 }
+ 
+/* Track */
 
-.custom-scrollbar::-webkit-scrollbar {
-    display: none; 
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
 }
-
+ 
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

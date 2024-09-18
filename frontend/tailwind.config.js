@@ -35,6 +35,9 @@ module.exports = {
         "card-orange":"#FF7F3E",
         "card-gold":"#FFDE4D",
         "card-dark-blue":"#00A9FF"
+      },
+      backgroundImage: {
+        
       }
     },
   },
